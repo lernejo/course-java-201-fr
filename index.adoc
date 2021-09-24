@@ -1,0 +1,19 @@
+= Java 201
+Loïc Ledoyen <loic.ledoyen@gmail.com>
+:reproducible:
+:toc-title: Java 201
+:listing-caption: Listing
+:source-highlighter: rouge
+:hardbreaks-option:
+:toc: left
+:title-page:
+
+ifndef::ci[]
+:imagesdir: ./images
+endif::[]
+
+:title-logo-image: image:logo.png[top=25%, align=center, pdfwidth=0.5in]
+
+<<<
+
+include::chapters/introduction.adoc[]
