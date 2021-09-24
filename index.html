@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.16">
 <meta name="author" content="Loïc Ledoyen">
-<title>Java 201</title>
+<title>Java 201 - Architecture logicielle</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -437,10 +437,225 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 #footer-text{color:rgba(0,0,0,.6);font-size:.9em}}
 @media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
 </style>
+<style>
+pre.rouge table td { padding: 5px; }
+pre.rouge table pre { margin: 0; }
+pre.rouge .cm {
+  color: #999988;
+  font-style: italic;
+}
+pre.rouge .cp {
+  color: #999999;
+  font-weight: bold;
+}
+pre.rouge .c1 {
+  color: #999988;
+  font-style: italic;
+}
+pre.rouge .cs {
+  color: #999999;
+  font-weight: bold;
+  font-style: italic;
+}
+pre.rouge .c, pre.rouge .ch, pre.rouge .cd, pre.rouge .cpf {
+  color: #999988;
+  font-style: italic;
+}
+pre.rouge .err {
+  color: #a61717;
+  background-color: #e3d2d2;
+}
+pre.rouge .gd {
+  color: #000000;
+  background-color: #ffdddd;
+}
+pre.rouge .ge {
+  color: #000000;
+  font-style: italic;
+}
+pre.rouge .gr {
+  color: #aa0000;
+}
+pre.rouge .gh {
+  color: #999999;
+}
+pre.rouge .gi {
+  color: #000000;
+  background-color: #ddffdd;
+}
+pre.rouge .go {
+  color: #888888;
+}
+pre.rouge .gp {
+  color: #555555;
+}
+pre.rouge .gs {
+  font-weight: bold;
+}
+pre.rouge .gu {
+  color: #aaaaaa;
+}
+pre.rouge .gt {
+  color: #aa0000;
+}
+pre.rouge .kc {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .kd {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .kn {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .kp {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .kr {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .kt {
+  color: #445588;
+  font-weight: bold;
+}
+pre.rouge .k, pre.rouge .kv {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .mf {
+  color: #009999;
+}
+pre.rouge .mh {
+  color: #009999;
+}
+pre.rouge .il {
+  color: #009999;
+}
+pre.rouge .mi {
+  color: #009999;
+}
+pre.rouge .mo {
+  color: #009999;
+}
+pre.rouge .m, pre.rouge .mb, pre.rouge .mx {
+  color: #009999;
+}
+pre.rouge .sa {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .sb {
+  color: #d14;
+}
+pre.rouge .sc {
+  color: #d14;
+}
+pre.rouge .sd {
+  color: #d14;
+}
+pre.rouge .s2 {
+  color: #d14;
+}
+pre.rouge .se {
+  color: #d14;
+}
+pre.rouge .sh {
+  color: #d14;
+}
+pre.rouge .si {
+  color: #d14;
+}
+pre.rouge .sx {
+  color: #d14;
+}
+pre.rouge .sr {
+  color: #009926;
+}
+pre.rouge .s1 {
+  color: #d14;
+}
+pre.rouge .ss {
+  color: #990073;
+}
+pre.rouge .s, pre.rouge .dl {
+  color: #d14;
+}
+pre.rouge .na {
+  color: #008080;
+}
+pre.rouge .bp {
+  color: #999999;
+}
+pre.rouge .nb {
+  color: #0086B3;
+}
+pre.rouge .nc {
+  color: #445588;
+  font-weight: bold;
+}
+pre.rouge .no {
+  color: #008080;
+}
+pre.rouge .nd {
+  color: #3c5d5d;
+  font-weight: bold;
+}
+pre.rouge .ni {
+  color: #800080;
+}
+pre.rouge .ne {
+  color: #990000;
+  font-weight: bold;
+}
+pre.rouge .nf, pre.rouge .fm {
+  color: #990000;
+  font-weight: bold;
+}
+pre.rouge .nl {
+  color: #990000;
+  font-weight: bold;
+}
+pre.rouge .nn {
+  color: #555555;
+}
+pre.rouge .nt {
+  color: #000080;
+}
+pre.rouge .vc {
+  color: #008080;
+}
+pre.rouge .vg {
+  color: #008080;
+}
+pre.rouge .vi {
+  color: #008080;
+}
+pre.rouge .nv, pre.rouge .vm {
+  color: #008080;
+}
+pre.rouge .ow {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .o {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .w {
+  color: #bbbbbb;
+}
+pre.rouge {
+  background-color: #f8f8f8;
+}
+</style>
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
-<h1>Java 201</h1>
+<h1>Java 201 - Architecture logicielle</h1>
 <div class="details">
 <span id="author" class="author">Loïc Ledoyen</span><br>
 <span id="email" class="email"><a href="mailto:loic.ledoyen@gmail.com">loic.ledoyen@gmail.com</a></span><br>
@@ -449,6 +664,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toctitle">Java 201</div>
 <ul class="sectlevel1">
 <li><a href="#_introduction">Introduction</a></li>
+<li><a href="#_le_découplage_un_concept_valide_a_toutes_les_échelles">1. Le Découplage, un concept valide a toutes les échelles</a>
+<ul class="sectlevel2">
+<li><a href="#_a_léchelle_dune_classe_java">1.1. A l&#8217;échelle d&#8217;une classe Java</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -462,7 +682,199 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h2 id="_introduction">Introduction</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>TODO</p>
+<p>Un logiciel doit répondre à plusieurs objectifs dépendant de son contexte.<br>
+Parmi ces objectifs on retrouve :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Maintenabilité / évolutivité</p>
+</li>
+<li>
+<p>Testabilité</p>
+</li>
+<li>
+<p>Fiabilité / Robustesse / tolérance à la panne</p>
+</li>
+<li>
+<p>Scalabilité</p>
+</li>
+<li>
+<p>Sécurité</p>
+</li>
+<li>
+<p>Performance</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>L&#8217;ordre de priorité de ces objectifs doit être décidé avec l&#8217;ensemble des acteurs du projet et réajusté périodiquement afin de suivre l&#8217;évolution du projet dans le temps.</p>
+</div>
+<div class="paragraph">
+<p>Il s&#8217;agit d&#8217;un partenariat.</p>
+</div>
+<div class="paragraph">
+<p>L&#8217;équipe de développement met en oeuvre les principes d&#8217;architecture logicielle pour répondre au mieux aux objectifs du projet.</p>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_le_découplage_un_concept_valide_a_toutes_les_échelles">1. Le Découplage, un concept valide a toutes les échelles</h2>
+<div class="sectionbody">
+<div class="quoteblock">
+<blockquote>
+J&#8217;ai répondu à leur problème en leur proposant d&#8217;ajouter un niveau d&#8217;indirection.
+</blockquote>
+<div class="attribution">
+&#8212; un architecte qui passait par là
+</div>
+</div>
+<div class="paragraph">
+<p>L&#8217;objectif qui prévaut sur tous les autres est la <strong>maintenabilité</strong>.<br>
+En cas de problème, lié à la performance, à la sécurité ou au fonctionnement d&#8217;un logiciel, la solution doit tendre vers un impact minimum.<br>
+Plus le changement de code est important, et plus le risque augmente.<br>
+Une correction (mais cela vaut pour une évolution également) doit comporter le moins de risque possible.</p>
+</div>
+<div class="sect2">
+<h3 id="_a_léchelle_dune_classe_java">1.1. A l&#8217;échelle d&#8217;une classe Java</h3>
+<div class="paragraph">
+<p>Ce découplage se traduit, par exemple, par le fait de</p>
+</div>
+<div class="sect3">
+<h4 id="_exemple_1_masquer_son_état_champs">1.1.1. Exemple 1 : Masquer son état (champs)</h4>
+<div class="paragraph">
+<p>Par exemple cette classe :</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 1. Fichier TrafficLight.java</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java"><span class="kd">class</span> <span class="nc">TrafficLight</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">color</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setColor</span><span class="o">(</span><span class="kt">int</span> <span class="n">newColor</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">color</span> <span class="o">=</span> <span class="n">newColor</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getColor</span><span class="o">()</span> <span class="o">{</span> // <b class="conum">(1)</b>
+        <span class="k">return</span> <span class="n">color</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Changer le type de la représentation interne (<code>int</code>) demandera d&#8217;adapter l&#8217;ensemble du code qui utilise cette classe</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Pourrait être ré-écrite de façon à <span class="underline">découpler</span> :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>d&#8217;une part, la représentation interne de l&#8217;état de cet objet (un <code>int</code>)</p>
+</li>
+<li>
+<p>d&#8217;autre part, le contrat <code>public</code> utilisable par les autres classes</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="title">Listing 2. Fichier TrafficLight.java</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java"><span class="kd">class</span> <span class="nc">TrafficLight</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">color</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nc">Color</span> <span class="nf">nextState</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">color</span> <span class="o">=</span> <span class="o">(</span><span class="n">color</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="o">%</span> <span class="mi">3</span><span class="o">;</span>
+        <span class="k">return</span> <span class="nc">Color</span><span class="o">.</span><span class="na">values</span><span class="o">()[</span><span class="n">color</span><span class="o">];</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">enum</span> <span class="nc">Color</span> <span class="o">{</span>
+        <span class="no">GREEN</span><span class="o">,</span>
+        <span class="no">ORANGE</span><span class="o">,</span>
+        <span class="no">RED</span><span class="o">,</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_exemple_2_prendre_des_paramètres_de_méthode_avec_des_types_correspondant_au_domaine">1.1.2. Exemple 2 : Prendre des paramètres de méthode avec des types correspondant au domaine</h4>
+<div class="paragraph">
+<p>Par exemple cette interface :</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 3. Fichier PersonRepository.java</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java"><span class="kd">interface</span> <span class="nc">PersonRepository</span> <span class="o">{</span>
+
+    <span class="kt">void</span> <span class="nf">savePerson</span><span class="o">(</span><span class="nc">String</span> <span class="n">firstname</span><span class="o">,</span> <span class="nc">String</span> <span class="n">lastname</span><span class="o">,</span> <span class="kt">int</span> <span class="n">birthYear</span><span class="o">,</span> <span class="kt">int</span> <span class="n">birthMonth</span><span class="o">);</span>
+<span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A l&#8217;usage, il est simple d&#8217;inverser un paramètre avec un autre car leurs types sont identiques.<br>
+Ainsi la compilation ne va pas aider à détecter un bug, où le mois et l&#8217;année sont inversées par exemple.<br>
+Il s&#8217;agit d&#8217;un <em>couplage de position</em>.<br>
+Un meilleur design pourrait être :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java"><span class="kd">interface</span> <span class="nc">PersonRepository</span> <span class="o">{</span>
+
+    <span class="nc">Person</span> <span class="nf">savePerson</span><span class="o">(</span><span class="nc">Person</span> <span class="n">person</span><span class="o">);</span>
+
+    <span class="nd">@RecordBuilder</span> // <b class="conum">(1)</b>
+    <span class="n">record</span> <span class="nf">Person</span><span class="o">(</span><span class="nc">String</span> <span class="n">firstname</span><span class="o">,</span> <span class="nc">String</span> <span class="n">lastname</span><span class="o">,</span> <span class="nc">YearMonth</span> <span class="n">birthMonth</span><span class="o">)</span> <span class="o">{}</span>
+<span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>utilisation de la librairie <strong>io.soabase.record-builder:record-builder</strong> pour générer un <em>builder</em> correspondant</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Il est maintenant difficile de se tromper en écrivant :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java"><span class="nc">Person</span> <span class="n">person</span> <span class="o">=</span> <span class="nc">PersonBuilder</span><span class="o">.</span><span class="na">builder</span><span class="o">()</span>
+    <span class="o">.</span><span class="na">firstname</span><span class="o">(</span><span class="s">"Bobby"</span><span class="o">)</span>
+    <span class="o">.</span><span class="na">lastname</span><span class="o">(</span><span class="s">"Singer"</span><span class="o">)</span>
+    <span class="o">.</span><span class="na">birthMonth</span><span class="o">(</span><span class="nc">YearMonth</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="mi">1950</span><span class="o">,</span> <span class="nc">Month</span><span class="o">.</span><span class="na">MARCH</span><span class="o">))</span>
+    <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+
+<span class="n">repository</span><span class="o">.</span><span class="na">savePerson</span><span class="o">(</span><span class="n">person</span><span class="o">);</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_exemple_3_extraire_le_contrat_public_dun_objet_dans_une_interface">1.1.3. Exemple 3 : Extraire le contrat public d&#8217;un objet dans une interface</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_différentes_formes_de_couplage">1.1.4. Différentes formes de couplage</h4>
+<div class="paragraph">
+<p>Les différentes formes de couplages peuvent être retrouvées ici : <a href="https://connascence.io/" class="bare">https://connascence.io/</a></p>
+</div>
+<div class="paragraph">
+<p>La plupart des couplages peuvent être évités en utilisant le code produit en même temps qu&#8217;il est créé.<br>
+La technique la plus simple est de suivre les principes du <strong>TDD</strong> (Test Driven Development) ou développement piloté par les tests.</p>
+</div>
+<div class="paragraph">
+<p>La pratique du TDD consiste à écrire un test avant d&#8217;écrire le code (dit <em>principal</em> / <em>main</em> destiné à la production) qui le fait passer.<br>
+Le code produit, répondant strictement aux cas de tests réalisés, est par construction validés par les tests et utilisables facilement (car déjà utilisé dans les tests).</p>
+</div>
+</div>
 </div>
 </div>
 </div>
