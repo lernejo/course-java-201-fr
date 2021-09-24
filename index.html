@@ -666,7 +666,7 @@ pre.rouge {
 <li><a href="#_introduction">Introduction</a></li>
 <li><a href="#_le_découplage_un_concept_valide_a_toutes_les_échelles">1. Le Découplage, un concept valide a toutes les échelles</a>
 <ul class="sectlevel2">
-<li><a href="#_a_léchelle_dune_classe_java">1.1. A l&#8217;échelle d&#8217;une classe Java</a></li>
+<li><a href="#_a_léchelle_dune_classe_java">1.1. A l’échelle d’une classe Java</a></li>
 </ul>
 </li>
 </ul>
@@ -708,13 +708,13 @@ Parmi ces objectifs on retrouve :</p>
 </ul>
 </div>
 <div class="paragraph">
-<p>L&#8217;ordre de priorité de ces objectifs doit être décidé avec l&#8217;ensemble des acteurs du projet et réajusté périodiquement afin de suivre l&#8217;évolution du projet dans le temps.</p>
+<p>L’ordre de priorité de ces objectifs doit être décidé avec l’ensemble des acteurs du projet et réajusté périodiquement afin de suivre l’évolution du projet dans le temps.</p>
 </div>
 <div class="paragraph">
-<p>Il s&#8217;agit d&#8217;un partenariat.</p>
+<p>Il s’agit d’un partenariat.</p>
 </div>
 <div class="paragraph">
-<p>L&#8217;équipe de développement met en oeuvre les principes d&#8217;architecture logicielle pour répondre au mieux aux objectifs du projet.</p>
+<p>L’équipe de développement met en oeuvre les principes d’architecture logicielle pour répondre au mieux aux objectifs du projet.</p>
 </div>
 <div style="page-break-after: always;"></div>
 </div>
@@ -724,25 +724,25 @@ Parmi ces objectifs on retrouve :</p>
 <div class="sectionbody">
 <div class="quoteblock">
 <blockquote>
-J&#8217;ai répondu à leur problème en leur proposant d&#8217;ajouter un niveau d&#8217;indirection.
+J’ai répondu à leur problème en leur proposant d’ajouter un niveau d’indirection.
 </blockquote>
 <div class="attribution">
 &#8212; un architecte qui passait par là
 </div>
 </div>
 <div class="paragraph">
-<p>L&#8217;objectif qui prévaut sur tous les autres est la <strong>maintenabilité</strong>.<br>
-En cas de problème, lié à la performance, à la sécurité ou au fonctionnement d&#8217;un logiciel, la solution doit tendre vers un impact minimum.<br>
+<p>L’objectif qui prévaut sur tous les autres est la <strong>maintenabilité</strong>.<br>
+En cas de problème, lié à la performance, à la sécurité ou au fonctionnement d’un logiciel, la solution doit tendre vers un impact minimum.<br>
 Plus le changement de code est important, et plus le risque augmente.<br>
 Une correction (mais cela vaut pour une évolution également) doit comporter le moins de risque possible.</p>
 </div>
 <div class="sect2">
-<h3 id="_a_léchelle_dune_classe_java">1.1. A l&#8217;échelle d&#8217;une classe Java</h3>
+<h3 id="_a_léchelle_dune_classe_java">1.1. A l’échelle d’une classe Java</h3>
 <div class="paragraph">
 <p>Ce découplage se traduit, par exemple, par le fait de</p>
 </div>
 <div class="sect3">
-<h4 id="_exemple_1_masquer_son_état_champs">1.1.1. Exemple 1 : Masquer son état (champs)</h4>
+<h4 id="_exemple_1_état_interne_différent_du_contrat_public">1.1.1. Exemple 1 : État interne différent du contrat public</h4>
 <div class="paragraph">
 <p>Par exemple cette classe :</p>
 </div>
@@ -766,7 +766,7 @@ Une correction (mais cela vaut pour une évolution également) doit comporter le
 <div class="colist arabic">
 <ol>
 <li>
-<p>Changer le type de la représentation interne (<code>int</code>) demandera d&#8217;adapter l&#8217;ensemble du code qui utilise cette classe</p>
+<p>Changer le type de la représentation interne (<code>int</code>) demandera d’adapter l’ensemble du code qui utilise cette classe</p>
 </li>
 </ol>
 </div>
@@ -776,10 +776,10 @@ Une correction (mais cela vaut pour une évolution également) doit comporter le
 <div class="ulist">
 <ul>
 <li>
-<p>d&#8217;une part, la représentation interne de l&#8217;état de cet objet (un <code>int</code>)</p>
+<p>d’une part, la représentation interne de l’état de cet objet (un <code>int</code>)</p>
 </li>
 <li>
-<p>d&#8217;autre part, le contrat <code>public</code> utilisable par les autres classes</p>
+<p>d’autre part, le contrat <code>public</code> utilisable par les autres classes</p>
 </li>
 </ul>
 </div>
@@ -805,7 +805,7 @@ Une correction (mais cela vaut pour une évolution également) doit comporter le
 </div>
 </div>
 <div class="sect3">
-<h4 id="_exemple_2_prendre_des_paramètres_de_méthode_avec_des_types_correspondant_au_domaine">1.1.2. Exemple 2 : Prendre des paramètres de méthode avec des types correspondant au domaine</h4>
+<h4 id="_exemple_2_paramètres_de_méthode_dont_les_types_correspondent_au_domaine">1.1.2. Exemple 2 : Paramètres de méthode dont les types correspondent au domaine</h4>
 <div class="paragraph">
 <p>Par exemple cette interface :</p>
 </div>
@@ -819,9 +819,9 @@ Une correction (mais cela vaut pour une évolution également) doit comporter le
 </div>
 </div>
 <div class="paragraph">
-<p>A l&#8217;usage, il est simple d&#8217;inverser un paramètre avec un autre car leurs types sont identiques.<br>
-Ainsi la compilation ne va pas aider à détecter un bug, où le mois et l&#8217;année sont inversées par exemple.<br>
-Il s&#8217;agit d&#8217;un <em>couplage de position</em>.<br>
+<p>A l’usage, il est simple d’inverser un paramètre avec un autre car leurs types sont identiques.<br>
+Ainsi la compilation ne va pas aider à détecter un bug, où le mois et l’année sont inversées par exemple.<br>
+Il s’agit d’un <em>couplage de position</em>.<br>
 Un meilleur design pourrait être :</p>
 </div>
 <div class="listingblock">
@@ -858,7 +858,7 @@ Un meilleur design pourrait être :</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_exemple_3_extraire_le_contrat_public_dun_objet_dans_une_interface">1.1.3. Exemple 3 : Extraire le contrat public d&#8217;un objet dans une interface</h4>
+<h4 id="_exemple_3_contrat_public_extrait_dans_une_interface">1.1.3. Exemple 3 : Contrat public extrait dans une interface</h4>
 
 </div>
 <div class="sect3">
@@ -867,12 +867,12 @@ Un meilleur design pourrait être :</p>
 <p>Les différentes formes de couplages peuvent être retrouvées ici : <a href="https://connascence.io/" class="bare">https://connascence.io/</a></p>
 </div>
 <div class="paragraph">
-<p>La plupart des couplages peuvent être évités en utilisant le code produit en même temps qu&#8217;il est créé.<br>
+<p>La plupart des couplages peuvent être évités en utilisant le code produit en même temps qu’il est créé.<br>
 La technique la plus simple est de suivre les principes du <strong>TDD</strong> (Test Driven Development) ou développement piloté par les tests.</p>
 </div>
 <div class="paragraph">
-<p>La pratique du TDD consiste à écrire un test avant d&#8217;écrire le code (dit <em>principal</em> / <em>main</em> destiné à la production) qui le fait passer.<br>
-Le code produit, répondant strictement aux cas de tests réalisés, est par construction validés par les tests et utilisables facilement (car déjà utilisé dans les tests).</p>
+<p>La pratique du TDD consiste à écrire un test avant d’écrire le code (dit <em>principal</em> / <em>main</em>, destiné à la production) qui le fait passer.<br>
+Le code produit, répondant strictement aux cas de tests réalisés, est par construction validé par les tests et utilisable facilement (car déjà utilisé dans les tests).</p>
 </div>
 </div>
 </div>
