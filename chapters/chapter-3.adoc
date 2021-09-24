@@ -1,0 +1,126 @@
+== Quelques types d’architecture
+:hardbreaks-option:
+
+[quote, attribuée à Melvin Conway, Loi de Conway]
+____
+Les organisations qui conçoivent des systèmes (informatiques) tendent inévitablement à produire des designs qui sont des copies de la structure de communication de leur organisation.
+____
+
+Tout à un coût, et le temps de développement a souvent un coup plus élevé que le reste.
+
+La direction que prend une architecture applicative doit permettre de faire correspondre le coût du développement avec le gain espéré et donc la stratégie de l’entreprise.
+
+Au-delà de l’aspect mercantile de la chose, il est également plus _agréable_ d’ajouter de nouvelles fonctionnalités, que de gérer une friction entre équipe ou de multiples bugs.
+
+L’architecture applicative doit donc tenir compte des cycles de développement pour concentrer l’énergie sur la valeur ajoutée.
+
+=== N-tiers
+
+L’architecture N-tiers est un découpage en couches techniques d’une application.
+
+Pour une application simple (API HTTP d’un côté, base de donnée de l’autre par exemple), on retrouve souvent *3* tiers :
+
+* La couche des [.underline]#contrôleurs# dont la responsabilité est de
+** Communiquer en HTTP(S)
+** Sécuriser l’accès (Authentification et Authorisation)
+** Sérialiser ou désérialiser la donnée représentée par des objets _anémiques_ (DTO pour Data Transfer Object)
+** Réaliser des contrôles de surface notamment sur la structure des données envoyées et reçues
+
+* La couche des [.underline]#services# dont la responsabilité est de
+** Fournir aux contrôleurs des traitements métiers de haut niveau afin qu’aucune logique métier ne soit nécessaire en amont
+** Valider la cohérence des données et le respect des règles _métiers_
+** (Gérer les transactions, si la base de donnée est transactionnelle)
+
+* La couche de [.underline]#persistence# (on parle aussi de _repositories_) dont la responsabilité est de
+** Communiquer avec une base de donnée
+** Sérialiser ou désérialiser la donnée représentée par des objets _anémiques_ (DTO pour Data Transfer Object)
+** Interpréter les erreurs techniques de la base de données pour être gérées par un traitement métier dans la couche service
+
+image::n_tiers.png[align=center]
+
+Historiquement, cette architecture est appliquée telle-quelle à l’ensemble de la base de code d’un projet informatique et apporte de la confusion sur les différents domaines métiers.
+
+Il est plus intéressant d’introduire un découpage qui correspond aux différents domaines.
+
+image::n_tiers_tree_lvl1.png[align=center]
+
+Ainsi le fonctionnement de l’application est plus clair, et cela évite de mélanger par inadvertance des composants entre les domaines.
+
+Par ailleurs rien n’empêche de structurer le code d’un domaine en suivant ce découpage technique.
+
+image::n_tiers_tree_lvl2.png[align=center]
+
+=== Hexagonale
+
+L’*architecture hexagonale* vise à séparer le code _métier_ du code _technique_.
+
+Pour cela on distingue le coeur (_core_) de l’application, des _adaptateurs_ (_adapters_) qui font le lien entre le code _métier_ et le reste du monde ; que ce soit via des communications _machine-to-machine_ (HTTPS, MQTT, etc.) ou _human-to-machine_ (interface graphique, email, SMS, etc.).
+
+Les objectifs sont les suivants :
+
+* Découpler les problématiques techniques en dehors du code qui contient les règles métiers
+* Simplifier les tests unitaires du code métier, du fait de l’absence de frameworks et bibliothèques
+* Permettre (théoriquement) de remplacer un _adaptateur_ sans modifier le reste de l’application. Dans la pratique, ce cas arrive assez peu et le cas échéant, le changement de paradigme qui y est souvent associé (SQL &#8660; NOSQL, synchrone &#8660; asynchrone) nécessite de revoir l’architecture de l’application.
+
+image::hexagonal_architecture.png[align=center]
+
+On appelle :
+
+* *API* (**A**pplication **P**rogramming **I**nterface) une interface qui est [.underline]#implémentée par le code métier#, et est appelée par un adaptateur
+* *SPI* (**S**ervice **P**rovider **I**nterface) une interface qui est appelée par le code métier, et est [.underline]#implémentée par un adaptateur#.
+
+On commence une application qui suit les principes de l’architecture hexagonale par le code d’un domaine métier / fonctionnalité.
+
+Ce code ne doit contenir aucune dépendance vers un framework ou une bibliothèque.
+
+À cette fin, il est plus simple de l’isoler dans un module dédié de sorte que ce code n’ait en pratique aucune dépendance (_classpath_ vide).
+
+Par la suite d’autres modules peuvent être ajoutés contenant le code des adaptateurs, ces modules auront une dépendance sur le module coeur.
+
+=== Monolithique vs micro-services
+
+[quote, Simon Brown, @simonbrown]
+____
+I’ll keep saying this... if people can’t build monoliths properly, microservices won’t help.
+____
+
+L’approche monolithique consiste à former une seule application avec la totalité des fonctionnalités.
+
+Ce qui peut impliquer de _mélanger_ plusieurs domaines métiers, en reprenant l’exemple d’un site de commerce électronique : gestion du catalogue, détail du panier, paiement, facturation, etc.
+
+Il est nécessaire de structurer le code d’une application monolithique en _modules_ pour isoler les parties du code qui n’ont pas à interagir entre elles.
+
+Le risque dans le cas où une telle structure n’est pas mise en place est de voir la complexité de l’application augmenter de manière exponentielle à chaque ajout de fonctionnalité.
+On parle dans ce cas de code _spaghetti_.
+La métaphore des _spaghettis_ vient des morceaux de code entrelacés, mélangés, ce qui les rend difficiles à tester en isolation du fait des nombreuses interactions entre les domaines voir les couches (au sens N-tiers).
+
+L’approche micro-service a ceci de différent que les différents domaines sont gérés par des applications différentes.
+
+Même s’il est toujours possible de partager du code au travers de bibliothèques communes, il est nécessaire, comme dans un monolithe de ne pas mélanger les domaines.
+Une des règles qui transcrit le mieux ce principe est le fait que les bases de données soient distinctes pour chaque micro-service.
+Cette règle permet également d’éviter un couplage au niveau du modèle de donnée.
+
+De même, si des micro-services doivent communiquer entre eux, il est préférable que ce soit de manière asynchrone (à travers un broker de message par exemple).
+
+Ainsi la coupure d’un service n’affecte pas les autres.
+
+image::micro_services_ecommerce.png[align=center]
+
+Une architecture basée sur les microservices a des inconvénients :
+
+* Plusieurs applications différentes doivent être déployées fréquemment
+[unstyled]
+** -> La livraison et le déploiement doivent être robustes et automatisés
+* Il est plus difficile d’investiguer un problème, pouvant être lié à une succession d’évènements dans différentes applications
+[unstyled]
+** -> Les logs doivent être uniques, informatives et centralisées
+** -> Une solution de traçage des appels doit être mise en place (correlation-id, header via, APM, etc.)
+* Le coût en infrastructure est plus élevé, car il y a plus d’applications actives et d’organes techniques pour les interconnexions
+
+Et a des avantages :
+
+* Le code d’un micro-service est plus petit, plus simple
+* Les micro-services peuvent évoluer indépendamment les uns des autres, et être développés par des équipes différentes dans des _repositories_ différents
+* Les micro-services peuvent être dimensionnés indépendamment
+[unstyled]
+** -> Si le domaine _produit_ de notre site de commerce électronique est plus sollicité que le domaine _paiement_, il sera possible d’affecter plus ressources à celui-ci sans en dépenser inutilement pour les services faiblement sollicités

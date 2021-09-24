@@ -1,6 +1,6 @@
 name: Render
 
-on: [push]
+on: [push, workflow_dispatch]
 
 jobs:
   asciidoctor_job:

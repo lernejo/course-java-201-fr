@@ -1,0 +1,26 @@
+== Pour aller plus loin
+
+* Out of the tar pit, traité sur la complexité
+https://github.com/papers-we-love/papers-we-love/blob/master/design/out-of-the-tar-pit.pdf
+
+* Agile Manifesto
+https://agilemanifesto.org/
+
+* Blogs de
+** Martin Fowler
+https://martinfowler.com/
+** Simon Brown
+https://www.codingthearchitecture.com/
+** Jessie Frazelle
+https://blog.jessfraz.com/
+
+* Vidéos YouTube de conférences
+** Devoxx
+** goto;
+** DevFest
+** JUGs (**J**ava **U**ser **G**roup)
+** etc.
+
+* Sites d’actualités et de contenu
+** InfoQ https://www.infoq.com/fr/
+** Developpez https://www.developpez.com/

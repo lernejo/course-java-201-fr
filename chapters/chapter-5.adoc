@@ -1,0 +1,204 @@
+== Documenter l’architecture
+:hardbreaks-option:
+
+Historiquement, la documentation d’un projet informatique était très verbeuse (Cahier des charges techniques, **D**ossier d’**A**rchitecture **T**ransverse, etc.).
+
+Or, un projet informatique évolue vite, plus vite que ces documents.
+Cette "documentation" devient alors obsolète et amène des incompréhensions ou des bugs car certaines informations deviennent fausses avec le temps.
+
+Documenter un projet est cependant nécessaire pour transmettre la connaissance entre les différents individus qui vont s’y succéder.
+
+L’objectif est donc d’écrire le minimum vital de documentation en éliminant le superflu et de raccrocher le plus possible cette documentation au code.
+
+On parle alors de documentation vivante, si celle-ci évolue comme le code, et notamment si des parties sont générées à partir du code.
+
+=== README
+
+Le fichier README, écrit en Markdown ou en AsciiDoc (comme ce cours) se trouve à la racine du projet / dépôt.
+Il s’agit de la porte d’entrée pour un projet inconnu.
+
+Il renseigne sur les questions suivantes :
+
+* À quoi sert le projet ?
+* Comment utiliser le projet (outil de construction, etc.)
+* Comment contacter et travailler avec les autres personnes sur ce projet
+
+Très populaire dans le monde de l’open-source cette pratique et également importante en entreprise dès lors que de nombreux projets cohabitent dans un même système d’information et que différentes équipes doivent travailler ensembles.
+
+.Fichier README du projet Spring
+image::readme_sample.png[align=center]
+
+=== C4
+
+*C4* est une approche pour concevoir un système informatique sans en compliquer inutilement l’architecture.
+
+Pour ce faire, il est nécessaire d’établir un ensemble de termes et d’abstractions avec lesquels tous les intervenants du projet pourront se *_comprendre_*.
+
+C’est une étape cruciale, qui permet d’éviter par la suite d’avoir des incompréhensions entre les différents corps de métier (fonctionnels, développeurs, intégrateurs, etc.).
+
+Ce sont ces éléments qui permettront de construire les diagrammes qui seront à la base du projet.
+
+==== Contexte
+
+Avec cette base, les intervenants peuvent construire le *diagramme de _contexte_*.
+
+Ce diagramme permet de comprendre les principales fonctionnalités du système [.underline]#sans# afficher *comment* le système est organisé.
+
+Le système est représenté par une unique forme (boite noire) qui sera en interaction avec des personnes ou d’autres systèmes.
+
+Les détails (technologies, protocoles, etc.) n’ont pas d’importance dans ce diagramme, qui doit pouvoir être compris par des intervenants non-techniques.
+
+image::c4_context_diagram.png[align=center]
+
+==== Container
+
+Une fois les fonctionnalités du systèmes acquises, on peut _zoome_} d’un cran avec le *diagramme de _conteneurs_*.
+
+On entend par _conteneur_ tout système qui peut héberger du code ou des données (application, base de données, broker, etc.).
+
+Ce diagramme va refléter l’architecture du système et permettre de visualiser comment les [.underline]#responsabilités# sont réparties entre les différentes briques logicielles.
+
+Ici peuvent être représentés
+
+* *Sécurité* : zones réseau, flux chiffrés, traçabilité, etc.
+* *Scalabilité* : load-balancers, (SPOF), etc.
+* *Fiabilité* : sauvegarde, réplication, etc
+* *Supervision* : sondes, bases, IHM, etc.
+
+image::c4_container_diagram.png[align=center]
+
+==== Composant
+
+On peut à nouveau _zoomer_ sur chacun des conteneurs grâce au *diagramme de _composants_*.
+
+Ce diagramme détaille ce dont est composé un conteneur, avec un découpage possible par
+
+* Fonctionnalité transverse
+* Service métier
+* Workflow
+
+Un composant a donc une identité logique, une [.underline]#responsabilité# et interagit avec d’autres composants.
+
+Sont habituellement consignés les détails d’implémentation et choix technologiques car ce schéma peut être la documentation la plus détaillée d’un projet.
+
+image::c4_component_diagram.png[align=center]
+
+==== Classe
+
+Si nécessaire, il est possible de descendre au classique *diagramme UML de _classes_*.
+
+Ce diagramme est rarement utile si les besoins sont clairs, et les responsabilités bien réparties.
+
+Cependant, pour modéliser un comportement complexe, ce schéma peut mettre en lumière une interaction complexe entre plusieurs objets.
+
+image::c4_class_diagram.jpg[align=center]
+
+=== ADR (Architectural Decision Records)
+
+L’*ADR* est un journal dont chaque entrée concerne un choix structurant dans l’architecture d’une application.
+
+Il est écrit par les développeurs et stocké le plus souvent à côté du code, dans le même dépôt.
+
+La lecture de ce journal permet de comprendre pourquoi et comment une application est construite.
+
+En effet dans une entrée du journal, on va retrouver
+
+* La date
+* Les individus impliqués
+* Le contexte : ce qui a amené à faire ce choix (problème de sécurité, d’organisation, de performance, etc.)
+* Les différentes solutions envisagées
+* La décision
+* Les conséquences prévues
+* Éventuellement un statut, qui témoigne que la question a été posée, réfléchie, mais que finalement aucune solution n’a été retenue
+
+=== Documentation des APIs
+
+Les APIs exposées à l’extérieur d’un système peuvent être documentées de différentes manières :
+
+* *Contract First* : on écrit le contrat dans un format donné (RAML, WSDL, etc.), et ensuite on écrit ou on _génère_ le code correspondant.
+À noter que si le code est généré, il y a toujours une seconde étape de "raccordement" au code métier.
+* *Code First* : on écrit le code technique permettant d’exposer l’API.
+Ce code peut être enrichi de métadonnées sur l’utilisation de l’API (description, signification des différents codes d’erreur, etc.).
+La documentation est ensuite générée sur la base de ce code, notamment avec l’initiative *OpenAPI* et les nombreux outils de son écosystème.
+Dans le cas ou ce mécanisme est inclus dans la construction du projet, la documentation évolue à chaque changement de code.
+
+L’approche *code first* est la plus pérenne, car elle évite qu’un décalage entre la documentation et le code s’introduise au fil du temps.
+
+Il faut cependant être vigilant sur les modifications d’une API et à ce que cela va impliquer pour les clients de cette API.
+
+Certains changements sont sans conséquences
+
+* Ajouter un champ dans une réponse
+* Supprimer un champ optionnel dans une requête
+
+-> _Qui peut le plus, peut le moins_.
+
+D’autres, comme
+
+* Supprimer un champ dans une réponse
+* Ajouter un champ obligatoire dans une requête
+
+Vont entrainer des malfonctions dans la communication, et nécessitent d’être abordés différemment.
+
+Dans le cas où ce second genre de modifications est nécessaire, il est possible de proposer une nouvelle version de l’API tout en continuant de servir la première version.
+
+Ainsi les clients ont le temps de faire le changement de code nécessaire de leur côté pour utiliser la nouvelle version.
+Quand tous les clients ont opéré ces changements, le code de la première version peut êre supprimé.
+
+Ce faisant, on introduit à nouveau un *_découplage_* entre les systèmes en permettant que chacun fasse les changements à son rythme.
+
+=== BDD et ATDD
+
+Le **B**ehavior **D**riven **D**evelopment et l’**A**cceptance **T**est **D**riven **D**evelopment sont deux techniques similaires qui visent à décrire le comportement des fonctionnalités d’un système dans un formalisme compréhensible par tous les intervenants du projet.
+Il peut s’agir de langage naturel (Français, Anglais, etc.) ou de graphes d’état, du moment que le vocabulaire est univoque.
+
+Ce vocabulaire dont les mots et phrases vont être utilisés dans différents tests et scénarios est ensuite associé à du code.
+
+Ces tests et scénarios _compris par tous_ deviennent alors [.underline]#*_executables_*#.
+
+À l’instar du TDD, il s’agit moins d’écrire des tests que d’une méthodologie de travail.
+
+Par ailleurs cette façon de construire les tests et scénarios favorise la composition et donne aux intervenants plus d’autonomie ainsi qu’une meilleure compréhension.
+
+On trouve dans le BDD des contraintes sur le formalisme des scénarios, contraintes similaires à celle d’un _test unitaire_ : les phrases doivent commencer par
+
+* *Given* : les conditions initiales, il peut y en avoir zéro ou plus -> **[0..*]**
+* *When* : l'élément déclencheur, il doit y en avoir un et uniquement un -> **[1]**
+* *Then* : les vérifications, il doit y en avoir au moins une -> **[1..*]**
+
+.Description d'une fonctionnalité au format *Gherkin*
+[source,gherkin]
+----
+Feature: Is it Friday yet?
+Everybody wants to know when it's Friday
+
+  Scenario: Sunday isn't Friday
+    Given today is Sunday
+    When I ask whether it's Friday yet
+    Then I should be told "Nope"
+----
+
+.Association des phrases à du code
+[source,java]
+----
+public class Stepdefs {
+    private String today;
+    private String actualAnswer;
+
+    @Given("today is Sunday") // <1>
+    public void today_is_Sunday() {
+        today = "Sunday";
+    }
+
+    @When("I ask whether it's Friday yet")
+    public void i_ask_whether_it_s_Friday_yet() {
+        actualAnswer = IsItFriday.isItFriday(today);
+    }
+
+    @Then("I should be told {string}")
+    public void i_should_be_told(String expectedAnswer) {
+        assertEquals(expectedAnswer, actualAnswer);
+    }
+}
+----
+<1> Annotation fournie par le framework de test *Cucumber*

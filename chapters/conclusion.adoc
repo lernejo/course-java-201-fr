@@ -1,0 +1,10 @@
+== Conclusion
+:hardbreaks-option:
+
+Contrairement à ce que l’industrie en France tente de nous faire croire, être Architecte Logiciel n’est pas un métier à part.
+
+Ces questions d’architectures doivent être traitées par l’équipe de développement, chacun à la mesure de son expérience.
+
+Ce sont bien des [.underline]#développeurs# qui doivent réfléchir aux conséquences de leurs réalisations et qui de toute façon les assumerons une fois le produit en production.
+
+L’architecture logicielle, tout comme la veille technologique, fait partie intégrante du portefeuille d’outils d’un développeur.

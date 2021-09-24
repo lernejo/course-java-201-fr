@@ -1,8 +1,9 @@
-= Java 201
+= Java 201 - Architecture logicielle
 Loïc Ledoyen <loic.ledoyen@gmail.com>
 :reproducible:
 :toc-title: Java 201
 :listing-caption: Listing
+:tip-caption: Conseil
 :source-highlighter: rouge
 :hardbreaks-option:
 :toc: left
@@ -12,8 +13,44 @@ ifndef::ci[]
 :imagesdir: ./images
 endif::[]
 
-:title-logo-image: image:logo.png[top=25%, align=center, pdfwidth=0.5in]
+:title-logo-image: image::logo.png[top=25%, align=center, pdfwidth=0.5in]
 
 <<<
 
 include::chapters/introduction.adoc[]
+
+:sectnums:
+
+<<<
+
+include::chapters/chapter-1.adoc[]
+
+<<<
+
+include::chapters/chapter-2.adoc[]
+
+<<<
+
+include::chapters/chapter-3.adoc[]
+
+<<<
+
+include::chapters/chapter-4.adoc[]
+
+<<<
+
+include::chapters/chapter-5.adoc[]
+
+<<<
+
+include::chapters/chapter-6.adoc[]
+
+<<<
+
+:sectnums!:
+
+include::chapters/conclusion.adoc[]
+
+<<<
+
+include::chapters/bibliography.adoc[]

@@ -1,0 +1,266 @@
+== Le Découplage, un concept valide a toutes les échelles
+:hardbreaks-option:
+
+[quote,un architecte qui passait par là]
+J’ai répondu à leur problème en leur proposant d’ajouter un nouveau niveau d’indirection.
+
+L’objectif qui prévaut sur tous les autres est la *maintenabilité*.
+En cas de problème, lié à la performance, à la sécurité ou au fonctionnement d’un logiciel, la solution doit tendre vers un impact minimum.
+Plus le changement de code est important, et plus le risque augmente, et plus le temps nécessaire à la mise en production se rallonge.
+Une correction (mais cela vaut pour une évolution également) doit comporter le moins de risque possible.
+
+Réduire l’inertie entre la conception et la mise en production, c’est augmenter la maitrise et la confiance de l’équipe dans le code produit.
+
+=== À l’échelle d’une classe Java
+
+==== Exemple 1 : État interne différent du contrat public
+
+Considérant cette classe :
+
+.Fichier TrafficLight.java
+[source,java]
+----
+class TrafficLight {
+
+    private int color;
+
+    public void setColor(int newColor) {
+        this.color = newColor;
+    }
+
+    public int getColor() { // <1>
+        return color;
+    }
+}
+----
+
+<1> Changer le type de la représentation interne (`int`) demandera d’adapter l’ensemble du code qui utilise cette classe
+
+La classe pourrait être réécrite de façon à [.underline]#découpler# :
+
+* d’une part, la représentation interne de l’état de cet objet (un `int`)
+* d’autre part, le contrat `public` utilisable par les autres classes
+
+.Fichier TrafficLight.java
+[source,java]
+----
+class TrafficLight {
+
+    private int color;
+
+    public Color nextState() {
+        color = (color + 1) % 3;
+        return Color.values()[color];
+    }
+
+    public enum Color {
+        GREEN,
+        ORANGE,
+        RED,
+    }
+}
+----
+
+==== Exemple 2 : Paramètres de méthode dont les types correspondent au domaine
+
+Considérant cette interface :
+
+.Fichier PersonRepository.java
+[source,java]
+----
+interface PersonRepository {
+
+    void savePerson(String firstname, String lastname, int birthYear, int birthMonth);
+}
+----
+
+À l’usage, il est simple d’inverser un paramètre avec un autre car leurs types sont identiques.
+Ainsi la compilation ne va pas aider à détecter un bug, où le mois et l’année sont inversées par exemple.
+Il s’agit d’un _couplage de position_.
+Un meilleur design pourrait être :
+
+.Fichier PersonRepository.java
+[source,java]
+----
+interface PersonRepository {
+
+    Person savePerson(Person person);
+
+    @RecordBuilder // <1>
+    record Person(String firstname, String lastname, YearMonth birthMonth) {}
+}
+----
+
+<1> Utilisation de la bibliothèque *io.soabase.record-builder:record-builder* pour générer un _builder_ correspondant
+
+Il est maintenant difficile de se tromper en écrivant :
+
+[source,java]
+----
+Person person = PersonBuilder.builder()
+    .firstname("Bobby")
+    .lastname("Singer")
+    .birthMonth(YearMonth.of(1962, Month.DECEMBER))
+    .build();
+
+repository.savePerson(person);
+----
+
+==== Exemple 3 : Contrat public extrait dans une interface
+
+L’intérêt des interfaces est de décorréler le contrat public de l’implémentation concrète afin de pouvoir :
+
+* Substituer un objet par un autre (implémentant la même interface) sans modifier le code appelant
+* Cacher l’implémentation (méthodes et champs de l’objet non présents dans l’interface) dans le code appelant
+
+Le concept de `Logger`, largement utilisé dans l’informatique de gestion est une abstraction pour envoyer un message _quelque part_.
+Du point de vue du code métier, peu importe ce "_quelque part_".
+
+Cette abstraction est une interface, par exemple :
+
+.Fichier Logger.java
+[source,java]
+----
+interface Logger {
+
+    void log(Level level, String message);
+
+    enum Level {
+        INFO,
+        WARNING,
+        ERROR,
+        ;
+    }
+}
+----
+
+Et s’utilise de cette manière :
+
+[source,java]
+----
+record CoffeeShop(CoffeeMaker coffeeMaker, Logger logger) {
+
+    public Cup makeCoffee(String firstname) {
+        if(!coffeeMaker.isReady()) {
+            logger.log(Level.WARN, "Tried to make some coffee, but the coffee maker is not ready yet");
+            return Cup.EMPTY;
+        }
+        Cup cup = new Cup(firstname);
+        coffeeMaker.pourIn(cup);
+        logger.log(Level.INFO, "Made coffee for " + firstname + ", careful it’s hot !");
+        return cup;
+    }
+}
+----
+
+Passer une implémentation de `Logger` qui écrit dans
+
+* la sortie standard
+* un fichier
+* une base de données
+* un broker de message
+* un mélange de toutes ces possibilités
+
+ne changera pas le code de la classe `CoffeeShop`.
+
+==== Différentes formes de couplage
+
+Différentes formes de couplages peuvent être retrouvées ici : https://connascence.io/
+
+La plupart des couplages peuvent être évités en utilisant le code produit en même temps qu’il est créé.
+La technique la plus simple est de suivre les principes du *TDD* (Test Driven Development) ou développement piloté par les tests.
+
+La pratique du TDD consiste à écrire un test _minimal_ avant d’écrire le code de production _minimal_ qui le fait passer.
+Le code produit, répondant strictement aux cas de tests réalisés, est par construction validé par les tests et utilisable facilement (car déjà utilisé dans les tests).
+
+[quote, Robert "Uncle Bob" Martin, Three laws of TDD]
+____
+1) Write [.underline]#NO# production code except to pass a failing test
+2) Write only [.underline]#enough# of a test to demonstrate a failure
+3) Write only [.underline]#enough# production code to pass the test
+____
+
+Le fait d’écrire un test minimal est très important car on souhaite, dans la pratique du TDD, écourter au maximum le temps d’une itération entre les différentes phases :
+
+image::tdd_red_green_blue.png[align=center]
+
+=== A l’échelle d’une application
+
+==== Découplage métier
+Une application touche la plupart du temps à plusieurs concepts métiers distincts.
+
+Dans une application de commerce électronique on peut retrouver, la gestion du catalogue, le descriptif d’un produit, le détail du panier, le paiement, la facturation, etc.
+
+Ces domaines ont des liens entre eux, mais peuvent évoluer indépendamment les uns des autres.
+Le code doit retranscrire ces liaisons, mais aussi cette indépendance.
+Le fait de modifier la gestion du panier n’aura (ou ne devrait) pas avoir d’impact sur le paiement.
+
+Mettre en place le découplage entre les composants d’une application permet de diminuer le risque en cas de changement, et d’évaluer plus finement les impacts afin de savoir où mettre l’accent sur les tests par exemple.
+
+Ce genre de découplage nécessite une compréhension profonde des domaines métiers en jeu, pour trouver les points d’interconnexion entre eux et créer un modèle dédié à chaque domaine avec les informations nécessaires à ces échanges.
+
+==== Découplage technique
+De la même façon, il est intéressant de séparer le code dit _métier_ (c’est-à-dire qui contient les règles métiers), du code technique.
+On parle de code technique quand celui-ci ne porte pas directement de règle métier, par exemple l’interfaçage avec le monde extérieur au travers d’une
+
+* API
+* Interface graphique
+* Connexion à un broker de message
+* Connexion à une base de données
+
+Il est possible de construire le _coeur_ applicatif sans l’aide de framework ou autre bibliothèque afin de simplifier l’écriture des tests et de réduire à sa plus simple forme le code _métier_.
+
+On pourra venir par la suite y brancher des _connecteurs_ qui feront le pont entre ce code et le reste du système ou les utilisateurs.
+
+Une de ces approche est l’[.underline]#architecture hexagonale# que nous verrons en détail un peu plus loin.
+
+=== A l’échelle d’un ensemble d’application
+Les considérations a cette échelle sont valables pour un SI (système d’information).
+
+Dans un système d’information, il est courant que plusieurs applications, opérées par des équipes distinctes doivent échanger des données.
+
+Les choix d’architectures réalisés dans ce cadre doivent aussi bien prendre en compte les objectifs énumérés en introduction (Maintenabilité, Testabilité, Sécurité, etc.) que les frictions entre les équipes.
+
+Les équipes qui travaillent sur des applications différentes sont constituées d’hommes et de femmes qui ont des façons de travailler différentes (agile, cycle en V, etc.), des rythmes différents (décalage horaire, temps partiel, etc.), des façons d’opérer la production différentes (avec ou sans coupure de service, livraison continue, ou par lot, etc.).
+
+Ces équipes n’ont pas forcément la même maturité technique non plus.
+
+Il est important de prendre en compte ces éléments pour protéger le service rendu et fluidifier les échanges entre équipes au maximum.
+
+==== Exemple 1 : communication asynchrone
+
+Considérant une application soumise à de forts traffics de manière irrégulière, comme un site de simulation de crédit immobilier qui sera consulté massivement entre 12 h et 14 h à la pause déjeuner.
+
+image::mortgage_system_http.png[align=center]
+
+Le site public recueille les demandes de simulation et les envoie à un service interne qui doit :
+
+* Se connecter régulièrement à des APIs externes de différentes banques pour maintenir des bases de calcul précises
+* Faire ces calculs (imaginons-les lents pour l’intérêt de l’exercice) sur la base des informations données par les clients
+* Renvoyer la simulation au site public
+
+Même s’il y a peu de traffic, une interruption de service de quelques minutes peut être dommageable, et faire perdre des clients ou de la visibilité.
+
+Cependant si la communication entre le site public et le service interne est synchrone, une mise à jour de ce dernier entraînerait _de facto_ une coupure de service du site public ou une perte d’information.
+
+Il peut être intéressant d’établir une communication asynchrone au travers d’un broker de message qui fera tampon entre les deux systèmes.
+Ainsi il n’y aura ni coupure de service _visible_ ni perte d’information.
+
+image::mortgage_system_amqp.png[align=center]
+
+==== Exemple 2 : lisser la charge
+
+Dans la continuité du système décrit ci-dessus, considérant que le broker de message est couplé à l’applicatif côté service pour des raisons historiques ou de maturité technologique (server applicatif + fournisseur d’API JMS par exemple).
+
+image::mortgage_system_bad_bad_jms.png[align=center]
+
+Envoyer beaucoup de message d’un coup (on parle de _coup de bélier_) à un tel système pourrait diminuer ses performances voir provoquer son arrêt / crash.
+
+Il peut être dans ce cas plus simple que ce soit l’application cliente (celle qui envoie les messages) qui lisse la charge (on parle aussi de _throttling_), pour éviter le couplage de pression entre les deux applications.
+
+Mettre en place ce mécanisme requiert de définir une vitesse maximum (en message/sec par exemple) et de la respecter.
+Il existe plusieurs manières de construire un tel système, par exemple avec
+
+* Un batch qui va lire à interval régulier les X plus vieux messages dans une base de donnée (attention cependant, un système de batch _scale_ difficilement)
+* Une petite application dont l’état n’est pas géré dans sa mémoire (mais plutôt dans une base de donnée, de façon à pouvoir scaler si nécessaire)
+* Les fonctionnalités de certains brokers

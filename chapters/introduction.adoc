@@ -1,4 +1,40 @@
 == Introduction
 :hardbreaks-option:
 
-TODO
+[quote, Ralph Johnson]
+Architecture is about the important stuff.
+Whatever that is.
+
+
+[quote, Martin Fowler]
+_____
+It means that the heart of thinking architecturally about software is to decide what is important, (i.e. what is architectural), and then expend energy on keeping those architectural elements in good condition.
+For a developer to become an architect, they need to be able to recognize what elements are important, recognizing what elements are likely to result in serious problems should they not be controlled.
+_____
+
+Un logiciel doit répondre à plusieurs objectifs dépendant de son contexte.
+Parmi ces objectifs on retrouve :
+
+* Maintenabilité / évolutivité
+* Testabilité
+* Fiabilité / Robustesse / tolérance à la panne
+* Scalabilité
+* Sécurité
+* Performance
+
+L’architecture logicielle est l’ensemble des moyens techniques utilisés pour répondre à ces objectifs tout en satisfaisant aux contraintes non techniques du projet.
+
+Tous les objectifs ne peuvent pas être atteint d’un coup, et l’architecture logicielle est le compromis qui convient le mieux pour atteindre les objectifs prioritaires dans le contexte du projet.
+
+Les facteurs peuvent être multiples :
+
+* Délais courts (_deadline_)
+* Budget limité
+* Certification de sécurité nécessaire
+* Connexion à un système _historique_ utilisant une technologie spécifique
+* Etc.
+
+L’ordre de priorité de ces objectifs doit être décidé avec l’ensemble des acteurs du projet et réajusté périodiquement afin de suivre l’évolution du projet dans le temps.
+Il s’agit d’un partenariat.
+
+L’équipe de développement met en oeuvre les principes d’architecture logicielle pour répondre au mieux aux objectifs du projet.
