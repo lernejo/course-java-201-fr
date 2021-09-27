@@ -664,11 +664,44 @@ pre.rouge {
 <div id="toctitle">Java 201</div>
 <ul class="sectlevel1">
 <li><a href="#_introduction">Introduction</a></li>
-<li><a href="#_le_découplage_un_concept_valide_a_toutes_les_échelles">1. Le Découplage, un concept valide a toutes les échelles</a>
+<li><a href="#_rappels_sur_les_outils">1. Rappels sur les outils</a>
 <ul class="sectlevel2">
-<li><a href="#_a_léchelle_dune_classe_java">1.1. A l’échelle d’une classe Java</a></li>
+<li><a href="#_git">1.1. Git</a></li>
+<li><a href="#_maven">1.2. Maven</a></li>
+<li><a href="#_junit">1.3. Junit</a></li>
 </ul>
 </li>
+<li><a href="#_le_découplage_un_concept_valide_a_toutes_les_échelles">2. Le Découplage, un concept valide a toutes les échelles</a>
+<ul class="sectlevel2">
+<li><a href="#_a_léchelle_dune_classe_java">2.1. A l’échelle d’une classe Java</a></li>
+<li><a href="#_a_léchelle_dune_application">2.2. A l’échelle d’une application</a></li>
+<li><a href="#_a_léchelle_dun_ensemble_dapplication">2.3. A l’échelle d’un ensemble d’application</a></li>
+</ul>
+</li>
+<li><a href="#_quelques_types_darchitecture">3. Quelques types d’architecture</a>
+<ul class="sectlevel2">
+<li><a href="#_n_tiers">3.1. N-tiers</a></li>
+<li><a href="#_hexagonale">3.2. Hexagonale</a></li>
+<li><a href="#_monolithique_vs_micro_services">3.3. Monolithique vs micro-services</a></li>
+</ul>
+</li>
+<li><a href="#_documenter_larchitecture">4. Documenter l’architecture</a>
+<ul class="sectlevel2">
+<li><a href="#_readme">4.1. README</a></li>
+<li><a href="#_c4">4.2. C4</a></li>
+<li><a href="#_adr_architectural_decision_records">4.3. ADR (Architectural Decision Records)</a></li>
+<li><a href="#_openapi_raml_etc">4.4. (OpenAPI, RAML, etc.)</a></li>
+</ul>
+</li>
+<li><a href="#_techniques_bonnes_pratiques">5. Techniques &amp; bonnes pratiques</a>
+<ul class="sectlevel2">
+<li><a href="#_pragmatisme_kiss_yagni_dry">5.1. Pragmatisme : KISS, YAGNI &amp; DRY</a></li>
+<li><a href="#_bdd">5.2. BDD</a></li>
+<li><a href="#_logs">5.3. Logs</a></li>
+<li><a href="#_supervision">5.4. Supervision</a></li>
+</ul>
+</li>
+<li><a href="#_conclusion">Conclusion</a></li>
 </ul>
 </div>
 </div>
@@ -720,7 +753,24 @@ Parmi ces objectifs on retrouve :</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_le_découplage_un_concept_valide_a_toutes_les_échelles">1. Le Découplage, un concept valide a toutes les échelles</h2>
+<h2 id="_rappels_sur_les_outils">1. Rappels sur les outils</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_git">1.1. Git</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_maven">1.2. Maven</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_junit">1.3. Junit</h3>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_le_découplage_un_concept_valide_a_toutes_les_échelles">2. Le Découplage, un concept valide a toutes les échelles</h2>
 <div class="sectionbody">
 <div class="quoteblock">
 <blockquote>
@@ -737,12 +787,12 @@ Plus le changement de code est important, et plus le risque augmente.<br>
 Une correction (mais cela vaut pour une évolution également) doit comporter le moins de risque possible.</p>
 </div>
 <div class="sect2">
-<h3 id="_a_léchelle_dune_classe_java">1.1. A l’échelle d’une classe Java</h3>
+<h3 id="_a_léchelle_dune_classe_java">2.1. A l’échelle d’une classe Java</h3>
 <div class="paragraph">
 <p>Ce découplage se traduit, par exemple, par le fait de</p>
 </div>
 <div class="sect3">
-<h4 id="_exemple_1_état_interne_différent_du_contrat_public">1.1.1. Exemple 1 : État interne différent du contrat public</h4>
+<h4 id="_exemple_1_état_interne_différent_du_contrat_public">2.1.1. Exemple 1 : État interne différent du contrat public</h4>
 <div class="paragraph">
 <p>Par exemple cette classe :</p>
 </div>
@@ -805,7 +855,7 @@ Une correction (mais cela vaut pour une évolution également) doit comporter le
 </div>
 </div>
 <div class="sect3">
-<h4 id="_exemple_2_paramètres_de_méthode_dont_les_types_correspondent_au_domaine">1.1.2. Exemple 2 : Paramètres de méthode dont les types correspondent au domaine</h4>
+<h4 id="_exemple_2_paramètres_de_méthode_dont_les_types_correspondent_au_domaine">2.1.2. Exemple 2 : Paramètres de méthode dont les types correspondent au domaine</h4>
 <div class="paragraph">
 <p>Par exemple cette interface :</p>
 </div>
@@ -825,6 +875,7 @@ Il s’agit d’un <em>couplage de position</em>.<br>
 Un meilleur design pourrait être :</p>
 </div>
 <div class="listingblock">
+<div class="title">Listing 4. Fichier PersonRepository.java</div>
 <div class="content">
 <pre class="rouge highlight"><code data-lang="java"><span class="kd">interface</span> <span class="nc">PersonRepository</span> <span class="o">{</span>
 
@@ -858,24 +909,202 @@ Un meilleur design pourrait être :</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_exemple_3_contrat_public_extrait_dans_une_interface">1.1.3. Exemple 3 : Contrat public extrait dans une interface</h4>
+<h4 id="_exemple_3_contrat_public_extrait_dans_une_interface">2.1.3. Exemple 3 : Contrat public extrait dans une interface</h4>
+<div class="paragraph">
+<p>L’intérêt des interfaces est de décorréler le contrat public de l’implémentation concrète afin de pouvoir :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Substituer un objet par un autre (implémentant la même interface) sans modifier le code appelant</p>
+</li>
+<li>
+<p>Cacher l’implémentation (méthodes de l’objet non présentes dans l’interface) dans le code appelant</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Le concept de <code>Logger</code>, largement utilisé dans l’informatique de gestion est une abstraction pour envoyer un message <em>quelque part</em>.<br>
+Du point de vue du code métier, peu importe ce '<em>quelque part</em>'.<br>
+Ainsi cette abstraction est une interface, par exemple :</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 5. Fichier Logger.java</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java"><span class="kd">interface</span> <span class="nc">Logger</span> <span class="o">{</span>
 
+    <span class="kt">void</span> <span class="nf">log</span><span class="o">(</span><span class="nc">Level</span> <span class="n">level</span><span class="o">,</span> <span class="nc">String</span> <span class="n">message</span><span class="o">);</span>
+
+    <span class="kd">enum</span> <span class="nc">Level</span> <span class="o">{</span>
+        <span class="no">INFO</span><span class="o">,</span>
+        <span class="no">WARNING</span><span class="o">,</span>
+        <span class="no">ERROR</span><span class="o">,</span>
+        <span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Et s’utilise de cette manière :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java"><span class="n">record</span> <span class="nf">CoffeeShop</span><span class="o">(</span><span class="nc">CoffeeMaker</span> <span class="n">coffeeMaker</span><span class="o">,</span> <span class="nc">Logger</span> <span class="n">logger</span><span class="o">)</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="nc">Cup</span> <span class="nf">makeCoffee</span><span class="o">(</span><span class="nc">String</span> <span class="n">firstname</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span><span class="o">(!</span><span class="n">coffeeMaker</span><span class="o">.</span><span class="na">isReady</span><span class="o">())</span> <span class="o">{</span>
+            <span class="n">logger</span><span class="o">.</span><span class="na">log</span><span class="o">(</span><span class="nc">Level</span><span class="o">.</span><span class="na">WARN</span><span class="o">,</span> <span class="s">"Tried to make some coffee, but the coffee maker is not ready yet"</span><span class="o">);</span>
+            <span class="k">return</span> <span class="nc">Cup</span><span class="o">.</span><span class="na">EMPTY</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="nc">Cup</span> <span class="n">cup</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Cup</span><span class="o">(</span><span class="n">firstname</span><span class="o">);</span>
+        <span class="n">coffeeMaker</span><span class="o">.</span><span class="na">pourIn</span><span class="o">(</span><span class="n">cup</span><span class="o">);</span>
+        <span class="n">logger</span><span class="o">.</span><span class="na">log</span><span class="o">(</span><span class="nc">Level</span><span class="o">.</span><span class="na">INFO</span><span class="o">,</span> <span class="s">"Made coffee for "</span> <span class="o">+</span> <span class="n">firstname</span> <span class="o">+</span> <span class="s">", careful it's hot !"</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">cup</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Ainsi passer une implémentation de <code>Logger</code> qui écrit dans</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>la sortie standard</p>
+</li>
+<li>
+<p>un fichier</p>
+</li>
+<li>
+<p>une base de données</p>
+</li>
+<li>
+<p>un broker de message</p>
+</li>
+<li>
+<p>un mélange de toutes ces possibilités</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>ne changera pas le code de la classe <code>CoffeeShop</code>.</p>
+</div>
 </div>
 <div class="sect3">
-<h4 id="_différentes_formes_de_couplage">1.1.4. Différentes formes de couplage</h4>
+<h4 id="_différentes_formes_de_couplage">2.1.4. Différentes formes de couplage</h4>
 <div class="paragraph">
-<p>Les différentes formes de couplages peuvent être retrouvées ici : <a href="https://connascence.io/" class="bare">https://connascence.io/</a></p>
+<p>Différentes formes de couplages peuvent être retrouvées ici : <a href="https://connascence.io/" class="bare">https://connascence.io/</a></p>
 </div>
 <div class="paragraph">
 <p>La plupart des couplages peuvent être évités en utilisant le code produit en même temps qu’il est créé.<br>
 La technique la plus simple est de suivre les principes du <strong>TDD</strong> (Test Driven Development) ou développement piloté par les tests.</p>
 </div>
 <div class="paragraph">
-<p>La pratique du TDD consiste à écrire un test avant d’écrire le code (dit <em>principal</em> / <em>main</em>, destiné à la production) qui le fait passer.<br>
+<p>La pratique du TDD consiste à écrire un test <em>minimal</em> avant d’écrire le code de production <em>minimal</em> qui le fait passer.<br>
 Le code produit, répondant strictement aux cas de tests réalisés, est par construction validé par les tests et utilisable facilement (car déjà utilisé dans les tests).</p>
 </div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>1) Write <span class="underline">NO</span> production code except to pass a failing test<br>
+2) Write only <span class="underline">enough</span> of a test to demonstrate a failure<br>
+3) Write only <span class="underline">enough</span> production code to pass the test</p>
+</div>
+</blockquote>
+<div class="attribution">
+&#8212; Robert "Uncle Bob" Martin<br>
+<cite>Three laws of TDD</cite>
 </div>
 </div>
+<div class="paragraph">
+<p>Le fait d’écrire un test minimal est très important car on souhaite, dans la pratique du TDD, écourter au maximum le temps d’une itération entre les différentes phases :</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/tdd_red_green_blue.png" alt="tdd red green blue">
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_a_léchelle_dune_application">2.2. A l’échelle d’une application</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_a_léchelle_dun_ensemble_dapplication">2.3. A l’échelle d’un ensemble d’application</h3>
+<div class="paragraph">
+<p>Les considérations a cette échelle sont valables pour un SI (système d’information).</p>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_quelques_types_darchitecture">3. Quelques types d’architecture</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Objectifs : compatibilité avec le fonctionnement de l’entreprise + diminution du risque</p>
+</div>
+<div class="sect2">
+<h3 id="_n_tiers">3.1. N-tiers</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_hexagonale">3.2. Hexagonale</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_monolithique_vs_micro_services">3.3. Monolithique vs micro-services</h3>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_documenter_larchitecture">4. Documenter l’architecture</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_readme">4.1. README</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_c4">4.2. C4</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_adr_architectural_decision_records">4.3. ADR (Architectural Decision Records)</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_openapi_raml_etc">4.4. (OpenAPI, RAML, etc.)</h3>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_techniques_bonnes_pratiques">5. Techniques &amp; bonnes pratiques</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_pragmatisme_kiss_yagni_dry">5.1. Pragmatisme : KISS, YAGNI &amp; DRY</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_bdd">5.2. BDD</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_logs">5.3. Logs</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_supervision">5.4. Supervision</h3>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_conclusion">Conclusion</h2>
+<div class="sectionbody">
+
 </div>
 </div>
 </div>
