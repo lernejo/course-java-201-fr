@@ -685,20 +685,21 @@ pre.rouge {
 <li><a href="#_monolithique_vs_micro_services">3.3. Monolithique vs micro-services</a></li>
 </ul>
 </li>
-<li><a href="#_documenter_larchitecture">4. Documenter l’architecture</a>
+<li><a href="#_scaling_spof">4. Scaling &amp; SPOF</a></li>
+<li><a href="#_documenter_larchitecture">5. Documenter l’architecture</a>
 <ul class="sectlevel2">
-<li><a href="#_readme">4.1. README</a></li>
-<li><a href="#_c4">4.2. C4</a></li>
-<li><a href="#_adr_architectural_decision_records">4.3. ADR (Architectural Decision Records)</a></li>
-<li><a href="#_openapi_raml_etc">4.4. (OpenAPI, RAML, etc.)</a></li>
+<li><a href="#_readme">5.1. README</a></li>
+<li><a href="#_c4">5.2. C4</a></li>
+<li><a href="#_adr_architectural_decision_records">5.3. ADR (Architectural Decision Records)</a></li>
+<li><a href="#_openapi_raml_etc">5.4. (OpenAPI, RAML, etc.)</a></li>
 </ul>
 </li>
-<li><a href="#_techniques_bonnes_pratiques">5. Techniques &amp; bonnes pratiques</a>
+<li><a href="#_techniques_bonnes_pratiques">6. Techniques &amp; bonnes pratiques</a>
 <ul class="sectlevel2">
-<li><a href="#_pragmatisme_kiss_yagni_dry">5.1. Pragmatisme : KISS, YAGNI &amp; DRY</a></li>
-<li><a href="#_bdd">5.2. BDD</a></li>
-<li><a href="#_logs">5.3. Logs</a></li>
-<li><a href="#_supervision">5.4. Supervision</a></li>
+<li><a href="#_pragmatisme_kiss_yagni_dry">6.1. Pragmatisme : KISS, YAGNI &amp; DRY</a></li>
+<li><a href="#_bdd">6.2. BDD</a></li>
+<li><a href="#_logs">6.3. Logs</a></li>
+<li><a href="#_supervision">6.4. Supervision</a></li>
 </ul>
 </li>
 <li><a href="#_conclusion">Conclusion</a></li>
@@ -794,7 +795,7 @@ Une correction (mais cela vaut pour une évolution également) doit comporter le
 <div class="sect3">
 <h4 id="_exemple_1_état_interne_différent_du_contrat_public">2.1.1. Exemple 1 : État interne différent du contrat public</h4>
 <div class="paragraph">
-<p>Par exemple cette classe :</p>
+<p>Considérant cette classe :</p>
 </div>
 <div class="listingblock">
 <div class="title">Listing 1. Fichier TrafficLight.java</div>
@@ -821,7 +822,7 @@ Une correction (mais cela vaut pour une évolution également) doit comporter le
 </ol>
 </div>
 <div class="paragraph">
-<p>Pourrait être ré-écrite de façon à <span class="underline">découpler</span> :</p>
+<p>La classe pourrait être ré-écrite de façon à <span class="underline">découpler</span> :</p>
 </div>
 <div class="ulist">
 <ul>
@@ -857,7 +858,7 @@ Une correction (mais cela vaut pour une évolution également) doit comporter le
 <div class="sect3">
 <h4 id="_exemple_2_paramètres_de_méthode_dont_les_types_correspondent_au_domaine">2.1.2. Exemple 2 : Paramètres de méthode dont les types correspondent au domaine</h4>
 <div class="paragraph">
-<p>Par exemple cette interface :</p>
+<p>Considérant cette interface :</p>
 </div>
 <div class="listingblock">
 <div class="title">Listing 3. Fichier PersonRepository.java</div>
@@ -925,7 +926,7 @@ Un meilleur design pourrait être :</p>
 </div>
 <div class="paragraph">
 <p>Le concept de <code>Logger</code>, largement utilisé dans l’informatique de gestion est une abstraction pour envoyer un message <em>quelque part</em>.<br>
-Du point de vue du code métier, peu importe ce '<em>quelque part</em>'.<br>
+Du point de vue du code métier, peu importe ce ’<em>quelque part</em>’.<br>
 Ainsi cette abstraction est une interface, par exemple :</p>
 </div>
 <div class="listingblock">
@@ -958,7 +959,7 @@ Ainsi cette abstraction est une interface, par exemple :</p>
         <span class="o">}</span>
         <span class="nc">Cup</span> <span class="n">cup</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Cup</span><span class="o">(</span><span class="n">firstname</span><span class="o">);</span>
         <span class="n">coffeeMaker</span><span class="o">.</span><span class="na">pourIn</span><span class="o">(</span><span class="n">cup</span><span class="o">);</span>
-        <span class="n">logger</span><span class="o">.</span><span class="na">log</span><span class="o">(</span><span class="nc">Level</span><span class="o">.</span><span class="na">INFO</span><span class="o">,</span> <span class="s">"Made coffee for "</span> <span class="o">+</span> <span class="n">firstname</span> <span class="o">+</span> <span class="s">", careful it's hot !"</span><span class="o">);</span>
+        <span class="n">logger</span><span class="o">.</span><span class="na">log</span><span class="o">(</span><span class="nc">Level</span><span class="o">.</span><span class="na">INFO</span><span class="o">,</span> <span class="s">"Made coffee for "</span> <span class="o">+</span> <span class="n">firstname</span> <span class="o">+</span> <span class="s">", careful it’s hot !"</span><span class="o">);</span>
         <span class="k">return</span> <span class="n">cup</span><span class="o">;</span>
     <span class="o">}</span>
 <span class="o">}</span></code></pre>
@@ -1028,14 +1029,156 @@ Le code produit, répondant strictement aux cas de tests réalisés, est par con
 </div>
 <div class="sect2">
 <h3 id="_a_léchelle_dune_application">2.2. A l’échelle d’une application</h3>
-
+<div class="sect3">
+<h4 id="_découplage_métier">2.2.1. Découplage métier</h4>
+<div class="paragraph">
+<p>Une application touche la plupart du temps à plusieurs concepts métiers distincts.</p>
+</div>
+<div class="paragraph">
+<p>Ainsi dans une application de e-commerce on peut retrouver, la gestion du catalogue, le descriptif d’un produit, le détail du panier, le paiement, la facturation, etc.</p>
+</div>
+<div class="paragraph">
+<p>Ces domaines ont des liens entre eux, mais peuvent évoluer indépendamment les uns des autres.<br>
+Le code doit retranscrire ces liaisons, mais aussi cette indépendance.<br>
+Ainsi le fait de modifier la gestion du panier n’aura (ou ne devrait) pas avoir d’impact sur le paiement.</p>
+</div>
+<div class="paragraph">
+<p>Mettre en place le découplage entre les composants d’une application permet de diminuer le risque en cas de changement, et d’évaluer plus finement les impacts afin de savoir où mettre l’accent sur les tests par exemple.</p>
+</div>
+<div class="paragraph">
+<p>Ce genre de découplage nécessite une compréhension profonde des domaines métiers en jeu, pour trouver les points d’interconnexion entre eux et créer un modèle dédié à chaque domaine avec les informations nécessaires à ces échanges.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_découplage_technique">2.2.2. Découplage technique</h4>
+<div class="paragraph">
+<p>De la même façon, il est intéressant de séparer le code dit <em>métier</em> (c’est-à-dire qui contient les règles métiers), du code technique.<br>
+On parle de code technique quand celui-ci ne porte pas directement de règle métier, par exemple l’interfaçage avec le monde extérieur au travers d’une</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>API</p>
+</li>
+<li>
+<p>Interface graphique</p>
+</li>
+<li>
+<p>Connexion à un broker de message</p>
+</li>
+<li>
+<p>Connexion à une base de données</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Ainsi il est possible de construire le <em>coeur</em> applicatif sans l’aide de framework ou autre librairie afin de simplifier l’écriture des tests et de réduire à sa plus simple forme le code <em>métier</em>.</p>
+</div>
+<div class="paragraph">
+<p>On pourra venir par la suite y brancher des <em>connecteurs</em> qui feront le pont entre ce code et les reste du système ou les utilisateurs.</p>
+</div>
+<div class="paragraph">
+<p>C’est l’<span class="underline">architecture hexagonale</span> que nous verrons en détail un peu plus loin.</p>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_a_léchelle_dun_ensemble_dapplication">2.3. A l’échelle d’un ensemble d’application</h3>
 <div class="paragraph">
 <p>Les considérations a cette échelle sont valables pour un SI (système d’information).</p>
 </div>
+<div class="paragraph">
+<p>Dans un système d’information, il est courant que plusieurs applications, opérées par des équipes distinctes doivent échanger des données.</p>
+</div>
+<div class="paragraph">
+<p>Les choix d’architectures réalisés dans ce cadre doivent aussi bien prendre en compte les objectifs énumérés en introduction (Maintenabilité, Testabilité, Sécurité, etc.) que les frictions humaines entre les équipes.</p>
+</div>
+<div class="paragraph">
+<p>Les équipes qui travaillent sur des applications différentes sont constituées d’hommes et de femmes qui ont des façons de travailler différentes (agile, cycle en V, etc.), des rythmes différents (décalage horaire, temps partiel, etc.), des façons d’opérer la production différentes (avec ou sans coupure de service, livraison continue, ou par lot, etc.).</p>
+</div>
+<div class="paragraph">
+<p>Ces équipes n’ont pas forcément la même maturité technique non plus.</p>
+</div>
+<div class="paragraph">
+<p>Il est important de prendre en compte ces éléments pour protéger le service rendu et fluidifier les échanges entre équipes au maximum.</p>
+</div>
+<div class="sect3">
+<h4 id="_exemple_1_communication_asynchrone">2.3.1. Exemple 1 : communication asynchrone</h4>
+<div class="paragraph">
+<p>Considérant une application soumise à de forts traffics de manière irrégulière, comme un site de simulation de crédit immobilier qui sera consulté massivement entre 12h et 14h à la pause déjeuner.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/mortgage_system_http.png" alt="mortgage system http">
+</div>
+</div>
+<div class="paragraph">
+<p>Le site public recueille les demandes de simulation et les envoient à un service interne qui doit :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Se connecter régulièrement à des APIs externes de différentes banques pour maintenir des bases de calcul précises</p>
+</li>
+<li>
+<p>Faire ces calculs (imaginons-les lents pour l’intérêt de l’exercice) sur la base des informations données par les clients</p>
+</li>
+<li>
+<p>Renvoyer la simulation au site public</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Même s’il y a peu de traffic, une interruption de service de quelques minutes peut être dommageable, et faire perdre des clients ou de la visibilité.</p>
+</div>
+<div class="paragraph">
+<p>Cependant si la communication entre le site public et le service interne est synchrone, une mise à jour de ce dernier entraînerait <em>de facto</em> une coupure de service du site public ou une perte d’information.</p>
+</div>
+<div class="paragraph">
+<p>Il peut être intéressant d’établir une communication asynchrone au travers d’un broker de message qui fera tampon entre les deux systèmes.<br>
+Ainsi il n’y aura ni coupure de service <em>visible</em> ni perte d’information.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/mortgage_system_amqp.png" alt="mortgage system amqp">
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_exemple_2_lisser_la_charge">2.3.2. Exemple 2 : lisser la charge</h4>
+<div class="paragraph">
+<p>Dans la continuité du système décrit ci-dessus, considérant que le broker de message est couplé à l’applicatif côté service pour des raisons historiques ou de maturité technologique (server applicatif + fournisseur d’API JMS par exemple).</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/mortgage_system_bad_bad_jms.png" alt="mortgage system bad bad jms">
+</div>
+</div>
+<div class="paragraph">
+<p>Envoyer beaucoup de message d’un coup (on parle de <em>coup de bélier</em>) à un tel système pourrait diminuer ses performances voir provoquer son arrêt / crash.</p>
+</div>
+<div class="paragraph">
+<p>Il peut être dans ce cas plus simple que ce soit l’application cliente (celle qui envoie les messages) qui lisse la charge (on parle aussi de <em>throttling</em>), pour éviter le couplage de pression entre les deux applications.</p>
+</div>
+<div class="paragraph">
+<p>Mettre en place ce mécanisme requiert de définir une vitesse maximum (en message/sec par exemple) et de la respecter.<br>
+Il existe plusieurs manières de construire un tel système, par exemple avec</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Un batch qui va lire à interval régulier les X plus vieux messages dans une base de donnée (attention cependant, un système de batch <em>scale</em> difficilement)</p>
+</li>
+<li>
+<p>Une petite application dont l&#8217;état n&#8217;est pas géré dans sa mémoire (mais plutôt dans une base de donnée, de façon à pouvoir scaler si nécessaire)</p>
+</li>
+<li>
+<p>Les fonctionnalités de certains brokers</p>
+</li>
+</ul>
+</div>
 <div style="page-break-after: always;"></div>
+</div>
 </div>
 </div>
 </div>
@@ -1060,43 +1203,49 @@ Le code produit, répondant strictement aux cas de tests réalisés, est par con
 </div>
 </div>
 <div class="sect1">
-<h2 id="_documenter_larchitecture">4. Documenter l’architecture</h2>
+<h2 id="_scaling_spof">4. Scaling &amp; SPOF</h2>
+<div class="sectionbody">
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_documenter_larchitecture">5. Documenter l’architecture</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_readme">4.1. README</h3>
+<h3 id="_readme">5.1. README</h3>
 
 </div>
 <div class="sect2">
-<h3 id="_c4">4.2. C4</h3>
+<h3 id="_c4">5.2. C4</h3>
 
 </div>
 <div class="sect2">
-<h3 id="_adr_architectural_decision_records">4.3. ADR (Architectural Decision Records)</h3>
+<h3 id="_adr_architectural_decision_records">5.3. ADR (Architectural Decision Records)</h3>
 
 </div>
 <div class="sect2">
-<h3 id="_openapi_raml_etc">4.4. (OpenAPI, RAML, etc.)</h3>
+<h3 id="_openapi_raml_etc">5.4. (OpenAPI, RAML, etc.)</h3>
 <div style="page-break-after: always;"></div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_techniques_bonnes_pratiques">5. Techniques &amp; bonnes pratiques</h2>
+<h2 id="_techniques_bonnes_pratiques">6. Techniques &amp; bonnes pratiques</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_pragmatisme_kiss_yagni_dry">5.1. Pragmatisme : KISS, YAGNI &amp; DRY</h3>
+<h3 id="_pragmatisme_kiss_yagni_dry">6.1. Pragmatisme : KISS, YAGNI &amp; DRY</h3>
 
 </div>
 <div class="sect2">
-<h3 id="_bdd">5.2. BDD</h3>
+<h3 id="_bdd">6.2. BDD</h3>
 
 </div>
 <div class="sect2">
-<h3 id="_logs">5.3. Logs</h3>
+<h3 id="_logs">6.3. Logs</h3>
 
 </div>
 <div class="sect2">
-<h3 id="_supervision">5.4. Supervision</h3>
+<h3 id="_supervision">6.4. Supervision</h3>
 <div style="page-break-after: always;"></div>
 </div>
 </div>
