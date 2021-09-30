@@ -1020,7 +1020,7 @@ Le code produit, répondant strictement aux cas de tests réalisés, est par con
 <div class="paragraph">
 <p>Le fait d’écrire un test minimal est très important car on souhaite, dans la pratique du TDD, écourter au maximum le temps d’une itération entre les différentes phases :</p>
 </div>
-<div class="imageblock">
+<div class="imageblock text-center">
 <div class="content">
 <img src="images/tdd_red_green_blue.png" alt="tdd red green blue">
 </div>
@@ -1107,7 +1107,7 @@ On parle de code technique quand celui-ci ne porte pas directement de règle mé
 <div class="paragraph">
 <p>Considérant une application soumise à de forts traffics de manière irrégulière, comme un site de simulation de crédit immobilier qui sera consulté massivement entre 12h et 14h à la pause déjeuner.</p>
 </div>
-<div class="imageblock">
+<div class="imageblock text-center">
 <div class="content">
 <img src="images/mortgage_system_http.png" alt="mortgage system http">
 </div>
@@ -1138,7 +1138,7 @@ On parle de code technique quand celui-ci ne porte pas directement de règle mé
 <p>Il peut être intéressant d’établir une communication asynchrone au travers d’un broker de message qui fera tampon entre les deux systèmes.<br>
 Ainsi il n’y aura ni coupure de service <em>visible</em> ni perte d’information.</p>
 </div>
-<div class="imageblock">
+<div class="imageblock text-center">
 <div class="content">
 <img src="images/mortgage_system_amqp.png" alt="mortgage system amqp">
 </div>
@@ -1149,7 +1149,7 @@ Ainsi il n’y aura ni coupure de service <em>visible</em> ni perte d’informat
 <div class="paragraph">
 <p>Dans la continuité du système décrit ci-dessus, considérant que le broker de message est couplé à l’applicatif côté service pour des raisons historiques ou de maturité technologique (server applicatif + fournisseur d’API JMS par exemple).</p>
 </div>
-<div class="imageblock">
+<div class="imageblock text-center">
 <div class="content">
 <img src="images/mortgage_system_bad_bad_jms.png" alt="mortgage system bad bad jms">
 </div>
@@ -1185,12 +1185,119 @@ Il existe plusieurs manières de construire un tel système, par exemple avec</p
 <div class="sect1">
 <h2 id="_quelques_types_darchitecture">3. Quelques types d’architecture</h2>
 <div class="sectionbody">
+<div class="quoteblock">
+<blockquote>
 <div class="paragraph">
-<p>Objectifs : compatibilité avec le fonctionnement de l’entreprise + diminution du risque</p>
+<p>Les organisations qui conçoivent des systèmes (informatiques) tendent inévitablement à produire des designs qui sont des copies de la structure de communication de leur organisation.</p>
+</div>
+</blockquote>
+<div class="attribution">
+&#8212; attribuée à Melvin Conway<br>
+<cite>Loi de Conway</cite>
+</div>
+</div>
+<div class="paragraph">
+<p>Tout à un coût, et le temps de développement a souvent un coup plus élevé que le reste.</p>
+</div>
+<div class="paragraph">
+<p>La direction que prend une architecture applicative doit permettre de faire correspondre le coût du développement avec le gain espéré et donc la stratégie de l’entreprise.</p>
+</div>
+<div class="paragraph">
+<p>Au-delà de l’aspect mercantile de la chose, il est également plus <em>agréable</em> d’ajouter de nouvelles fonctionnalités, que de gérer une friction entre équipe ou de multiples bugs.</p>
+</div>
+<div class="paragraph">
+<p>L’architecture applicative doit donc avoir pour objectif de fluidifier les cycles de développement pour concentrer l’énergie sur la valeur ajoutée.</p>
 </div>
 <div class="sect2">
 <h3 id="_n_tiers">3.1. N-tiers</h3>
-
+<div class="paragraph">
+<p>L’architecture N-tiers est un découpage en couche technique d’une application.</p>
+</div>
+<div class="paragraph">
+<p>Pour une application simple (API HTTP d’un côté, base de donnée de l’autre par exemple), on retrouve souvent <strong>3</strong> tiers :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>La couche des <span class="underline">contrôleurs</span> dont la responsabilité est de</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Communiquer en HTTP(S)</p>
+</li>
+<li>
+<p>Sécuriser l’accès (Authentification et Authorisation)</p>
+</li>
+<li>
+<p>Sérialiser ou désérialiser la donnée représentée par des objets <em>anémiques</em> (DTO pour Data Transfer Object)</p>
+</li>
+<li>
+<p>Réaliser des contrôles de surface notamment sur la structure des données envoyées et reçues</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>La couche des <span class="underline">services</span> dont la responsabilité est de</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Fournir aux contrôleurs des traitements métiers de haut niveau afin qu’aucune logique métier ne soit nécessaire en amont</p>
+</li>
+<li>
+<p>Valider la cohérence des données</p>
+</li>
+<li>
+<p>(Gérer les transactions, si la base de donnée est transactionnelle)</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>La couche de <span class="underline">persistence</span> (on parle aussi de <em>repositories</em>) dont la responsabilité est de</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Communiquer avec une base de donnée</p>
+</li>
+<li>
+<p>Sérialiser ou désérialiser la donnée représentée par des objets <em>anémiques</em> (DTO pour Data Transfer Object)</p>
+</li>
+<li>
+<p>Interpréter les erreurs techniques de la base de données pour être gérées par un traitement métier dans la couche service</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/n_tiers.png" alt="n tiers">
+</div>
+</div>
+<div class="paragraph">
+<p>Historiquement, cette architecture est appliquée telle-quelle à l’ensemble de la base de code d’un projet informatique et apporte de la confusion sur les différents domaines métiers.</p>
+</div>
+<div class="paragraph">
+<p>Il est plus intéressant d’introduire un découpage qui correspond aux différents domaines.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/n_tiers_tree_lvl1.png" alt="n tiers tree lvl1">
+</div>
+</div>
+<div class="paragraph">
+<p>Ainsi le fonctionnement de l’application est plus clair, et cela évite de mélanger par inadvertance des composants entre les domaines.</p>
+</div>
+<div class="paragraph">
+<p>Par ailleurs rien n’empêche de structurer le code d’un domaine en suivant ce découpage technique.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/n_tiers_tree_lvl2.png" alt="n tiers tree lvl2">
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_hexagonale">3.2. Hexagonale</h3>
