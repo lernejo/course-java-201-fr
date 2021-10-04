@@ -685,7 +685,7 @@ pre.rouge {
 <li><a href="#_monolithique_vs_micro_services">3.3. Monolithique vs micro-services</a></li>
 </ul>
 </li>
-<li><a href="#_scaling_spof">4. Scaling &amp; SPOF</a></li>
+<li><a href="#_dimensionnement_spof">4. Dimensionnement &amp; SPOF</a></li>
 <li><a href="#_documenter_larchitecture">5. Documenter l’architecture</a>
 <ul class="sectlevel2">
 <li><a href="#_readme">5.1. README</a></li>
@@ -758,7 +758,215 @@ Parmi ces objectifs on retrouve :</p>
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="_git">1.1. Git</h3>
-
+<div class="paragraph">
+<p>Git est un SCM (<strong>S</strong>ource <strong>C</strong>ode <strong>M</strong>anagement tool) décentralisé.</p>
+</div>
+<div class="paragraph">
+<p>On étend par décentralisé le fait qu’il peut y avoir plusieurs instances d’un même dépôt sur des serveurs différents.</p>
+</div>
+<div class="paragraph">
+<p>Typiquement, dans le monde de l’open-source, quand un individu externe à l’organisation souhaite contribuer au code d’un dépôt, il en fait une copie, travaille sur sa copie, puis propose le code de sa copie pour intégration sur le dépôt <em>officiel</em>.</p>
+</div>
+<div class="paragraph">
+<p>Git est aujourd’hui très répandu, mais fait suite historiquement à d’autres SCMs (CVS, SVN, Mercurial, etc.).<br>
+Tous ces outils fonctionnent par différentiel (patch) pour permettre de restaurer une version précédente, ou encore de travailler sur une version parallèle qui pourra plus tard être ré-incorporée dans la version principale.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/git_sample.png" alt="git sample">
+</div>
+</div>
+<div class="paragraph">
+<p>Voici le vocabulaire consacré :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>commit</strong> : une révision / version contenant des modifications de code</p>
+</li>
+<li>
+<p><strong>branch</strong> : un fil de modification, une suite de révisions</p>
+</li>
+<li>
+<p><strong>tag</strong> : alias pour une version spécifique, souvent utilisé pour marquer une version applicative (1.0.25 par exemple)</p>
+</li>
+<li>
+<p><strong>merge</strong> : fusion d’une branche dans une autre</p>
+</li>
+<li>
+<p><strong>checkout</strong> : récupérer le code d’un serveur distant dans une version spécifique</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Une des fonctionnalités qui démarque Git de ses prédécesseurs est le <strong>rebase</strong>.</p>
+</div>
+<div class="paragraph">
+<p>Le <strong>rebase</strong> peut être utilisé pour remettre à jour une branche quand la branche d’origine a changé.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash">git fetch <span class="nt">--all</span> <span class="nt">--prune</span> # <b class="conum">(1)</b>
+git log <span class="nt">--one-line</span> <span class="nt">-n</span> 10 # <b class="conum">(2)</b>
+git rebase origin/main # <b class="conum">(3)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Récupère la base de donnée du remote par défaut (<strong>origin</strong>) pour toutes les branches</p>
+</li>
+<li>
+<p>Affiche les dix derniers commits de la branche courante</p>
+</li>
+<li>
+<p>Modifie l’historique de la branche courante en mettant les commits réalisés après la base à la suite des derniers commits de la branche <code>main</code> telle qu’elle est connue par <strong>origin</strong></p>
+</li>
+</ol>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/git_rebase.png" alt="git rebase">
+</div>
+</div>
+<div class="paragraph">
+<p>Le <strong>rebase</strong> peut également être utilisé en mode <em><strong>interractif</strong></em> pour modifier son historique local :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Ajouter des modifications dans un commit</p>
+</li>
+<li>
+<p>Changer le nom d’un commit</p>
+</li>
+<li>
+<p>Fusionner des commits</p>
+</li>
+<li>
+<p>Supprimer des commits</p>
+</li>
+<li>
+<p>Ré-ordonner des commits</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Conseil</div>
+</td>
+<td class="content">
+Ne pas utiliser le rebase sur une branche partagée par plusieurs développeurs, et encore moins <code>main</code>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_quelques_commandes_utiles">1.1.1. Quelques commandes utiles</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Initialiser un dépôt</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>git clone &lt;url&gt;</code> : copie un dépôt distant existant en local</p>
+</li>
+<li>
+<p>ou <code>git init</code> : transforme le dossier courant en dépôt local. Un dépôt distant pourra être indiqué par la suite avec <code>git remote add origin &lt;url&gt;</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Mettre à jour</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>git fetch --all --prune</code> : récupère les changements du dépôt distant</p>
+</li>
+<li>
+<p><code>git pull</code> : fusionne les changements distants avec les fichiers locaux</p>
+</li>
+<li>
+<p><code>git rebase origin/&lt;current-branch&gt;</code> : déplace les commits locaux après ceux ayant été poussés sur le dépôt distant (et sur la même branche)</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Changer de branche</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>git checkout &lt;branch&gt;</code> : positionne les sources courantes sur la dernière version de <code>&lt;branch&gt;</code></p>
+</li>
+<li>
+<p><code>git branch -b &lt;branch&gt;</code> : crée une branche de nom <code>&lt;branch&gt;</code> dont le point de départ est le commit courant</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Observer les changements</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>git status</code> : affiche les différences entre les dépôts local et distant</p>
+</li>
+<li>
+<p><code>git log --oneline -n 15</code> : affiche les 15 derniers commits de la branche courante (avec leurs hash)</p>
+</li>
+<li>
+<p><code>git diff --stat</code> : affiche un résumé des changements</p>
+</li>
+<li>
+<p><code>git diff --word-diff=color &lt;file&gt;</code> : affiche les changements effectués sur le fichier <code>&lt;file&gt;</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Apporter des changements</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>git add &lt;file&gt;</code> : ajoute le fichier <code>&lt;file&gt;</code> à l’<em>index</em></p>
+</li>
+<li>
+<p><code>git add .</code> : ajoute tous les fichiers modifiés à l’<em>index</em> (traverse les répertoires)</p>
+</li>
+<li>
+<p><code>git reset &lt;file&gt;</code> : enlève le fichier <code>&lt;file&gt;</code> de l’<em>index</em></p>
+</li>
+<li>
+<p><code>git commit -m "&lt;title&gt;"</code> : crée un commit avec toutes les modifications dans l’<em>index</em> avec le titre <code>&lt;title&gt;</code></p>
+</li>
+<li>
+<p><code>git commit --fixup &lt;hash&gt;</code> : crée un commit de correction d’un commit existant de hash <code>&lt;hash&gt;</code> avec toutes les modifications dans l’<em>index</em></p>
+</li>
+<li>
+<p><code>git rebase -i --autosquash &lt;hash&gt;</code> : fusionne les commits de correction avec les commits normaux, jusqu’au commit de hash <code>&lt;hash&gt;</code> exclu</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Source : <a href="https://git-scm.com/docs" class="bare">https://git-scm.com/docs</a></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_pour_les_utilisateurs_de_windows">1.1.2. Pour les utilisateurs de Windows</h4>
+<div class="paragraph">
+<p>Git est sensible au bit d’execution des fichiers (<code>chmod +x</code>).<br>
+<strong>Windows</strong> ne gérant pas de la même façon les permissions sur les fichiers qu’Unix, il est recommandé de désactiver cette sensibilité avec <code>git config core.fileMode false</code><br>
+Pour expliciter le fait qu’un fichier soit executable : <code>git update-index --chmod=+x &lt;file&gt;</code></p>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_maven">1.2. Maven</h3>
@@ -1211,7 +1419,7 @@ Il existe plusieurs manières de construire un tel système, par exemple avec</p
 <div class="sect2">
 <h3 id="_n_tiers">3.1. N-tiers</h3>
 <div class="paragraph">
-<p>L’architecture N-tiers est un découpage en couche technique d’une application.</p>
+<p>L’architecture N-tiers est un découpage en couches techniques d’une application.</p>
 </div>
 <div class="paragraph">
 <p>Pour une application simple (API HTTP d’un côté, base de donnée de l’autre par exemple), on retrouve souvent <strong>3</strong> tiers :</p>
@@ -1301,16 +1509,167 @@ Il existe plusieurs manières de construire un tel système, par exemple avec</p
 </div>
 <div class="sect2">
 <h3 id="_hexagonale">3.2. Hexagonale</h3>
-
+<div class="paragraph">
+<p>L’<strong>architecture hexagonale</strong> vise à séparer le code <em>métier</em> du code <em>technique</em>.</p>
+</div>
+<div class="paragraph">
+<p>Pour celà on distingue le coeur (<em>core</em>) de l’application, des <em>adaptateurs</em> (<em>adapters</em>) qui font le lien entre le code <em>métier</em> et le reste du monde ; que ce soit via des communications <em>machine-to-machine</em> (HTTPS, MQTT, etc.) ou <em>human-to-machine</em> (interface graphique, email, SMS, etc.).</p>
+</div>
+<div class="paragraph">
+<p>Les objectifs sont les suivants :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Découpler les problématiques techniques en dehors du code qui contient les règles métiers</p>
+</li>
+<li>
+<p>Simplifier les tests unitaires du code métier, du fait de l’absence de frameworks et librairies</p>
+</li>
+<li>
+<p>Permettre (théoriquement) de remplacer un <em>adaptateur</em> sans modifier le reste de l’application. Dans la pratique, ce cas arrive assez peu et le cas échéant, le changement de paradigme qui y est souvent associé (SQL &#8660; NOSQL, synchrone &#8660; asynchrone) nécessite de revoir l’architecture de l’application.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/hexagonal_architecture.png" alt="hexagonal architecture">
+</div>
+</div>
+<div class="paragraph">
+<p>On appelle :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>API</strong> (<strong>A</strong>pplication <strong>P</strong>rogramming <strong>I</strong>nterface) une interface qui est <span class="underline">implémentée par le code métier</span>, et est appelée par un adaptateur</p>
+</li>
+<li>
+<p><strong>SPI</strong> (<strong>S</strong>ervice <strong>P</strong>rovider <strong>I</strong>nterface) une interface qui est appelée par le code métier, et est <span class="underline">implémentée par un adaptateur</span>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>On commence une application qui suit les principes de l’architecture hexagonale par le code d’un domaine métier / fonctionnalité.</p>
+</div>
+<div class="paragraph">
+<p>Ce code ne doit contenir aucune dépendance vers un framework ou une librairie.</p>
+</div>
+<div class="paragraph">
+<p>À cette fin, il est plus simple de l’isoler dans un module dédié de sorte que ce code n’ait effectivement aucune dépendance.</p>
+</div>
+<div class="paragraph">
+<p>Par la suite d’autres modules peuvent être ajoutés contenant le code des adaptateurs, ces modules auront une dépendance sur le module coeur.</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_monolithique_vs_micro_services">3.3. Monolithique vs micro-services</h3>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>I’ll keep saying this&#8230;&#8203; if people can’t build monoliths properly, microservices won’t help.</p>
+</div>
+</blockquote>
+<div class="attribution">
+&#8212; Simon Brown<br>
+<cite>@simonbrown</cite>
+</div>
+</div>
+<div class="paragraph">
+<p>L’approche monolithique consiste à former une seule application avec la totalité des fonctionnalités.</p>
+</div>
+<div class="paragraph">
+<p>Ce qui peut impliquer de <em>mélanger</em> plusieurs domaines métiers, en reprenant l’exemple d’un site de e-commerce : gestion du catalogue, détail du panier, paiement, facturation, etc.</p>
+</div>
+<div class="paragraph">
+<p>Il est donc nécessaire de structurer le code d’une application monolithique en <em>modules</em>  pour isoler les parties du code qui n’ont pas à interagir entre elles.</p>
+</div>
+<div class="paragraph">
+<p>Le risque dans le cas où une telle structure n’est pas mis en place est de voir la complexité de l’application augmenter de manière exponentielle à chaque ajout de fonctionnalité.<br>
+On parle dans ce cas de code <em>spaghetti</em>.<br>
+La métaphore des <em>spaghettis</em> vient des morceaux de code entrelacés, mélangés, ce qui les rend difficile à tester en isolation du fait des nombreuses interactions entre les domaines voir les couches (au sens N-tiers).</p>
+</div>
+<div class="paragraph">
+<p>L’approche micro-service a ceci de différent que les différents domaines sont gérés par des applications différentes.</p>
+</div>
+<div class="paragraph">
+<p>Même s’il est toujours possible de partager du code au travers de bibliothèques communes, il est nécessaire, comme dans un monolithe de ne pas mélanger les domaines.<br>
+Une des règles qui transcrit le mieux ce principe est le fait que les bases de données soient distinctes pour chaque micro-service.<br>
+Cette règle permet également d’éviter un couplage au niveau du modèle de donnée.</p>
+</div>
+<div class="paragraph">
+<p>De même, si des micro-services doivent communiquer entre eux, il est préférable que ce soit de manière asynchrone (à travers un broker de message par ex.).</p>
+</div>
+<div class="paragraph">
+<p>Ainsi la coupure d’un service n’affecte pas les autres.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/micro_services_ecommerce.png" alt="micro services ecommerce">
+</div>
+</div>
+<div class="paragraph">
+<p>Une architecture basée sur les microservices a des inconvénients :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Plusieurs applications différentes doivent être déployées fréquemment</p>
+<div class="ulist unstyled">
+<ul class="unstyled">
+<li>
+<p>&#8594; La livraison et le déploiement doivent être robustes et automatisés</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Il est plus difficile d’investiguer un problème, pouvant être lié à une succession d’évènements dans différentes applications</p>
+<div class="ulist unstyled">
+<ul class="unstyled">
+<li>
+<p>&#8594; Les logs doivent être uniques, informatives et centralisées</p>
+</li>
+<li>
+<p>&#8594; Une solution de traçage des appels doit être mise en place (correlation-id, header via, APM, etc.)</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Le coût en infrastructure est plus élevé, car il y a plus d’applications actives et d’organes techniques pour les interconnexions</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Et a des avantages :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Le code d’un micro-service est plus petit, plus simple</p>
+</li>
+<li>
+<p>Les micro-services peuvent évoluer indépendamment les uns des autres, et être développés par des équipes différentes dans des <em>repositories</em> différents</p>
+</li>
+<li>
+<p>Les micro-services peuvent être dimensionnés indépendamment</p>
+<div class="ulist unstyled">
+<ul class="unstyled">
+<li>
+<p>&#8594; Le domaine <em>produit</em> de notre site e-commerce sera plus sollicité que le domaine <em>paiement</em>, il sera possible d’affecter plus ressources à celui-ci sans en dépenser inutilement pour les services faiblement sollicités</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
 <div style="page-break-after: always;"></div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_scaling_spof">4. Scaling &amp; SPOF</h2>
+<h2 id="_dimensionnement_spof">4. Dimensionnement &amp; SPOF</h2>
 <div class="sectionbody">
 <div style="page-break-after: always;"></div>
 </div>
