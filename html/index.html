@@ -799,6 +799,8 @@ Tous ces outils fonctionnent par différentiel (patch) pour permettre de restaur
 </li>
 </ul>
 </div>
+<div class="sect3">
+<h4 id="_rebase">1.1.1. Rebase</h4>
 <div class="paragraph">
 <p>Une des fonctionnalités qui démarque Git de ses prédécesseurs est le <strong>rebase</strong>.</p>
 </div>
@@ -831,7 +833,7 @@ git rebase origin/main # <b class="conum">(3)</b></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Le <strong>rebase</strong> peut également être utilisé en mode <em><strong>interractif</strong></em> pour modifier son historique local :</p>
+<p>Le <strong>rebase</strong> peut également être utilisé en mode <em><strong>interactif</strong></em> pour modifier son historique local :</p>
 </div>
 <div class="ulist">
 <ul>
@@ -864,8 +866,9 @@ Ne pas utiliser le rebase sur une branche partagée par plusieurs développeurs,
 </tr>
 </table>
 </div>
+</div>
 <div class="sect3">
-<h4 id="_quelques_commandes_utiles">1.1.1. Quelques commandes utiles</h4>
+<h4 id="_quelques_commandes_utiles">1.1.2. Quelques commandes utiles</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -949,7 +952,7 @@ Ne pas utiliser le rebase sur une branche partagée par plusieurs développeurs,
 <p><code>git commit --fixup &lt;hash&gt;</code> : crée un commit de correction d’un commit existant de hash <code>&lt;hash&gt;</code> avec toutes les modifications dans l’<em>index</em></p>
 </li>
 <li>
-<p><code>git rebase -i --autosquash &lt;hash&gt;</code> : fusionne les commits de correction avec les commits normaux, jusqu’au commit de hash <code>&lt;hash&gt;</code> exclu</p>
+<p><code>git rebase -i --autosquash &lt;hash&gt;</code> : initie un rebase interactif et déplace et marque les commits de correction pour les fusionner, jusqu’au commit de hash <code>&lt;hash&gt;</code> exclu</p>
 </li>
 </ul>
 </div>
@@ -961,7 +964,7 @@ Ne pas utiliser le rebase sur une branche partagée par plusieurs développeurs,
 </div>
 </div>
 <div class="sect3">
-<h4 id="_pour_les_utilisateurs_de_windows">1.1.2. Pour les utilisateurs de Windows</h4>
+<h4 id="_pour_les_utilisateurs_de_windows">1.1.3. Pour les utilisateurs de Windows</h4>
 <div class="paragraph">
 <p>Git est sensible au bit d’execution des fichiers (<code>chmod +x</code>).<br>
 <strong>Windows</strong> ne gérant pas de la même façon les permissions sur les fichiers qu’Unix, il est recommandé de désactiver cette sensibilité avec <code>git config core.fileMode false</code><br>
@@ -971,7 +974,216 @@ Pour expliciter le fait qu’un fichier soit executable : <code>git update-index
 </div>
 <div class="sect2">
 <h3 id="_maven">1.2. Maven</h3>
+<div class="paragraph">
+<p>Maven est un outil de construction de projet (Build Automation tool) autour de la JVM.</p>
+</div>
+<div class="paragraph">
+<p>Sa grande extensibilité lui permet de s’adapter à différents languages (Java, Scala, Kotlin, etc.) et à différents scénarios (intégration continue, génération de code, déploiement, etc.).</p>
+</div>
+<div class="sect3">
+<h4 id="_structure_dun_projet">1.2.1. Structure d’un projet</h4>
+<div class="paragraph">
+<p>Maven propose de baser l’organisation d’un projet sur des conventions (nommage, structure des répertoires, etc.) plutôt que sur de la configuration pure comme ses prédécesseurs (Make, Ant, etc. ).</p>
+</div>
+<div class="paragraph">
+<p>Cette structure est composée de</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Un fichier pom.xml qui contient toutes les informations nécessaires à Maven pour construire le projet. Sa structure minimale est la suivante</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="title">Listing 1. Fichier pom.xml</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="xml"><span class="cp">&lt;?xml version="1.0"?&gt;</span>
+<span class="nt">&lt;project</span> <span class="na">xsi:schemaLocation=</span><span class="s">"http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd"</span>
+         <span class="na">xmlns=</span><span class="s">"http://maven.apache.org/POM/4.0.0"</span>
+         <span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;modelVersion&gt;</span>4.0.0<span class="nt">&lt;/modelVersion&gt;</span>
 
+    <span class="nt">&lt;groupId&gt;</span>com.mycompany<span class="nt">&lt;/groupId&gt;</span> &lt;!--<b class="conum">(1)</b>--&gt;
+    <span class="nt">&lt;artifactId&gt;</span>my-app<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>1.0.0-SNAPSHOT<span class="nt">&lt;/version&gt;</span>
+
+    <span class="nt">&lt;properties&gt;</span> &lt;!--<b class="conum">(2)</b>--&gt;
+        <span class="nt">&lt;project.build.sourceEncoding&gt;</span>UTF-8<span class="nt">&lt;/project.build.sourceEncoding&gt;</span>
+        <span class="nt">&lt;project.reporting.outputEncoding&gt;</span>UTF-8<span class="nt">&lt;/project.reporting.outputEncoding&gt;</span>
+        <span class="nt">&lt;maven.compiler.source&gt;</span>17<span class="nt">&lt;/maven.compiler.source&gt;</span>
+        <span class="nt">&lt;maven.compiler.target&gt;</span>17<span class="nt">&lt;/maven.compiler.target&gt;</span>
+    <span class="nt">&lt;/properties&gt;</span>
+<span class="nt">&lt;/project&gt;</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Le triplet <code>groupId</code>, <code>artifactId</code> et <code>version</code> sont les coordonnées qui identifient un projet Maven et permettent des dépendances avec d’autres</p>
+</li>
+<li>
+<p>Section optionnelle, permettant de fixer l’encodage et la version de Java utilisée pour éviter des conflits par la suite</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Un répertoire <strong>src</strong> qui contiendra tous les fichiers que l’on souhaite conserver dans un SCM</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Dans <strong>src</strong> on retrouve deux répertoires : <strong>main</strong> et <strong>test</strong> qui contiennent respectivement le code de production, et le code de test, qui ne sera pas inclus dans les binaires produits lors de la phase de <strong><em>packaging</em></strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Dans ces deux répertoires, on trouve un répertoire du nom du langage utilisé, dans cet exemple, <strong>java</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Enfin dans ce<strong>s</strong> répertoire<strong>s</strong> <strong>java</strong> (ou <strong>groovy</strong>, etc.), on retrouve le code. Ce code est organisé en packages, eux-mêmes étant constitués de répertoires</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/maven_structure.png" alt="maven structure">
+</div>
+<div class="title">Figure 1. Structure d’un projet Maven</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_balises_de_configuration">1.2.2. Balises de configuration</h4>
+<div class="paragraph">
+<p>Toutes les balises doivent être contenues dans le bloc <code>&lt;project&gt;</code>.</p>
+</div>
+<div class="paragraph">
+<p>Dans les balises notables, on retrouve :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>properties</code> : cette balise contient des propriétés (clé et valeur) qui peuvent être utilisées par la suite, soit par convention par les plugins, soit explicitement avec  l’écriture <code>${my-property}</code></p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;properties&gt;</span>
+    <span class="nt">&lt;my-test-lib.version&gt;</span>1.2<span class="nt">&lt;/my-test-lib.version&gt;</span>
+<span class="nt">&lt;/properties&gt;</span></code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>dependencies</code> : cette balise contient toutes les dépendances d’un projet sur d’autres (internes, externes, frameworks, bibliothèques, etc.)</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;dependencies&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span> &lt;!--<b class="conum">(1)</b>--&gt;
+        <span class="nt">&lt;groupId&gt;</span>com.mycompany<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>my-lib<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;version&gt;</span>1.45.3<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>com.mycompany<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>my-test-lib<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;version&gt;</span>${my-test-lib.version}<span class="nt">&lt;/version&gt;</span> &lt;!--<b class="conum">(2)</b>--&gt;
+        <span class="nt">&lt;scope&gt;</span>test<span class="nt">&lt;/scope&gt;</span> &lt;!--<b class="conum">(3)</b>--&gt;
+    <span class="nt">&lt;/dependency&gt;</span>
+<span class="nt">&lt;/dependencies&gt;</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Le bloc <code>dependencies</code> est constitué de blocs <code>dependency</code> (singulier), chacun contenant les coordonnées d’une dépendance</p>
+</li>
+<li>
+<p>La valeur de la version fait référence à la propriété <code>my-test-lib.version</code>, donc <code>1.2</code></p>
+</li>
+<li>
+<p>Ce second bloc est indiqué avec le <strong><em>scope</em></strong> <code>test</code>, cette dépendance ne sera donc disponible que pour le code de test</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>build/plugins</code> : cette balise contient tous les plugins utilisés par le projet ainsi que leurs configurations</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;build&gt;</span>
+    <span class="nt">&lt;plugins&gt;</span>
+        <span class="nt">&lt;plugin&gt;</span> &lt;!--<b class="conum">(1)</b>--&gt;
+            <span class="nt">&lt;groupId&gt;</span>org.apache.maven.plugins<span class="nt">&lt;/groupId&gt;</span> &lt;!--<b class="conum">(2)</b>--&gt;
+            <span class="nt">&lt;artifactId&gt;</span>maven-surefire-plugin<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;version&gt;</span>2.22.2<span class="nt">&lt;/version&gt;</span>
+            <span class="nt">&lt;configuration&gt;</span> &lt;!--<b class="conum">(3)</b>--&gt;
+                <span class="nt">&lt;failIfNoTests&gt;</span>true<span class="nt">&lt;/failIfNoTests&gt;</span>
+            <span class="nt">&lt;/configuration&gt;</span>
+        <span class="nt">&lt;/plugin&gt;</span>
+    <span class="nt">&lt;/plugins&gt;</span>
+<span class="nt">&lt;/build&gt;</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>À l’instar de la balise <code>dependencies</code>, la balise <code>plugins</code> contient des blocs de <code>plugin</code> (singulier)</p>
+</li>
+<li>
+<p>Ici c’est le plugin <code>maven-surefire-plugin</code> qui est utilisé. Il s’agit du plugin par défaut pour lancer les tests. Un plugin est un projet Maven, et à ce titre est référencé grâce à ses coordonnées (<code>groupId</code>, <code>artifactId</code> et <code>version</code>) comme pour les dépendances</p>
+</li>
+<li>
+<p>La balise configuration permet de modifier le comportement du plugin, ici le plugin va faire échouer le build si aucun test n’est trouvé</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>profiles</code> : cette balise permet d’ajouter des pans de configuration qui sont désactivables. Un profil peut ajouter des <code>properties</code>, des <code>dependencies</code>, des <code>plugins</code> et même des <code>modules</code> (utilisés pour les projets multi-modules)</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;profiles&gt;</span>
+    <span class="nt">&lt;profile&gt;</span>
+        <span class="nt">&lt;id&gt;</span>disable-tests<span class="nt">&lt;/id&gt;</span> &lt;!--<b class="conum">(1)</b>--&gt;
+        <span class="nt">&lt;properties&gt;</span>
+            <span class="nt">&lt;maven.test.skip&gt;</span>true<span class="nt">&lt;/maven.test.skip&gt;</span>
+        <span class="nt">&lt;/properties&gt;</span>
+    <span class="nt">&lt;/profile&gt;</span>
+<span class="nt">&lt;/profiles&gt;</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Balise obligatoire, un profil doit avoir un <code>id</code>, ce qui permet de l&#8217;activer ou de le désactiver en ligne de commande, par exemple : <code>mvn install -P disable-tests</code></p>
+</li>
+</ol>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_junit">1.3. Junit</h3>
@@ -1007,7 +1219,7 @@ Une correction (mais cela vaut pour une évolution également) doit comporter le
 <p>Considérant cette classe :</p>
 </div>
 <div class="listingblock">
-<div class="title">Listing 1. Fichier TrafficLight.java</div>
+<div class="title">Listing 2. Fichier TrafficLight.java</div>
 <div class="content">
 <pre class="rouge highlight"><code data-lang="java"><span class="kd">class</span> <span class="nc">TrafficLight</span> <span class="o">{</span>
 
@@ -1044,7 +1256,7 @@ Une correction (mais cela vaut pour une évolution également) doit comporter le
 </ul>
 </div>
 <div class="listingblock">
-<div class="title">Listing 2. Fichier TrafficLight.java</div>
+<div class="title">Listing 3. Fichier TrafficLight.java</div>
 <div class="content">
 <pre class="rouge highlight"><code data-lang="java"><span class="kd">class</span> <span class="nc">TrafficLight</span> <span class="o">{</span>
 
@@ -1070,7 +1282,7 @@ Une correction (mais cela vaut pour une évolution également) doit comporter le
 <p>Considérant cette interface :</p>
 </div>
 <div class="listingblock">
-<div class="title">Listing 3. Fichier PersonRepository.java</div>
+<div class="title">Listing 4. Fichier PersonRepository.java</div>
 <div class="content">
 <pre class="rouge highlight"><code data-lang="java"><span class="kd">interface</span> <span class="nc">PersonRepository</span> <span class="o">{</span>
 
@@ -1085,7 +1297,7 @@ Il s’agit d’un <em>couplage de position</em>.<br>
 Un meilleur design pourrait être :</p>
 </div>
 <div class="listingblock">
-<div class="title">Listing 4. Fichier PersonRepository.java</div>
+<div class="title">Listing 5. Fichier PersonRepository.java</div>
 <div class="content">
 <pre class="rouge highlight"><code data-lang="java"><span class="kd">interface</span> <span class="nc">PersonRepository</span> <span class="o">{</span>
 
@@ -1139,7 +1351,7 @@ Du point de vue du code métier, peu importe ce ’<em>quelque part</em>’.<br>
 Ainsi cette abstraction est une interface, par exemple :</p>
 </div>
 <div class="listingblock">
-<div class="title">Listing 5. Fichier Logger.java</div>
+<div class="title">Listing 6. Fichier Logger.java</div>
 <div class="content">
 <pre class="rouge highlight"><code data-lang="java"><span class="kd">interface</span> <span class="nc">Logger</span> <span class="o">{</span>
 
