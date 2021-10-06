@@ -667,8 +667,9 @@ pre.rouge {
 <li><a href="#_rappels_sur_les_outils">1. Rappels sur les outils</a>
 <ul class="sectlevel2">
 <li><a href="#_git">1.1. Git</a></li>
-<li><a href="#_maven">1.2. Maven</a></li>
-<li><a href="#_junit">1.3. JUnit</a></li>
+<li><a href="#_concepts_utilisés_par_git">1.2. Concepts utilisés par Git</a></li>
+<li><a href="#_maven">1.3. Maven</a></li>
+<li><a href="#_junit">1.4. JUnit</a></li>
 </ul>
 </li>
 <li><a href="#_le_découplage_un_concept_valide_a_toutes_les_échelles">2. Le Découplage, un concept valide a toutes les échelles</a>
@@ -685,7 +686,14 @@ pre.rouge {
 <li><a href="#_monolithique_vs_micro_services">3.3. Monolithique vs micro-services</a></li>
 </ul>
 </li>
-<li><a href="#_dimensionnement_spof">4. Dimensionnement &amp; SPOF</a></li>
+<li><a href="#_dimensionnement_considérations_relatives">4. Dimensionnement &amp; considérations relatives</a>
+<ul class="sectlevel2">
+<li><a href="#_identifier_les_spofs">4.1. Identifier les SPOFs</a></li>
+<li><a href="#_identifier_les_points_de_contention">4.2. Identifier les points de contention</a></li>
+<li><a href="#_prévenir_les_coups_de_bélier">4.3. Prévenir les coups de bélier</a></li>
+<li><a href="#_exemple_dévolution_darchitecture">4.4. Exemple d’évolution d’architecture</a></li>
+</ul>
+</li>
 <li><a href="#_documenter_larchitecture">5. Documenter l’architecture</a>
 <ul class="sectlevel2">
 <li><a href="#_readme">5.1. README</a></li>
@@ -743,10 +751,36 @@ Parmi ces objectifs on retrouve :</p>
 </ul>
 </div>
 <div class="paragraph">
-<p>L’ordre de priorité de ces objectifs doit être décidé avec l’ensemble des acteurs du projet et réajusté périodiquement afin de suivre l’évolution du projet dans le temps.</p>
+<p>L’architecture logicielle est l’ensemble des moyens techniques utilisés pour répondre à ces objectifs tout en satisfaisant aux contraintes non techniques du projet.</p>
 </div>
 <div class="paragraph">
-<p>Il s’agit d’un partenariat.</p>
+<p>Tous les objectifs ne peuvent pas être atteint d’un coup, et l&#8217;architecture logicielle est le compromis qui convient le mieux pour atteindre les objectifs prioritaires dans le contexte du projet.</p>
+</div>
+<div class="paragraph">
+<p>Les facteurs peuvent être multiples :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Délais courts (<em>deadline</em>)</p>
+</li>
+<li>
+<p>Budget limité</p>
+</li>
+<li>
+<p>Certification de sécurité nécessaire</p>
+</li>
+<li>
+<p>Connexion à un système <em>historique</em> utilisant une technologie spécifique</p>
+</li>
+<li>
+<p>Etc.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>L’ordre de priorité de ces objectifs doit être décidé avec l’ensemble des acteurs du projet et réajusté périodiquement afin de suivre l’évolution du projet dans le temps.<br>
+Il s’agit d’un partenariat.</p>
 </div>
 <div class="paragraph">
 <p>L’équipe de développement met en oeuvre les principes d’architecture logicielle pour répondre au mieux aux objectifs du projet.</p>
@@ -763,10 +797,8 @@ Parmi ces objectifs on retrouve :</p>
 <p>Git est un SCM (<strong>S</strong>ource <strong>C</strong>ode <strong>M</strong>anagement tool) décentralisé.</p>
 </div>
 <div class="paragraph">
-<p>On étend par décentralisé le fait qu’il peut y avoir plusieurs instances d’un même dépôt sur des serveurs différents.</p>
-</div>
-<div class="paragraph">
-<p>Typiquement, dans le monde de l’open-source, quand un individu externe à l’organisation souhaite contribuer au code d’un dépôt, il en fait une copie, travaille sur sa copie, puis propose le code de sa copie pour intégration sur le dépôt <em>officiel</em>.</p>
+<p>On étend par décentralisé le fait qu’il peut y avoir plusieurs instances d’un même dépôt sur des serveurs différents.<br>
+Typiquement, dans le monde de l’open-source, quand un individu externe à l’organisation souhaite contribuer au code d’un dépôt, il en fait une copie, travaille sur sa copie, puis propose le code de sa copie pour intégration sur le dépôt <em>officiel</em>.</p>
 </div>
 <div class="paragraph">
 <p>Git est aujourd’hui très répandu, mais fait suite historiquement à d’autres SCMs (CVS, SVN, Mercurial, etc.).<br>
@@ -800,75 +832,7 @@ Tous ces outils fonctionnent par différentiel (patch) pour permettre de restaur
 </ul>
 </div>
 <div class="sect3">
-<h4 id="_rebase">1.1.1. Rebase</h4>
-<div class="paragraph">
-<p>Une des fonctionnalités qui démarque Git de ses prédécesseurs est le <strong>rebase</strong>.</p>
-</div>
-<div class="paragraph">
-<p>Le <strong>rebase</strong> peut être utilisé pour remettre à jour une branche quand la branche d’origine a changé.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash">git fetch <span class="nt">--all</span> <span class="nt">--prune</span> # <b class="conum">(1)</b>
-git log <span class="nt">--one-line</span> <span class="nt">-n</span> 10 # <b class="conum">(2)</b>
-git rebase origin/main # <b class="conum">(3)</b></code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<ol>
-<li>
-<p>Récupère la base de donnée du remote par défaut (<strong>origin</strong>) pour toutes les branches</p>
-</li>
-<li>
-<p>Affiche les dix derniers commits de la branche courante</p>
-</li>
-<li>
-<p>Modifie l’historique de la branche courante en mettant les commits réalisés après la base à la suite des derniers commits de la branche <code>main</code> telle qu’elle est connue par <strong>origin</strong></p>
-</li>
-</ol>
-</div>
-<div class="imageblock text-center">
-<div class="content">
-<img src="images/git_rebase.png" alt="git rebase">
-</div>
-</div>
-<div class="paragraph">
-<p>Le <strong>rebase</strong> peut également être utilisé en mode <em><strong>interactif</strong></em> pour modifier son historique local :</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Ajouter des modifications dans un commit</p>
-</li>
-<li>
-<p>Changer le nom d’un commit</p>
-</li>
-<li>
-<p>Fusionner des commits</p>
-</li>
-<li>
-<p>Supprimer des commits</p>
-</li>
-<li>
-<p>Ré-ordonner des commits</p>
-</li>
-</ul>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Conseil</div>
-</td>
-<td class="content">
-Ne pas utiliser le rebase sur une branche partagée par plusieurs développeurs, et encore moins <code>main</code>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_quelques_commandes_utiles">1.1.2. Quelques commandes utiles</h4>
+<h4 id="_quelques_commandes_utiles">1.1.1. Quelques commandes utiles</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -964,16 +928,88 @@ Ne pas utiliser le rebase sur une branche partagée par plusieurs développeurs,
 </div>
 </div>
 <div class="sect3">
-<h4 id="_pour_les_utilisateurs_de_windows">1.1.3. Pour les utilisateurs de Windows</h4>
+<h4 id="_pour_les_utilisateurs_de_windows">1.1.2. Pour les utilisateurs de Windows</h4>
 <div class="paragraph">
 <p>Git est sensible au bit d’execution des fichiers (<code>chmod +x</code>).<br>
 <strong>Windows</strong> ne gérant pas de la même façon les permissions sur les fichiers qu’Unix, il est recommandé de désactiver cette sensibilité avec <code>git config core.fileMode false</code><br>
 Pour expliciter le fait qu’un fichier soit executable : <code>git update-index --chmod=+x &lt;file&gt;</code></p>
 </div>
 </div>
+<div class="sect3">
+<h4 id="_rebase">1.1.3. Rebase</h4>
+<div class="paragraph">
+<p>Une des fonctionnalités qui démarque Git de ses prédécesseurs est le <strong>rebase</strong>.</p>
+</div>
+<div class="paragraph">
+<p>Le <strong>rebase</strong> peut être utilisé pour remettre à jour une branche quand la branche d’origine a changé.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash">git fetch <span class="nt">--all</span> <span class="nt">--prune</span> # <b class="conum">(1)</b>
+git log <span class="nt">--one-line</span> <span class="nt">-n</span> 10 # <b class="conum">(2)</b>
+git rebase origin/main # <b class="conum">(3)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Récupère la base de donnée du remote par défaut (<strong>origin</strong>) pour toutes les branches</p>
+</li>
+<li>
+<p>Affiche les dix derniers commits de la branche courante</p>
+</li>
+<li>
+<p>Modifie l’historique de la branche courante en mettant les commits réalisés après la base à la suite des derniers commits de la branche <code>main</code> telle qu’elle est connue par <strong>origin</strong></p>
+</li>
+</ol>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/git_rebase.png" alt="git rebase">
+</div>
+</div>
+<div class="paragraph">
+<p>Le <strong>rebase</strong> peut également être utilisé en mode <em><strong>interactif</strong></em> pour modifier son historique local :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Ajouter des modifications dans un commit</p>
+</li>
+<li>
+<p>Changer le nom d’un commit</p>
+</li>
+<li>
+<p>Fusionner des commits</p>
+</li>
+<li>
+<p>Supprimer des commits</p>
+</li>
+<li>
+<p>Ré-ordonner des commits</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Conseil</div>
+</td>
+<td class="content">
+Ne pas utiliser le rebase sur une branche partagée par plusieurs développeurs, et encore moins <code>main</code>
+</td>
+</tr>
+</table>
+</div>
+</div>
 </div>
 <div class="sect2">
-<h3 id="_maven">1.2. Maven</h3>
+<h3 id="_concepts_utilisés_par_git">1.2. Concepts utilisés par Git</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_maven">1.3. Maven</h3>
 <div class="paragraph">
 <p>Maven est un outil de construction de projet (Build Automation tool) autour de la JVM.</p>
 </div>
@@ -981,7 +1017,7 @@ Pour expliciter le fait qu’un fichier soit executable : <code>git update-index
 <p>Sa grande extensibilité lui permet de s’adapter à différents languages (Java, Scala, Kotlin, etc.) et à différents scénarios (intégration continue, génération de code, déploiement, etc.).</p>
 </div>
 <div class="sect3">
-<h4 id="_structure_dun_projet">1.2.1. Structure d’un projet</h4>
+<h4 id="_structure_dun_projet">1.3.1. Structure d’un projet</h4>
 <div class="paragraph">
 <p>Maven propose de baser l’organisation d’un projet sur des conventions (nommage, structure des répertoires, etc.) plutôt que sur de la configuration pure comme ses prédécesseurs (Make, Ant, etc. ).</p>
 </div>
@@ -1063,7 +1099,7 @@ Pour expliciter le fait qu’un fichier soit executable : <code>git update-index
 </div>
 </div>
 <div class="sect3">
-<h4 id="_cycle_de_vie_dun_projet_maven">1.2.2. Cycle de vie d’un projet Maven</h4>
+<h4 id="_cycle_de_vie_dun_projet_maven">1.3.2. Cycle de vie d’un projet Maven</h4>
 <div class="paragraph">
 <p>Par défaut Maven utilise un cycle de vie permettant à la grande majorité des projets d’être construit avec peu de configuration.</p>
 </div>
@@ -1130,7 +1166,7 @@ Pour expliciter le fait qu’un fichier soit executable : <code>git update-index
 </div>
 </div>
 <div class="sect3">
-<h4 id="_balises_de_configuration">1.2.3. Balises de configuration</h4>
+<h4 id="_balises_de_configuration">1.3.3. Balises de configuration</h4>
 <div class="paragraph">
 <p>Toutes les balises doivent être contenues dans le bloc <code>&lt;project&gt;</code>.</p>
 </div>
@@ -1253,7 +1289,7 @@ Pour expliciter le fait qu’un fichier soit executable : <code>git update-index
 </div>
 </div>
 <div class="sect2">
-<h3 id="_junit">1.3. JUnit</h3>
+<h3 id="_junit">1.4. JUnit</h3>
 <div class="paragraph">
 <p>Java ne propose pas dans le JDK d’outils pour construire et exécuter des tests.</p>
 </div>
@@ -1266,7 +1302,7 @@ Cependant, Maven ne fourni pas d’outil pour déclarer ou exécuter ces tests.<
 Il en existe plusieurs, et JUnit est le plus répandu aujourd’hui.</p>
 </div>
 <div class="sect3">
-<h4 id="_utilisation_de_lapi_de_junit_jupiter">1.3.1. Utilisation de l’API de JUnit-Jupiter</h4>
+<h4 id="_utilisation_de_lapi_de_junit_jupiter">1.4.1. Utilisation de l’API de JUnit-Jupiter</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="java"><span class="kd">class</span> <span class="nc">CalculatorTest</span> <span class="o">{</span>
@@ -1340,7 +1376,7 @@ Il en existe plusieurs, et JUnit est le plus répandu aujourd’hui.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_comment_junit_fonctionne_avec_maven">1.3.2. Comment JUnit fonctionne avec Maven</h4>
+<h4 id="_comment_junit_fonctionne_avec_maven">1.4.2. Comment JUnit fonctionne avec Maven</h4>
 <div class="paragraph">
 <p><strong>JUnit-Jupiter</strong> défini plusieurs choses :</p>
 </div>
@@ -1392,14 +1428,14 @@ Il en existe plusieurs, et JUnit est le plus répandu aujourd’hui.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_un_peu_dhistoire">1.3.3. Un peu d’histoire</h4>
+<h4 id="_un_peu_dhistoire">1.4.3. Un peu d’histoire</h4>
 <div class="paragraph">
 <p>JUnit est un vieux framework (1997) et celui-ci a beaucoup évolué au fil des versions de Java.<br>
-La version 4 a longtemps été utilisée, du fait de la simplicité d’écriture apportée par le support des annotations (<code>@Test</code>).<br>
+La version 4, arrivée en 2006 (après Java 1.5) a longtemps été utilisée, du fait de la simplicité d’écriture apportée par le support des annotations (<code>@Test</code>).<br>
 En 2015, une campagne de financement participatif est lancée pour créer JUnit<strong>5</strong>, une réécriture totale du framework.</p>
 </div>
 <div class="paragraph">
-<p>Le constat de l’équipe est que le côté monolithique qui a jusque-là prévalu, a amené des dérives dans l’API du framework, qui est à la fois permissive mais très complexe.</p>
+<p>Le constat de l’équipe est que le côté monolithique qui a jusque-là prévalu, a amené des dérives dans l’API du framework, qui est à la fois permissive et très complexe.</p>
 </div>
 <div class="paragraph">
 <p>En effet, si le point de départ d’un test est conventionnellement une méthode, des plugins voient le jour pour changer ce paradigme (Cucumber, etc.), où un test peut-être un paragraphe dans un fichier texte.</p>
@@ -1420,7 +1456,7 @@ Cela demande aux équipes fournissant des plugins de fournir des outils qui fonc
 </div>
 </div>
 <div class="paragraph">
-<p>La <strong>JUnit-platform</strong> est un framework pour construire (et lancer) des moteurs d’exécutions.</p>
+<p><strong>JUnit-platform</strong> est un framework pour construire (et lancer) des moteurs d’exécutions.</p>
 </div>
 <div class="paragraph">
 <p><strong>JUnit-Vintage</strong> est un moteur d’exécution qui est compatible avec l’API de JUnit4.</p>
@@ -2124,9 +2160,116 @@ Cette règle permet également d’éviter un couplage au niveau du modèle de d
 </div>
 </div>
 <div class="sect1">
-<h2 id="_dimensionnement_spof">4. Dimensionnement &amp; SPOF</h2>
+<h2 id="_dimensionnement_considérations_relatives">4. Dimensionnement &amp; considérations relatives</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>Historiquement, la construction d’application monolithique et dont l’état est géré en mémoire (<em>stateful</em>) nécessitait avec l’augmentation de la charge des serveurs plus puissants.</p>
+</div>
+<div class="paragraph">
+<p>Il s’agissait donc d’augmenter</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>RAM (mémoire)</p>
+</li>
+<li>
+<p>Fréquence CPU</p>
+</li>
+<li>
+<p>Nombre de coeur CPU</p>
+</li>
+<li>
+<p>Taille du disque dur</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Dans ce cas, on parle de <strong>dimensionnement vertical</strong>.<br>
+Il se trouve que le coût du matériel n’est pas proportionnel à la puissance, mais plutôt exponentiel.<br>
+Ce type de dimensionnement (ou <em>scaling</em>) arrive donc rapidement à une limite technique (puissance maximale des CPUs à une époque, etc.) ou financière.</p>
+</div>
+<div class="paragraph">
+<p>Certains systèmes, comme les bases de données SQL traditionnelles (Oracle, PostgreSQL, MariaDB, etc.) ne peuvent augmenter leurs capacités que de cette manière.</p>
+</div>
+<div class="paragraph">
+<p>À l’inverse, les applications peuvent être structurées de manière à pouvoir être dimensionnées différemment.</p>
+</div>
+<div class="paragraph">
+<p>On parle dans ce cas de <strong>dimensionnement horizontal</strong>, qui consiste à augmenter le nombre de conteneurs / vms / serveurs pour augmenter de manière linéaire le nombre d’appels que le système peut traiter.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/vertical_vs_horizontal_scaling.png" alt="vertical vs horizontal scaling">
+</div>
+</div>
+<div class="paragraph">
+<p>Un autre aspect négatif de l’approche instance unique est que tout changement nécessitant un redémarrage de l’application (configuration, nouvelle version, etc.) interrompt le service rendu.</p>
+</div>
+<div class="paragraph">
+<p>Dans le cas où il y a plusieurs instances d’une même application, que ce soit derrière un <strong>répartiteur de charge</strong> (<em>load-balancer</em>) ou qu’elles consomment les messages d’un broker, en éteindre une ne coupe pas le service.</p>
+</div>
+<div class="paragraph">
+<p>Il est tout à fait possible de configurer le <strong>répartiteur de charge</strong> afin de ne plus distribuer de connexion vers une instance et de laisser les connexions existantes se terminer afin de pour voir éteindre l’instance sans impact pour les utilisateurs.</p>
+</div>
+<div class="paragraph">
+<p>Traiter toutes les instances d’une même application comme celà pour réaliser une mise à jour est appelé <strong>rolling update</strong>.</p>
+</div>
+<div class="paragraph">
+<p>Attention toutefois à ce que les systèmes connectés à l’application (clients d’une API, base de données, etc.) puissent fonctionner avec les deux versions qui vont cohabiter durant la mise la mise à jour.</p>
+</div>
+<div class="sect2">
+<h3 id="_identifier_les_spofs">4.1. Identifier les SPOFs</h3>
+<div class="paragraph">
+<p>Les SPOFs (<strong>S</strong>ingle <strong>P</strong>oint <strong>O</strong>f <strong>F</strong>ailure) sont les parties d’un système qui ne peuvent pas avoir plus d’une instance et qui par conséquent entraine une coupure de service en cas d’arrêt (crash, mise à jour, etc.).</p>
+</div>
+<div class="paragraph">
+<p>Il est important de les identifier et de monitorer leur état pour pouvoir réagir en cas de problème.</p>
+</div>
+<div class="paragraph">
+<p>Cette réaction peut être automatique (bascule sur un réplica jusque-là passif) ou manuelle (démarrage de services alternatifs).</p>
+</div>
+<div class="paragraph">
+<p>Tenir compte des SPOFs peut également influer sur l’architecture du système pour limiter au strict minimum la charge qui y est envoyée, ou metre en place des mécanismes pour alléger cette charge (un cache de données par exemple).</p>
+</div>
+<div class="paragraph">
+<p>Ces considérations sont applicables à tout système dont on voudrait diminuer l’usage (une API extérieure payante par exemple) et rejoigne le méta-objectif du découplage (diminuer les dépendances entres composants).</p>
+</div>
+<div class="paragraph">
+<p>Les bases de données (SQL) sont également souvent des SPOFs ; il est cependant possible dans la plupart des cas de mettre en place des réplicas pouvant remplacer la base principale en cas d’indisponibilité.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/pg_auto_failover.png" alt="pg auto failover">
+</div>
+<div class="title">Figure 2. Mécanisme de bascule pour PostgreSQL (<code>pg_auto_failover</code>)</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_identifier_les_points_de_contention">4.2. Identifier les points de contention</h3>
+<div class="paragraph">
+<p>Quand un système est soumis à de fortes charges, des points de contention (ou goulot d’étranglement) peuvent apparaître.</p>
+</div>
+<div class="paragraph">
+<p>Il s’agit de partie de système dont la vitesse de traitement est plus lente et qui constitue la vitesse maximale du système dans son ensemble.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prévenir_les_coups_de_bélier">4.3. Prévenir les coups de bélier</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_exemple_dévolution_darchitecture">4.4. Exemple d’évolution d’architecture</h3>
+<div class="paragraph">
+<p>Considérant une application <em>classique</em> comme celle-ci :</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/korekto_1.png" alt="korekto 1">
+</div>
+</div>
 <div style="page-break-after: always;"></div>
+</div>
 </div>
 </div>
 <div class="sect1">
