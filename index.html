@@ -690,7 +690,7 @@ pre.rouge {
 <ul class="sectlevel2">
 <li><a href="#_identifier_les_spofs">4.1. Identifier les SPOFs</a></li>
 <li><a href="#_identifier_les_points_de_contention">4.2. Identifier les points de contention</a></li>
-<li><a href="#_prévenir_les_coups_de_bélier">4.3. Prévenir les coups de bélier</a></li>
+<li><a href="#_répartir_la_charge">4.3. Répartir la charge</a></li>
 <li><a href="#_exemple_dévolution_darchitecture">4.4. Exemple d’évolution d’architecture</a></li>
 </ul>
 </li>
@@ -700,12 +700,13 @@ pre.rouge {
 <li><a href="#_c4">5.2. C4</a></li>
 <li><a href="#_adr_architectural_decision_records">5.3. ADR (Architectural Decision Records)</a></li>
 <li><a href="#_openapi_raml_etc">5.4. (OpenAPI, RAML, etc.)</a></li>
+<li><a href="#_bdd">5.5. BDD</a></li>
 </ul>
 </li>
 <li><a href="#_techniques_bonnes_pratiques">6. Techniques &amp; bonnes pratiques</a>
 <ul class="sectlevel2">
 <li><a href="#_pragmatisme_kiss_yagni_dry">6.1. Pragmatisme : KISS, YAGNI &amp; DRY</a></li>
-<li><a href="#_bdd">6.2. BDD</a></li>
+<li><a href="#_bdd_2">6.2. BDD</a></li>
 <li><a href="#_logs">6.3. Logs</a></li>
 <li><a href="#_supervision">6.4. Supervision</a></li>
 </ul>
@@ -724,6 +725,26 @@ pre.rouge {
 <div class="sect1">
 <h2 id="_introduction">Introduction</h2>
 <div class="sectionbody">
+<div class="quoteblock">
+<blockquote>
+Architecture is about the important stuff.<br>
+Whatever that is.
+</blockquote>
+<div class="attribution">
+&#8212; Ralph Johnson
+</div>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>It means that the heart of thinking architecturally about software is to decide what is important, (i.e. what is architectural), and then expend energy on keeping those architectural elements in good condition.<br>
+For a developer to become an architect, they need to be able to recognize what elements are important, recognizing what elements are likely to result in serious problems should they not be controlled.</p>
+</div>
+</blockquote>
+<div class="attribution">
+&#8212; Martin Fowler
+</div>
+</div>
 <div class="paragraph">
 <p>Un logiciel doit répondre à plusieurs objectifs dépendant de son contexte.<br>
 Parmi ces objectifs on retrouve :</p>
@@ -754,7 +775,7 @@ Parmi ces objectifs on retrouve :</p>
 <p>L’architecture logicielle est l’ensemble des moyens techniques utilisés pour répondre à ces objectifs tout en satisfaisant aux contraintes non techniques du projet.</p>
 </div>
 <div class="paragraph">
-<p>Tous les objectifs ne peuvent pas être atteint d’un coup, et l&#8217;architecture logicielle est le compromis qui convient le mieux pour atteindre les objectifs prioritaires dans le contexte du projet.</p>
+<p>Tous les objectifs ne peuvent pas être atteint d’un coup, et l’architecture logicielle est le compromis qui convient le mieux pour atteindre les objectifs prioritaires dans le contexte du projet.</p>
 </div>
 <div class="paragraph">
 <p>Les facteurs peuvent être multiples :</p>
@@ -935,8 +956,38 @@ Tous ces outils fonctionnent par différentiel (patch) pour permettre de restaur
 Pour expliciter le fait qu’un fichier soit executable : <code>git update-index --chmod=+x &lt;file&gt;</code></p>
 </div>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_concepts_utilisés_par_git">1.2. Concepts utilisés par Git</h3>
+<div class="paragraph">
+<p>On appelle <strong>remotes</strong> les serveurs distants configurés sur une copie locale.<br>
+Le remote par défaut est appelé <strong>origin</strong>.<br>
+Dans le cas où le dépôt a été cloné (et non initialisé) <strong>origin</strong> pointe sur l’url utilisée lors du <em>clone</em>.</p>
+</div>
+<div class="paragraph">
+<p>Git utilise une base de données (répertoire <strong>.git</strong>) qui contient l’arbre de toutes les modifications de chaque branche.<br>
+Celle-ci contient également la version des différents remotes.<br>
+Les branches en question sont accessibles avec le nom : <strong>&lt;remote_name&gt;/&lt;branch_name&gt;</strong>.<br>
+Par exemple <strong>origin/main</strong> est la branche <strong>main</strong> telle que le serveur <strong>origin</strong> la connaissait lors de la dernière synchronisation de la base de donnée.<br>
+Il est tout à fait possible d’avoir une (et une seule) version locale et plusieurs versions distantes d’une même branche différente.<br>
+Ce sera lors d’un push (envoi de l’historique local vers un remote) que ces versions deviendront les mêmes.</p>
+</div>
+<div class="paragraph">
+<p>La copie de travail (<strong>working copy</strong>) sont les fichiers contenus dans un dépôt local.<br>
+Il est possible de les modifier, d’en ajouter ou d’en supprimer, sans modifier les versions connues par Git.<br>
+Il sera dans tous les cas possible de revenir à une version connue par Git, grâce à la base de données.</p>
+</div>
+<div class="paragraph">
+<p>Afin de considérer les modifications opérées sur la copie de travail pour être historisées (embarquées dans un <em>commit</em>), il est nécessaire de les indexer.<br>
+L’<strong>index</strong> est l’espace accueillant les modifications qui seront comprises dans un commit.<br>
+Il est possible d’y ajouter des éléments (ajout, suppression ou modification de fichier) avec la commande <code>add</code>.<br>
+Y enlever des éléments se fait avec la commande <code>reset</code>.<br>
+Enfin la commande <code>status</code> fait apparaître dans des couleurs différentes les changements qui sont indexés et ceux qui ne le sont pas.<br>
+Par défaut les changements indexés sont en vert et les autres en rouge.<br>
+Réaliser un <em>commit</em> (commande <code>commit</code>), embarquera toutes les modifications vertes.</p>
+</div>
 <div class="sect3">
-<h4 id="_rebase">1.1.3. Rebase</h4>
+<h4 id="_rebase">1.2.1. Rebase</h4>
 <div class="paragraph">
 <p>Une des fonctionnalités qui démarque Git de ses prédécesseurs est le <strong>rebase</strong>.</p>
 </div>
@@ -1003,10 +1054,6 @@ Ne pas utiliser le rebase sur une branche partagée par plusieurs développeurs,
 </table>
 </div>
 </div>
-</div>
-<div class="sect2">
-<h3 id="_concepts_utilisés_par_git">1.2. Concepts utilisés par Git</h3>
-
 </div>
 <div class="sect2">
 <h3 id="_maven">1.3. Maven</h3>
@@ -2253,10 +2300,87 @@ Ce type de dimensionnement (ou <em>scaling</em>) arrive donc rapidement à une l
 <div class="paragraph">
 <p>Il s’agit de partie de système dont la vitesse de traitement est plus lente et qui constitue la vitesse maximale du système dans son ensemble.</p>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+À l’instar d’un système d’écoulement d’eaux pluviales, si un des tuyaux a un faible débit, c’est tout le système qui est plus lent, et qui risque l’engorgement
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Ces points de contention peuvent provoquer ds réactions en chaîne ou en cacher d’autres.</p>
+</div>
+<div class="paragraph">
+<p>Pour les identifier et si nécessaire les améliorer, il est nécessaire d’avoir une supervision précise des différents composants du système.<br>
+La supervision est constituée entre autres, d’un ensemble de sondes qui permettent de relever des données à interval régulier et d’en faire des courbes.<br>
+Ces courbes témoignent de l’évolution du système dans le temps et permettent de faire la corrélation entre des évènements exogènes et des conséquences endogènes, notamment l’apparition de points de contention.</p>
+</div>
 </div>
 <div class="sect2">
-<h3 id="_prévenir_les_coups_de_bélier">4.3. Prévenir les coups de bélier</h3>
-
+<h3 id="_répartir_la_charge">4.3. Répartir la charge</h3>
+<div class="sect3">
+<h4 id="_pour_les_communications_synchrones">4.3.1. Pour les communications synchrones</h4>
+<div class="paragraph">
+<p>Pour distribuer la charge sur plusieurs instances d’un même service, on utilise des répartiteurs de charge qu’ils soient matériel (F5, Altéon, etc.) ou logiciel (HAProxy, Nginx, Traefik, etc.).</p>
+</div>
+<div class="paragraph">
+<p>Il existe différentes configurations possibles, notamment pour affecter des poids aux nœuds cibles ou établir une affinité de session (<em>sticky session</em>).</p>
+</div>
+<div class="paragraph">
+<p>Les répartiteurs de charge logiciel sont plus simples à configurer et peuvent même être pilotés par une API.<br>
+Cela permet notamment d’automatiser des opérations telles que le <strong>rolling update</strong> précédemment vu.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_pour_les_communications_asynchrones">4.3.2. Pour les communications asynchrones</h4>
+<div class="paragraph">
+<p>Pour ce qui est des communications asynchrones, on va tendre le plus possible vers l’utilisation d’un <em>broker de message</em> qui fera le tampon entre les applications communicantes.</p>
+</div>
+<div class="paragraph">
+<p>Un certain nombre d’outils peuvent être mis en place pour rendre un broker <em>hautement disponible</em> (<strong>H</strong>igh <strong>A</strong>vailability) et capable d’ingérer de grosses volumétries.</p>
+</div>
+<div class="paragraph">
+<p>Ce faisant, le broker pourra accueillir les éventuels coups de béliers (très grosses charges temporaires) sans redistribuer la pression aux applications clientes.</p>
+</div>
+<div class="paragraph">
+<p>En effet, quand deux systèmes communiquent, il est préférable de fonctionner en <em>flux tiré</em> de sorte que l’application cliente consomme quand elle le veut et au rythme ou elle le peut les messages qui lui sont destinés.</p>
+</div>
+<div class="paragraph">
+<p>La répartition de charge se fait naturellement avec l’augmentation du nombre d’instances de l’application cliente (pour Kafka, au sein d’un même <strong>client-group</strong>).</p>
+</div>
+<div class="paragraph">
+<p>Il faut cependant être vigilant à la stratégie de livraison de message :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>at most once</strong> : un message est délivré au plus une fois. Par conséquent, il peut y avoir des pertes de message (cas marginal).</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Cas d’usage : notifications, données peu importantes</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>at least once</strong> : un message est délivré au moins une fois. Par conséquent, il peut être délivré plusieurs fois (cas marginal) et l’application cliente doit être capable de dé-dupliquer ces messages</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Cas d’usage : tout le reste, du moment qu’on ne peut pas se permettre de perdre un message (commande client, transaction bancaire, changement d’une fiche patient, etc.)</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_exemple_dévolution_darchitecture">4.4. Exemple d’évolution d’architecture</h3>
@@ -2265,23 +2389,350 @@ Ce type de dimensionnement (ou <em>scaling</em>) arrive donc rapidement à une l
 </div>
 <div class="imageblock text-center">
 <div class="content">
-<img src="images/korekto_1.png" alt="korekto 1">
+<img src="images/korekto_context.png" alt="korekto context">
 </div>
+<div class="title">Figure 3. Diagramme de Contexte</div>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/korekto_container_v0.png" alt="korekto container v0">
+</div>
+<div class="title">Figure 4. Diagramme de Container</div>
+</div>
+<div class="sect3">
+<h4 id="_introduction_dun_répartiteur_de_charge">4.4.1. Introduction d’un répartiteur de charge</h4>
+<div class="paragraph">
+<p>Le dimensionnement horizontal, c’est la capacité du système à répartir la charge sur plusieurs instances (ou nœuds).<br>
+Mais du point de vue des utilisateurs, il n’y a qu’un seul service (<a href="https://korekto.io" class="bare">https://korekto.io</a> par exemple).<br>
+Pour faire cela il est nécessaire d’introduire un répartiteur de charge.</p>
+</div>
+<div class="paragraph">
+<p>Attention ici, la partie qui exécute une tâche toutes les 4 heures ne doit être active que sur une seule instance, sous peine de faire le même travail plusieurs fois, ce qui peut provoquer :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Charge CPU inutile</p>
+</li>
+<li>
+<p>États incohérents en base</p>
+</li>
+</ul>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/korekto_container_v1.png" alt="korekto container v1">
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_découpage_de_lapplicatif">4.4.2. Découpage de l’applicatif</h4>
+<div class="paragraph">
+<p>Certaines fonctions de l’application, sont exécutées plus au moins souvent, et utilisent plus ou moins de CPU.</p>
+</div>
+<div class="paragraph">
+<p>Il peut être intéressant de découper une application monolithique en plusieurs petites applications pour pouvoir dimensionner finement les fonctions les plus sollicitées.</p>
+</div>
+<div class="paragraph">
+<p>Ce découpage doit respecter une unique règle pour être profitable :</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Important</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Les applications découpées à partir d’un monolithe doivent être indépendantes d’un point de vue métier et technique.</p>
+</div>
+<div class="paragraph">
+<p>C’est-à-dire que si une de ces applications est amenée à évoluer, elle doit pouvoir être mise à jour sans impact dans les autres applications</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/korekto_container_v2.png" alt="korekto container v2">
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_suppression_des_spofs">4.4.3. Suppression des SPOFs</h4>
+<div class="paragraph">
+<p>Les points de défaillance unique (<strong>S</strong>ingle <strong>P</strong>oint <strong>O</strong>f <strong>F</strong>ailure), sont des conteneurs du système qui ne peuvent pas être répliqués.<br>
+Cela pose 2 problèmes :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Si le conteneur ne fonctionne plus, il y a une coupure de service</p>
+</li>
+<li>
+<p>Si le trafic augmente (ici le nombre d’exercices à corriger), la seule solution est par définition le dimensionnement vertical.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>La cause des SPOFs est souvent un état en mémoire qui ne peut être facilement répliqué.<br>
+C’est le cas de notre conteneur <strong>[batch]</strong>.</p>
+</div>
+<div class="paragraph">
+<p>En effet, si plusieurs instances devaient s’exécuter, comment pourraient-elles simplement se synchroniser pour se répartir le travail et reprendre celui des autres instances dans le cas de pannes ?</p>
+</div>
+<div class="paragraph">
+<p>Dans notre cas, il est possible de faire plus simple en utilisant les hooks de GitHub pour être notifié en cas de changement, plutôt que de lancer une tache quoi qu’il arrive.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/korekto_container_v3.png" alt="korekto container v3">
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_ne_pas_communiquer_par_le_stockage">4.4.4. Ne pas communiquer par le stockage !</h4>
+<div class="paragraph">
+<p>Quand nous avons découpé notre applicatif, nous avons commis une grave erreur.<br>
+En effet, le conteneur <strong>[web]</strong> et le conteneur <strong>[grader]</strong> communiquent par la base de données.</p>
+</div>
+<div class="paragraph">
+<p>C’est un <strong>anti-pattern</strong> d’architecture, car :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Comment changer la base par une autre sans impacter les 2 conteneurs ?</p>
+</li>
+<li>
+<p>Comment changer la façon de stocker la donnée sans impacter les 2 conteneurs ?</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Bref, ces 2 conteneurs sont couplés.</p>
+</div>
+<div class="paragraph">
+<p>Le but ici va être d’introduire un nouveau <em>container</em> qui va abstraire le stockage.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/korekto_container_v4.png" alt="korekto container v4">
+</div>
+</div>
+<div class="paragraph">
+<p>Ainsi, dans le cas où</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Une partie de la donnée doit être stockée de manière différente (dans une base de donnée relationnelle par ex)</p>
+<div class="ulist unstyled">
+<ul class="unstyled">
+<li>
+<p>&#8594; la seule modification à apporter est dans le code du conteneur <strong>[storage API]</strong>.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Le format de spécification d’exercice évolue pour inclure plus de données -&#8594; [storage API] on propose une nouvelle API (GET / POST / PUT / DELETE) <a href="#">/api/admin/specification/exercise/${name}/v2</a></p>
+<div class="ulist unstyled">
+<ul class="unstyled">
+<li>
+<p>&#8594; <strong>[web]</strong> on utilise cette nouvelle API pour que les professeurs puissent écrire des spécifications plus détaillées</p>
+</li>
+<li>
+<p>&#8594; <strong>[grader]</strong> on utilise cette nouvelle API pour corriger les exercices plus finement</p>
+</li>
+<li>
+<p>&#8594; <strong>[storage API]</strong> on supprime l’ancienne API (<a href="#">/api/admin/specification/exercise/${name}/v1</a>) maintenant que plus aucun conteneur ne l’utilise</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Ce genre de changement peut être apporté sans coupure de service.</p>
 </div>
 <div style="page-break-after: always;"></div>
+</div>
 </div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="_documenter_larchitecture">5. Documenter l’architecture</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>Historiquement, la documentation d’un projet informatique était très verbeuse (Cahier des charges techniques, <strong>D</strong>ossier d’<strong>A</strong>rchitecture <strong>T</strong>ransverse, etc.).</p>
+</div>
+<div class="paragraph">
+<p>Or, un projet informatique évolue vite, plus vite que ces documents.<br>
+Cette "documentation" devient alors obsolète et amène des incompréhensions ou des bugs car certaines informations deviennent fausses avec le temps.</p>
+</div>
+<div class="paragraph">
+<p>Documenter un projet est cependant nécessaire pour transmettre la connaissance entre les différents individus qui vont s’y succéder.</p>
+</div>
+<div class="paragraph">
+<p>L’objectif est donc d’écrire le minimum vital de documentation en éliminant le superflu et de raccrocher le plus possible cette documentation au code.</p>
+</div>
+<div class="paragraph">
+<p>On parle alors de documentation vivante, si celle-ci évolue comme le code, et notamment si des parties sont générées à partir du code.</p>
+</div>
 <div class="sect2">
 <h3 id="_readme">5.1. README</h3>
-
+<div class="paragraph">
+<p>Le fichier README, écrit en Markdown ou en AsciiDoc (comme ce cours) se trouve à la racine du projet / dépôt.<br>
+Il s’agit de la porte d’entrée pour un projet inconnu.</p>
+</div>
+<div class="paragraph">
+<p>Il renseigne sur les questions suivantes :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>À quoi sert le projet ?</p>
+</li>
+<li>
+<p>Comment utiliser le projet (outil de construction, etc.)</p>
+</li>
+<li>
+<p>Comment contacter et travailler avec les autres personnes sur ce projet</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Très populaire dans le monde de l’open-source cette pratique et également importante en entreprise dès lors que de nombreux projets cohabitent dans un même système d’information et que différentes équipes doivent travailler ensembles.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/readme_sample.png" alt="readme sample">
+</div>
+<div class="title">Figure 5. Fichier README du projet Spring</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_c4">5.2. C4</h3>
-
+<div class="paragraph">
+<p><strong>C4</strong> est une approche pour concevoir un système informatique sans en compliquer inutilement l’architecture.</p>
+</div>
+<div class="paragraph">
+<p>Pour ce faire, il est nécessaire d’établir un ensemble de termes et d’abstractions avec lesquels tous les intervenants du projet pourront se <strong><em>comprendre</em></strong>.</p>
+</div>
+<div class="paragraph">
+<p>C’est une étape cruciale, qui permet d’éviter par la suite d’avoir des incompréhensions entre les différents corps de métier (fonctionnels, développeurs, intégrateurs, etc.).</p>
+</div>
+<div class="paragraph">
+<p>Ce sont ces éléments qui permettront de construire les diagrammes qui seront à la base du projet.</p>
+</div>
+<div class="sect3">
+<h4 id="_contexte">5.2.1. Contexte</h4>
+<div class="paragraph">
+<p>Avec cette base, les intervenants peuvent construire le <strong>diagramme de <em>contexte</em></strong>.</p>
+</div>
+<div class="paragraph">
+<p>Ce diagramme permet de comprendre les principales fonctionnalités du système <span class="underline">sans</span> afficher <strong>comment</strong> le système est organisé.</p>
+</div>
+<div class="paragraph">
+<p>Le système est représenté par une unique forme (boite noire) qui sera en interaction avec des personnes ou d’autres systèmes.</p>
+</div>
+<div class="paragraph">
+<p>Les détails (technologies, protocoles, etc.) n’ont pas d’importance dans ce diagramme, qui doit pouvoir être compris par des intervenants non-techniques.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/c4_context_diagram.png" alt="c4 context diagram">
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_container">5.2.2. Container</h4>
+<div class="paragraph">
+<p>Une fois les fonctionnalités du systèmes acquises, on peut <em>zoome</em>} d’un cran avec le <strong>diagramme de <em>conteneurs</em></strong>.</p>
+</div>
+<div class="paragraph">
+<p>On entend par <em>conteneur</em> tout système qui peut héberger du code ou des données (application, base de données, broker, etc.).</p>
+</div>
+<div class="paragraph">
+<p>Ce diagramme va refléter l’architecture du système et permettre de visualiser comment les <span class="underline">responsabilités</span> sont réparties entre les différentes briques logicielles.</p>
+</div>
+<div class="paragraph">
+<p>Ici peuvent être représentés</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Sécurité</strong> : zones réseau, flux chiffrés, traçabilité, etc.</p>
+</li>
+<li>
+<p><strong>Scalabilité</strong> : load-balancers, (SPOF), etc.</p>
+</li>
+<li>
+<p><strong>Fiabilité</strong> : sauvegarde, réplication, etc</p>
+</li>
+<li>
+<p><strong>Supervision</strong> : sondes, bases, IHM, etc.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/c4_container_diagram.png" alt="c4 container diagram">
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_composant">5.2.3. Composant</h4>
+<div class="paragraph">
+<p>On peut à nouveau <em>zoomer</em> sur chacun des conteneurs grâce au <strong>diagramme de <em>composants</em></strong>.</p>
+</div>
+<div class="paragraph">
+<p>Ce diagramme détaille ce dont est composé un conteneur, avec un découpage possible par</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Fonctionnalité transverse</p>
+</li>
+<li>
+<p>Service métier</p>
+</li>
+<li>
+<p>Workflow</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Un composant a donc une identité logique, une <span class="underline">responsabilité</span> et interagit avec d’autres composants.</p>
+</div>
+<div class="paragraph">
+<p>Sont habituellement consignés les détails d’implémentation et choix technologiques car ce schéma peut être la documentation la plus détaillée d’un projet.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/c4_component_diagram.png" alt="c4 component diagram">
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_classe">5.2.4. Classe</h4>
+<div class="paragraph">
+<p>Si nécessaire, il est possible de descendre au classique <strong>diagramme UML de <em>classes</em></strong>.</p>
+</div>
+<div class="paragraph">
+<p>Ce diagramme est rarement utile si les besoins sont clairs, et les responsabilités bien réparties.</p>
+</div>
+<div class="paragraph">
+<p>Cependant, pour modéliser un comportement complexe, ce schéma peut mettre en lumière une interaction complexe entre plusieurs objets.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/c4_class_diagram.png" alt="c4 class diagram">
+</div>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_adr_architectural_decision_records">5.3. ADR (Architectural Decision Records)</h3>
@@ -2289,6 +2740,10 @@ Ce type de dimensionnement (ou <em>scaling</em>) arrive donc rapidement à une l
 </div>
 <div class="sect2">
 <h3 id="_openapi_raml_etc">5.4. (OpenAPI, RAML, etc.)</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_bdd">5.5. BDD</h3>
 <div style="page-break-after: always;"></div>
 </div>
 </div>
@@ -2301,7 +2756,7 @@ Ce type de dimensionnement (ou <em>scaling</em>) arrive donc rapidement à une l
 
 </div>
 <div class="sect2">
-<h3 id="_bdd">6.2. BDD</h3>
+<h3 id="_bdd_2">6.2. BDD</h3>
 
 </div>
 <div class="sect2">
