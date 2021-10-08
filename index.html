@@ -700,15 +700,14 @@ pre.rouge {
 <li><a href="#_c4">5.2. C4</a></li>
 <li><a href="#_adr_architectural_decision_records">5.3. ADR (Architectural Decision Records)</a></li>
 <li><a href="#_documentation_des_apis">5.4. Documentation des APIs</a></li>
-<li><a href="#_bdd">5.5. BDD</a></li>
+<li><a href="#_bdd_et_atdd">5.5. BDD et ATDD</a></li>
 </ul>
 </li>
 <li><a href="#_techniques_bonnes_pratiques">6. Techniques &amp; bonnes pratiques</a>
 <ul class="sectlevel2">
 <li><a href="#_pragmatisme_kiss_yagni_dry">6.1. Pragmatisme : KISS, YAGNI &amp; DRY</a></li>
-<li><a href="#_bdd_2">6.2. BDD</a></li>
-<li><a href="#_logs">6.3. Logs</a></li>
-<li><a href="#_supervision">6.4. Supervision</a></li>
+<li><a href="#_logs">6.2. Logs</a></li>
+<li><a href="#_supervision">6.3. Supervision</a></li>
 </ul>
 </li>
 <li><a href="#_conclusion">Conclusion</a></li>
@@ -1530,14 +1529,11 @@ J’ai répondu à leur problème en leur proposant d’ajouter un niveau d’in
 <div class="paragraph">
 <p>L’objectif qui prévaut sur tous les autres est la <strong>maintenabilité</strong>.<br>
 En cas de problème, lié à la performance, à la sécurité ou au fonctionnement d’un logiciel, la solution doit tendre vers un impact minimum.<br>
-Plus le changement de code est important, et plus le risque augmente.<br>
+Plus le changement de code est important, et plus le risque augmente, et plus le temps nécessaire à la mise en production se rallonge.<br>
 Une correction (mais cela vaut pour une évolution également) doit comporter le moins de risque possible.</p>
 </div>
 <div class="sect2">
 <h3 id="_a_léchelle_dune_classe_java">2.1. A l’échelle d’une classe Java</h3>
-<div class="paragraph">
-<p>Ce découplage se traduit, par exemple, par le fait de</p>
-</div>
 <div class="sect3">
 <h4 id="_exemple_1_état_interne_différent_du_contrat_public">2.1.1. Exemple 1 : État interne différent du contrat public</h4>
 <div class="paragraph">
@@ -2776,10 +2772,149 @@ Il s’agit de la porte d’entrée pour un projet inconnu.</p>
 </div>
 <div class="sect2">
 <h3 id="_documentation_des_apis">5.4. Documentation des APIs</h3>
-
+<div class="paragraph">
+<p>Les APIs exposées à l’extérieur d’un système peuvent être documentées de différentes manières :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Contract First</strong> : on écrit le contrat dans un format donné (RAML, WSDL, etc.), et ensuite on écrit ou on <em>génère</em> le code correspondant.<br>
+À noter que si le code est généré, il y a toujours une seconde étape de "raccordement" au code métier.</p>
+</li>
+<li>
+<p><strong>Code First</strong> : on écrit le code technique permettant d’exposer l’API.<br>
+Ce code peut être enrichi de métadonnées sur l’utilisation de l’API (description, signification des différents codes d’erreur, etc.).<br>
+La documentation est ensuite générée sur la base de ce code, notamment avec l’initiative <strong>OpenAPI</strong> et les nombreux outils de son écosystème.<br>
+Dans le cas ou ce mécanisme est inclus dans la construction du projet, la documentation évolue à chaque changement de code.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>L’approche <strong>code first</strong> est la plus pérenne, car elle évite qu’un décalage entre la documentation et le code s’introduise au fil du temps.</p>
+</div>
+<div class="paragraph">
+<p>Il faut cependant être vigilant sur les modifications d’une API et à ce que cela va impliquer pour les clients de cette API.</p>
+</div>
+<div class="paragraph">
+<p>Certains changements sont sans conséquences</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Ajouter un champ dans une réponse</p>
+</li>
+<li>
+<p>Supprimer un champ optionnel dans une requête</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>&#8594; <em>Qui peut le plus, peut le moins</em>.</p>
+</div>
+<div class="paragraph">
+<p>D’autres, comme</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Supprimer un champ dans une réponse</p>
+</li>
+<li>
+<p>Ajouter un champ obligatoire dans une requête</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Vont entrainer des malfonctions dans la communication, et nécessitent d’être abordés différemment.</p>
+</div>
+<div class="paragraph">
+<p>Dans le cas où ce second genre de modifications est nécessaire, il est possible de proposer une nouvelle version de l’API tout en continuant de servir la première version.</p>
+</div>
+<div class="paragraph">
+<p>Ainsi les clients ont le temps de faire le changement de code nécessaire de leur côté pour utiliser la nouvelle version.<br>
+Quand tous les clients ont opéré ces changements, le code de la première version peut êre supprimé.</p>
+</div>
+<div class="paragraph">
+<p>Ce faisant, on introduit à nouveau un <strong><em>découplage</em></strong> entre les systèmes en permettant que chacun fasse les changements à son rythme.</p>
+</div>
 </div>
 <div class="sect2">
-<h3 id="_bdd">5.5. BDD</h3>
+<h3 id="_bdd_et_atdd">5.5. BDD et ATDD</h3>
+<div class="paragraph">
+<p>Le <strong>B</strong>ehavior <strong>D</strong>riven <strong>D</strong>evelopment et l’<strong>A</strong>cceptance <strong>T</strong>est <strong>D</strong>riven <strong>D</strong>evelopment sont deux techniques similaires qui visent à décrire le comportement des fonctionnalités d’un système dans un formalisme compréhensible par tous les intervenants du projet.<br>
+Il peut s’agir de langage naturel (Français, Anglais, etc.) ou de graphes d’état, du moment que le vocabulaire est univoque.</p>
+</div>
+<div class="paragraph">
+<p>Ce vocabulaire dont les mots et phrases vont être utilisés dans différents tests et scénarios est ensuite associé à du code.</p>
+</div>
+<div class="paragraph">
+<p>Ainsi ces tests et scénarios <em>compris par tous</em> deviennent <span class="underline"><strong><em>executables</em></strong></span>.</p>
+</div>
+<div class="paragraph">
+<p>À l’instar du TDD, il s’agit moins d’écrire des tests que d’une méthodologie de travail.</p>
+</div>
+<div class="paragraph">
+<p>Par ailleurs cette façon de construire les tests et scénarios favorise la composition et donne aux intervenants plus d’autonomie ainsi qu’une meilleure compréhension.</p>
+</div>
+<div class="paragraph">
+<p>On trouve dans le BDD des contraintes sur le formalisme des scénarios, contraintes similaires à celle d’un <em>test unitaire</em> : les phrases doivent commencer par</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Given</strong> : les conditions initiales, il peut y en avoir zéro ou plus &#8594; <strong>[0..*]</strong></p>
+</li>
+<li>
+<p><strong>When</strong> : l&#8217;élément déclencheur, il doit y en avoir un et uniquement un &#8594; <strong>[1]</strong></p>
+</li>
+<li>
+<p><strong>Then</strong> : les vérifications, il doit y en avoir au moins une &#8594; <strong>[1..*]</strong></p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="title">Listing 7. Description d&#8217;une fonctionnalité au format <strong>Gherkin</strong></div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="kd">Feature</span><span class="p">:</span> Is it Friday yet?
+Everybody wants to know when it's Friday
+
+  <span class="kn">Scenario</span><span class="p">:</span> Sunday isn't Friday
+    <span class="nf">Given </span>today is Sunday
+    <span class="nf">When </span>I ask whether it's Friday yet
+    <span class="nf">Then </span>I should be told <span class="s">"Nope"</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Listing 8. Association des phrases à du code</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Stepdefs</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">today</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">actualAnswer</span><span class="o">;</span>
+
+    <span class="nd">@Given</span><span class="o">(</span><span class="s">"today is Sunday"</span><span class="o">)</span> // <b class="conum">(1)</b>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">today_is_Sunday</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">today</span> <span class="o">=</span> <span class="s">"Sunday"</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@When</span><span class="o">(</span><span class="s">"I ask whether it's Friday yet"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">i_ask_whether_it_s_Friday_yet</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">actualAnswer</span> <span class="o">=</span> <span class="nc">IsItFriday</span><span class="o">.</span><span class="na">isItFriday</span><span class="o">(</span><span class="n">today</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Then</span><span class="o">(</span><span class="s">"I should be told {string}"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">i_should_be_told</span><span class="o">(</span><span class="nc">String</span> <span class="n">expectedAnswer</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">assertEquals</span><span class="o">(</span><span class="n">expectedAnswer</span><span class="o">,</span> <span class="n">actualAnswer</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Annotation fournie par le framework de test <strong>Cucumber</strong></p>
+</li>
+</ol>
+</div>
 <div style="page-break-after: always;"></div>
 </div>
 </div>
@@ -2792,15 +2927,11 @@ Il s’agit de la porte d’entrée pour un projet inconnu.</p>
 
 </div>
 <div class="sect2">
-<h3 id="_bdd_2">6.2. BDD</h3>
+<h3 id="_logs">6.2. Logs</h3>
 
 </div>
 <div class="sect2">
-<h3 id="_logs">6.3. Logs</h3>
-
-</div>
-<div class="sect2">
-<h3 id="_supervision">6.4. Supervision</h3>
+<h3 id="_supervision">6.3. Supervision</h3>
 <div style="page-break-after: always;"></div>
 </div>
 </div>
@@ -2835,6 +2966,41 @@ Il s’agit de la porte d’entrée pour un projet inconnu.</p>
 <li>
 <p>Jessie Frazelle<br>
 <a href="https://blog.jessfraz.com/" class="bare">https://blog.jessfraz.com/</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Vidéos youtube de conférences</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Devoxx</p>
+</li>
+<li>
+<p>goto;</p>
+</li>
+<li>
+<p>DevFest</p>
+</li>
+<li>
+<p>JUGs (<strong>J</strong>ava <strong>U</strong>ser <strong>G</strong>roup)</p>
+</li>
+<li>
+<p>etc.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Sites d’actualités et de contenu</p>
+<div class="ulist">
+<ul>
+<li>
+<p>InfoQ <a href="https://www.infoq.com/fr/" class="bare">https://www.infoq.com/fr/</a></p>
+</li>
+<li>
+<p><a href="https://www.developpez.com/" class="bare">https://www.developpez.com/</a></p>
 </li>
 </ul>
 </div>
