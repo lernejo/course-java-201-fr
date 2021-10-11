@@ -705,7 +705,7 @@ pre.rouge {
 </li>
 <li><a href="#_techniques_bonnes_pratiques">6. Techniques &amp; bonnes pratiques</a>
 <ul class="sectlevel2">
-<li><a href="#_pragmatisme_kiss_yagni_dry">6.1. Pragmatisme : KISS, YAGNI &amp; DRY</a></li>
+<li><a href="#_kiss_yagni_dry">6.1. KISS, YAGNI &amp; DRY</a></li>
 <li><a href="#_logs">6.2. Logs</a></li>
 <li><a href="#_supervision">6.3. Supervision</a></li>
 </ul>
@@ -1458,7 +1458,7 @@ Il en existe plusieurs, et JUnit est le plus répandu aujourd’hui.</p>
 <p>La phase <strong>test</strong> de Maven est associé au plugin <strong>maven-surefire-plugin</strong></p>
 </li>
 <li>
-<p>Ce plugin peut lancer <strong>junit-platform-launcher</strong> (si cette librairie est présente sur le classpath)</p>
+<p>Ce plugin peut lancer <strong>junit-platform-launcher</strong> (si cette bibliothèque est présente sur le classpath)</p>
 </li>
 <li>
 <p>Ce <em>launcher</em> peut lancer les moteurs d’exécutions construits avec l’API de moteur d’exécution <strong>junit-platform-engine</strong>, notamment <strong>JUnit-Jupiter</strong></p>
@@ -1632,7 +1632,7 @@ Un meilleur design pourrait être :</p>
 <div class="colist arabic">
 <ol>
 <li>
-<p>utilisation de la librairie <strong>io.soabase.record-builder:record-builder</strong> pour générer un <em>builder</em> correspondant</p>
+<p>Utilisation de la bibliothèque <strong>io.soabase.record-builder:record-builder</strong> pour générer un <em>builder</em> correspondant</p>
 </li>
 </ol>
 </div>
@@ -1814,7 +1814,7 @@ On parle de code technique quand celui-ci ne porte pas directement de règle mé
 </ul>
 </div>
 <div class="paragraph">
-<p>Ainsi il est possible de construire le <em>coeur</em> applicatif sans l’aide de framework ou autre librairie afin de simplifier l’écriture des tests et de réduire à sa plus simple forme le code <em>métier</em>.</p>
+<p>Ainsi il est possible de construire le <em>coeur</em> applicatif sans l’aide de framework ou autre bibliothèque afin de simplifier l’écriture des tests et de réduire à sa plus simple forme le code <em>métier</em>.</p>
 </div>
 <div class="paragraph">
 <p>On pourra venir par la suite y brancher des <em>connecteurs</em> qui feront le pont entre ce code et les reste du système ou les utilisateurs.</p>
@@ -2058,7 +2058,7 @@ Il existe plusieurs manières de construire un tel système, par exemple avec</p
 <p>Découpler les problématiques techniques en dehors du code qui contient les règles métiers</p>
 </li>
 <li>
-<p>Simplifier les tests unitaires du code métier, du fait de l’absence de frameworks et librairies</p>
+<p>Simplifier les tests unitaires du code métier, du fait de l’absence de frameworks et bibliothèques</p>
 </li>
 <li>
 <p>Permettre (théoriquement) de remplacer un <em>adaptateur</em> sans modifier le reste de l’application. Dans la pratique, ce cas arrive assez peu et le cas échéant, le changement de paradigme qui y est souvent associé (SQL &#8660; NOSQL, synchrone &#8660; asynchrone) nécessite de revoir l’architecture de l’application.</p>
@@ -2087,7 +2087,7 @@ Il existe plusieurs manières de construire un tel système, par exemple avec</p
 <p>On commence une application qui suit les principes de l’architecture hexagonale par le code d’un domaine métier / fonctionnalité.</p>
 </div>
 <div class="paragraph">
-<p>Ce code ne doit contenir aucune dépendance vers un framework ou une librairie.</p>
+<p>Ce code ne doit contenir aucune dépendance vers un framework ou une bibliothèque.</p>
 </div>
 <div class="paragraph">
 <p>À cette fin, il est plus simple de l’isoler dans un module dédié de sorte que ce code n’ait effectivement aucune dépendance.</p>
@@ -2923,15 +2923,494 @@ Everybody wants to know when it's Friday
 <h2 id="_techniques_bonnes_pratiques">6. Techniques &amp; bonnes pratiques</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_pragmatisme_kiss_yagni_dry">6.1. Pragmatisme : KISS, YAGNI &amp; DRY</h3>
-
+<h3 id="_kiss_yagni_dry">6.1. KISS, YAGNI &amp; DRY</h3>
+<div class="paragraph">
+<p>Quelques principes populaires qui circulent dans les communautés de développeurs :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>K</strong>eep <strong>I</strong>t <strong>S</strong>tupid <strong>S</strong>imple Le plus simple, le mieux.<br>
+Faire simple n’est cependant pas toujours facile.</p>
+</li>
+<li>
+<p><strong>Y</strong>ou <strong>A</strong>in’t <strong>G</strong>onna <strong>N</strong>eed <strong>I</strong>t N’ajouter que du code utile dans le présent.<br>
+Les prédictions sur le futur peuvent se révéler fausses et la conception qui a été faites "en prévision de" peut faire obstacle une fois le futur devenu présent.</p>
+</li>
+<li>
+<p><strong>D</strong>on’t <strong>R</strong>epeat <strong>Y</strong>ourself La duplication est mal vue parmi les développeurs, et amène plusieurs problèmes :</p>
+<div class="ulist">
+<ul>
+<li>
+<p>C’est plus de travail, il faut écrire, tester et maintenir plusieurs fois le même code</p>
+</li>
+<li>
+<p>En cas de bug, il faut corriger à de multiples endroits, certains pouvant être oubliés</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>C’est cette même simplicité que l’on retrouve dans deux des douze principes du <strong>Manifeste Agile</strong> :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Our highest priority is to satisfy the customer through early and continuous delivery of <span class="underline"><strong>valuable</strong></span> software</p>
+</li>
+<li>
+<p>Simplicity [the art of maximizing the amount of work not done] is essential.</p>
+</li>
+</ul>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_logs">6.2. Logs</h3>
+<div class="listingblock">
+<div class="title">Listing 9. Exemple de log peu utile</div>
+<div class="content">
+<pre class="rouge highlight"><code>2017-02-04 22:33:12 [thread-1] com.github.some.project.DatabaseService l.74 #################
+2017-02-04 22:33:12 [thread-2] com.github.some.project.DatabaseService l.75 START
+2017-02-04 22:33:12 [thread-1] com.github.some.project.DatabaseService l.93 STOP in 17ms
+2017-02-04 22:33:12 [thread-2] com.github.some.project.DatabaseService l.94 #################
+2017-02-04 22:33:12 [thread-1] com.github.some.project.DatabaseService l.124 java.sql.SQLIntegrityConstraintViolationException
+at org.h2.message.DbException.getJdbcSQLException(DbException.java:345)
+at org.h2.message.DbException.get(DbException.java:179)
+at org.h2.message.DbException.get(DbException.java:155)
+at org.h2.command.CommandContainer.update(CommandContainer.java:98)
+at org.h2.command.Command.executeUpdate(Command.java:258)
+at org.h2.jdbc.JdbcPreparedStatement.execute(JdbcPreparedStatement.java:201)
+... 50 more</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Listing 10. C’est déjà mieux</div>
+<div class="content">
+<pre class="rouge highlight"><code>2017-02-04 22:33:12.332 INFO  5jhgd45ui74h c.g.s.p.UserService.create [Joshua] [Bloch] Save successful
+2017-02-04 22:33:12.758 INFO  6jyg45hgduyg c.g.s.p.UserService.create [Doug] [Lea] Save successful
+2017-02-04 22:33:12.964 ERROR hg457gehe4rt c.g.s.p.UserService.create [James] [Gosling] Save KO: already exists</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Les logs ou fichiers d’évènements sont ces <em>fichiers</em> qui contiennent les informations nécessaires au diagnostique en cas de problème.<br>
+Elles peuvent également être utilisées comme source de données pour créer des métriques de supervision.<br>
+Les logs sont souvent la seule trace de la chronologie des évènements et sont d’autant plus importantes dans les applications à fort traffic, où résoudre le problème d’un utilisateur peut s’apparenter à chercher une aiguille dans une botte de foin.</p>
+</div>
+<div class="paragraph">
+<p>Afin de pouvoir exploiter au mieux les logs, il est important de les centraliser.<br>
+C’est-à-dire les envoyer dans un même endroit, que ce soit dans un :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Système de fichier, sur lequel on pourra utiliser la commande <code>grep</code> par exemple</p>
+</li>
+<li>
+<p><em>ElasticSearch</em>, <em>Loki</em> ou équivalent, sur lequel on pourra faire des requêtes</p>
+</li>
+<li>
+<p>SAAS dont c’est le coeur de métier (<em>Datadog</em>, <em>Logz.io</em>, etc.)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Les logs doivent être claires et apporter le maximum d’information possible.<br>
+Pour cela on évite les logs visuelles ou de <em>debug</em>.</p>
+</div>
+<div class="sect3">
+<h4 id="_la_stack_elastic">6.2.1. La stack Elastic</h4>
+<div class="paragraph">
+<p>Il existe plusieurs solutions de centralisation <em>on premise</em>, la plus connue étant la suite proposée par <em>Elastic</em> : <strong>ELK</strong> (<strong>E</strong>lasticSearch, <strong>L</strong>ogstash, <strong>K</strong>ibana).<br>
+Aujourd’hui un peu datée, des composants peuvent être remplacés, la chaîne peut être plus complexe pour mieux gérer le dimensionnement, mais la structure reste néanmoins identique.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/elk_stack.png" alt="elk stack">
+</div>
+</div>
+<div class="paragraph">
+<p>La brique <strong>Logstash</strong> permet de découper les lignes de logs en documents structurés (JSON) pour ensuite les envoyer à <strong>ElasticSearch</strong>.<br>
+<strong>ElasticSearch</strong> indexe les documents reçus et propose une API de recherche utilisée par <strong>Kibana</strong>.<br>
+<strong>Kibana</strong> fourni une interface Web qui satisfait aussi bien à la recherche exploratoire qu’à la création de tableaux de bord pour suivre l’état du système.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_bibliothèques_de_log">6.2.2. Bibliothèques de log</h4>
+<div class="paragraph">
+<p>Côté applicatif, il existe de nombreuses bibliothèques pour écrire dans des fichiers de logs.</p>
+</div>
+<div class="paragraph">
+<p>Rien que dans l’univers Java, on peut trouver</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>JUL (<strong>J</strong>ava <strong>U</strong>til <strong>L</strong>ogging) minimaliste, fourni par le JDK</p>
+</li>
+<li>
+<p>Apache JULI (<strong>J</strong>ava <strong>U</strong>til <strong>L</strong>ogging <strong>I</strong>nterface)</p>
+</li>
+<li>
+<p>Apache Commons Logging</p>
+</li>
+<li>
+<p>Apache Log4J</p>
+</li>
+<li>
+<p>JBoss Logging</p>
+</li>
+<li>
+<p>Logback</p>
+</li>
+<li>
+<p>etc.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>On retrouve dans ces différents outils des concepts communs :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Découplage entre le composant qui collecte les logs (<code>Logger</code>) et celui qui écrit à l’extérieur du système (<code>Appender</code>)</p>
+</li>
+<li>
+<p>Configuration extérieure au code (fichier, propriétés système)</p>
+</li>
+<li>
+<p>Niveaux de sévérités</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>DEBUG</strong> : utilise pour le développement, invisible une fois l’application déployée en dehors d’un poste de développement</p>
+</li>
+<li>
+<p><strong>INFO</strong> : information sur un évènement dans le système (changement d’état ou réaction à une sollicitation exogène)</p>
+</li>
+<li>
+<p><strong>WARN</strong> : une erreur est survenue, le système ne s’est pas comporté comme prévu, mais aucune intervention humaine n’est requise immédiatement</p>
+</li>
+<li>
+<p><strong>ERROR</strong> : une erreur est survenue, une intervention humaine est requise pour corriger le problème</p>
+</li>
+<li>
+<p>(<strong>FATAL</strong> : une erreur <span class="underline">irrémédiable</span> est survenue, suite à quoi le système s’est arrêté)</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Une erreur métier n’est pas forcément une erreur technique.<br>
+Par exemple : un utilisateur qui entre un mauvais mot de passe est un cas métier normal, géré par le code, et l’évènement correspondant (s’il est tracé) est de sévérité <strong>INFO</strong>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_architecture_de_slf4j">Architecture de SLF4J</h5>
+<div class="paragraph">
+<p>Le problème avec cette multiplicité de choix d’outil est que l’écosystème s’est construit de manière hétérogène.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Tomcat utilise <strong>JUL</strong> à travers l’abstraction <strong>JULI</strong>.</p>
+</li>
+<li>
+<p>Spring utilise <strong>Apache Commons Logging</strong>.</p>
+</li>
+<li>
+<p>Le client <strong>HBase</strong> officiel utilise <strong>Log4j</strong>.</p>
+</li>
+<li>
+<p>Etc.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Une application qui utilise différents frameworks et bibliothèques devrait alors configurer chacune de ces technologies de <em>logging</em> et ce de manière cohérente (même format de ligne, même fichier, même sévérité minimum, etc.).</p>
+</div>
+<div class="paragraph">
+<p>Ce serait pénible, et le risque de problèmes serait élevé (concurrence d’accès sur un même fichier, etc.).</p>
+</div>
+<div class="paragraph">
+<p>Une technologie existe cependant, pour unifier tous ces outils : <strong>SLF4J</strong>.</p>
+</div>
+<div class="paragraph">
+<p>Cet outil est composé</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>D’une <strong><em>API abstraite</em></strong> représentant de manière unifiée un grand nombre des fonctionnalités des bibliothèques de log existantes</p>
+</li>
+<li>
+<p>D’<strong><em>adaptateurs</em></strong> entre cette API et les bibliothèques de logs existantes qui ne l’implémentent pas</p>
+</li>
+<li>
+<p>De <strong><em>bridges</em></strong>, bibliothèques ayant la même compatibilité binaire (même noms qualifiés des classes, même signatures des méthodes) que les bibliothèques de logs existantes, mais redirigeant l’information vers l’<strong><em>API abstraite</em></strong></p>
+</li>
+</ul>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/slf4j_bridges.png" alt="slf4j bridges">
+</div>
+</div>
+<div class="paragraph">
+<p>Dans une application mettant cette technologie à profit, toutes les logs sont redirigées vers cette <strong><em>API abstraite</em></strong> et envoyées vers une seule et unique bibliothèque de log.</p>
+</div>
+<div class="paragraph">
+<p>La configuration est alors faite une fois, et il n’y a plus de risque de concurrence d’accès.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_mdc_mapped_diagnostic_context">MDC (Mapped Diagnostic Context)</h5>
+<div class="paragraph">
+<p>Le <strong>MDC</strong> est un outil fourni par la plupart des bibliothèques de log qui permet de transporter de l’information dans un thread.</p>
+</div>
+<div class="paragraph">
+<p>L’idée est d’enrichir les informations transverses utiles pour une ligne de log au fur et à mesure de leur disponibilité, sans avoir à les passer en paramètres de toutes les méthodes précédant l’écriture du message.</p>
+</div>
+<div class="paragraph">
+<p>Considérant ce code :</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 11. Fichier MyController.java</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java"><span class="kd">class</span> <span class="nc">MyController</span> <span class="o">{</span>
 
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">MyService</span> <span class="n">service</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nc">User</span> <span class="nf">newUser</span><span class="o">(</span><span class="nc">User</span> <span class="n">user</span><span class="o">,</span> <span class="nd">@Header</span><span class="o">(</span><span class="s">"correlationId"</span><span class="o">)</span> <span class="nc">String</span> <span class="n">correlationId</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">service</span><span class="o">.</span><span class="na">newUser</span><span class="o">(</span><span class="n">user</span><span class="o">,</span> <span class="n">correlationId</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Listing 12. Fichier MyService.java</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java"><span class="kd">class</span> <span class="nc">MyService</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">Logger</span> <span class="n">logger</span> <span class="o">=</span> <span class="nc">LoggerFactory</span><span class="o">.</span><span class="na">getLogger</span><span class="o">(</span><span class="nc">MyService</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">MyRepository</span> <span class="n">repository</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nc">User</span> <span class="nf">newUser</span><span class="o">(</span><span class="nc">User</span> <span class="n">user</span><span class="o">,</span> <span class="nc">String</span> <span class="n">correlationId</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">isValid</span><span class="o">(</span><span class="n">user</span><span class="o">,</span> <span class="n">correlationId</span><span class="o">))</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">repository</span><span class="o">.</span><span class="na">save</span><span class="o">(</span><span class="n">user</span><span class="o">,</span> <span class="n">correlationId</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nf">InvalidUserException</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">boolean</span> <span class="nf">isValid</span><span class="o">(</span><span class="nc">User</span> <span class="n">user</span><span class="o">,</span> <span class="nc">String</span> <span class="n">correlationId</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">user</span><span class="o">.</span><span class="na">age</span> <span class="o">&gt;</span> <span class="mi">110</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">logger</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"["</span> <span class="o">+</span> <span class="n">correlationId</span> <span class="o">+</span> <span class="s">"] Invalid User: too old"</span><span class="o">);</span>
+            <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span><span class="o">(</span><span class="n">user</span><span class="o">.</span><span class="na">age</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">logger</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"["</span> <span class="o">+</span> <span class="n">correlationId</span> <span class="o">+</span> <span class="s">"] Invalid User: too young"</span><span class="o">);</span>
+            <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>La variable <code>correlationId</code> est passé systématiquement car il est nécessaire de la logger à chaque fois pour réconcilier plusieurs lignes de logs qui concernent le même appel d’un utilisateur.</p>
+</div>
+<div class="paragraph">
+<p>C’est une bonne candidate pour le <strong>MDC</strong> :</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 13. Fichier MyController.java</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java"><span class="kd">class</span> <span class="nc">MyController</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">MyService</span> <span class="n">service</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nc">User</span> <span class="nf">newUser</span><span class="o">(</span><span class="nc">User</span> <span class="n">user</span><span class="o">,</span> <span class="nd">@Header</span><span class="o">(</span><span class="s">"correlationId"</span><span class="o">)</span> <span class="nc">String</span> <span class="n">correlationId</span><span class="o">)</span> <span class="o">{</span>
+        <span class="no">MDC</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"correlationId"</span><span class="o">,</span> <span class="n">correlationId</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">service</span><span class="o">.</span><span class="na">newUser</span><span class="o">(</span><span class="n">user</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Listing 14. Fichier MyService.java</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java"><span class="kd">class</span> <span class="nc">MyService</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">Logger</span> <span class="n">logger</span> <span class="o">=</span> <span class="nc">LoggerFactory</span><span class="o">.</span><span class="na">getLogger</span><span class="o">(</span><span class="nc">MyService</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">MyRepository</span> <span class="n">repository</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nc">User</span> <span class="nf">newUser</span><span class="o">(</span><span class="nc">User</span> <span class="n">user</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">isValid</span><span class="o">(</span><span class="n">user</span><span class="o">))</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">repository</span><span class="o">.</span><span class="na">save</span><span class="o">(</span><span class="n">user</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nf">InvalidUserException</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">boolean</span> <span class="nf">isValid</span><span class="o">(</span><span class="nc">User</span> <span class="n">user</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">user</span><span class="o">.</span><span class="na">age</span> <span class="o">&gt;</span> <span class="mi">110</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">logger</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"Invalid User: too old"</span><span class="o">);</span>
+            <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span><span class="o">(</span><span class="n">user</span><span class="o">.</span><span class="na">age</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">logger</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"Invalid User: too young"</span><span class="o">);</span>
+            <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Il n’y a plus qu’à configurer le bon format de sortie des lignes de log pour que le <code>correlationId</code> soit présent.</p>
+</div>
+<div class="listingblock">
+<div class="title">Listing 15. Fichier logback.xml</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;configuration&gt;</span>
+
+  <span class="nt">&lt;appender</span> <span class="na">name=</span><span class="s">"STDOUT"</span> <span class="na">class=</span><span class="s">"ch.qos.logback.core.ConsoleAppender"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;encoder&gt;</span>
+      <span class="nt">&lt;pattern&gt;</span>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - [%X{correlationId}] %msg%n<span class="nt">&lt;/pattern&gt;</span> &lt;!--<b class="conum">(1)</b>--&gt;
+    <span class="nt">&lt;/encoder&gt;</span>
+  <span class="nt">&lt;/appender&gt;</span>
+
+  <span class="nt">&lt;root</span> <span class="na">level=</span><span class="s">"DEBUG"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;appender-ref</span> <span class="na">ref=</span><span class="s">"STDOUT"</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;/root&gt;</span>
+<span class="nt">&lt;/configuration&gt;</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Ici une ligne de log sera structurée comme suit : &lt;heure&gt; &lt;nom du thread&gt; &lt;sévérité&gt; &lt;nom de la classe&gt; - &lt;correlationId&gt; &lt;message&gt;</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_logs_gc">6.2.3. Logs GC</h4>
+<div class="paragraph">
+<p>Les logs applicatives sont une chose, mais quand un problème arrive en production, son origine ou ses symptômes peuvent être techniques.</p>
+</div>
+<div class="paragraph">
+<p>Il est important de ne pas oublier d’activer les logs du <strong>G</strong>arbarge <strong>C</strong>ollector.<br>
+Cela se fait avec un flag sur la ligne de commande du démarrage de la JVM :</p>
+</div>
+<div class="paragraph">
+<p><code>-Xlog:gc=debug:file=gc.log:pid,time,uptimemillis:filecount=5,filesize=1M</code></p>
+</div>
+<div class="paragraph">
+<p>Ici la JVM va écrire les évènements à partir de la sévérité <strong>debug</strong> dans un fichier <strong>gc.log</strong> (en gérant la rotation sur 5 fichiers max de 1M chacun) avec les informations PID (processus ID), heure et durée d’exécution de l’application.</p>
+</div>
+<div class="paragraph">
+<p>Plus d’options ici : <a href="https://openjdk.java.net/jeps/158" class="bare">https://openjdk.java.net/jeps/158</a></p>
+</div>
+<div class="paragraph">
+<p><span class="underline">Alternativement</span> des outils de collecte de métriques tels que <strong>Micrometer</strong> peuvent exporter ces informations vers des systèmes ingérant des <em>séries temporelles</em> (Time Series) tels que <strong>Graphite</strong>, <strong>Warp10</strong> ou <strong>Prometheus</strong> (pour du on-premise).</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_heap_dump">6.2.4. Heap Dump</h4>
+<div class="paragraph">
+<p>Quand la JVM s’arrête de manière non prévue, cela peut être à cause d’un problème de mémoire (<strong>O</strong>ut <strong>O</strong>f <strong>M</strong>emory error) et dans ce cas l’investigation va se faire sur la base d’un <strong>Heap Dump</strong>.</p>
+</div>
+<div class="paragraph">
+<p>Un <strong>Heap Dump</strong> est une projection sur fichier de l’état de la mémoire de la JVM.</p>
+</div>
+<div class="paragraph">
+<p>Voici donc le flag à ne pas oublier sur la ligne de commande du démarrage de la JVM :</p>
+</div>
+<div class="paragraph">
+<p><code>-XX:+HeapDumpOnOutOfMemoryError</code></p>
+</div>
+<div class="paragraph">
+<p>Par la suite un tel fichier peut être analysé avec des outils comme <strong>Eclipse MAT</strong> (gratuit) ou <strong>JProfiler</strong> (payant).</p>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_supervision">6.3. Supervision</h3>
+<div class="paragraph">
+<p>La collecte de logs et de métriques forme la base de la <em>supervision</em> d’un système.</p>
+</div>
+<div class="paragraph">
+<p>Sur cette base, il est nécessaire d’ajouter des composants pour transformer ces données brutes en :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Alertes, dans le cas où un comportement anormal est détecté</p>
+</li>
+<li>
+<p>Tableaux de bord, pour investiguer un comportement anormal, trouver des correlations et converger vers l’origine du problème.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>La supervision, c’est l’outillage qui permet de suivre l’état d’un système, de comprendre son fonctionnement, et même de prévoir son utilisation.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Conseil</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Il faut néanmoins faire preuve de retenue et ne garder que les informations qui ont de la valeur, au risque de se perdre dans trop d’information et de devoir stocker d’énormes quantités d’informations inutiles.</p>
+</div>
+<div class="paragraph">
+<p>Le résultat doit être construit à l’aide de ces trois questions :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Quels sont les comportements du système que l’on souhaite identifier comme problématiques (service indisponible, utilisation anormale, etc.) ?</p>
+</li>
+<li>
+<p>Quels comportements du système souhaite-t-on comprendre (coup de bélier, interruption de services externes, etc.) ?</p>
+</li>
+<li>
+<p>Où placer les sondes qui remonterons les informations nécessaires ?</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Que ce soit des outils d’indexation de document, de stockage de séries temporelles ou des bases de données, tous sont des sources d’information pour la constitution de tableaux de bord et d’alerte.</p>
+</div>
+<div class="paragraph">
+<p>L’outil open-source le plus complet aujourd’hui pour aggréger ces sources est Grafana</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="images/grafana.png" alt="grafana">
+</div>
+</div>
 <div style="page-break-after: always;"></div>
 </div>
 </div>
@@ -2950,6 +3429,10 @@ Everybody wants to know when it's Friday
 <li>
 <p>Out of the tar pit, traité sur la complexité<br>
 <a href="https://github.com/papers-we-love/papers-we-love/blob/master/design/out-of-the-tar-pit.pdf" class="bare">https://github.com/papers-we-love/papers-we-love/blob/master/design/out-of-the-tar-pit.pdf</a></p>
+</li>
+<li>
+<p>Agile Manifesto<br>
+<a href="https://agilemanifesto.org/" class="bare">https://agilemanifesto.org/</a></p>
 </li>
 <li>
 <p>Blogs de</p>
@@ -2971,7 +3454,7 @@ Everybody wants to know when it's Friday
 </div>
 </li>
 <li>
-<p>Vidéos youtube de conférences</p>
+<p>Vidéos YouTube de conférences</p>
 <div class="ulist">
 <ul>
 <li>
@@ -3000,7 +3483,7 @@ Everybody wants to know when it's Friday
 <p>InfoQ <a href="https://www.infoq.com/fr/" class="bare">https://www.infoq.com/fr/</a></p>
 </li>
 <li>
-<p><a href="https://www.developpez.com/" class="bare">https://www.developpez.com/</a></p>
+<p>Developpez <a href="https://www.developpez.com/" class="bare">https://www.developpez.com/</a></p>
 </li>
 </ul>
 </div>
