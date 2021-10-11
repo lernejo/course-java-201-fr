@@ -674,7 +674,7 @@ pre.rouge {
 </li>
 <li><a href="#_le_découplage_un_concept_valide_a_toutes_les_échelles">2. Le Découplage, un concept valide a toutes les échelles</a>
 <ul class="sectlevel2">
-<li><a href="#_a_léchelle_dune_classe_java">2.1. A l’échelle d’une classe Java</a></li>
+<li><a href="#_à_léchelle_dune_classe_java">2.1. À l’échelle d’une classe Java</a></li>
 <li><a href="#_a_léchelle_dune_application">2.2. A l’échelle d’une application</a></li>
 <li><a href="#_a_léchelle_dun_ensemble_dapplication">2.3. A l’échelle d’un ensemble d’application</a></li>
 </ul>
@@ -822,7 +822,7 @@ Typiquement, dans le monde de l’open-source, quand un individu externe à l’
 </div>
 <div class="paragraph">
 <p>Git est aujourd’hui très répandu, mais fait suite historiquement à d’autres SCMs (CVS, SVN, Mercurial, etc.).<br>
-Tous ces outils fonctionnent par différentiel (patch) pour permettre de restaurer une version précédente, ou encore de travailler sur une version parallèle qui pourra plus tard être ré-incorporée dans la version principale.</p>
+Tous ces outils fonctionnent par différentiel (patch) pour permettre de restaurer une version précédente, ou encore de travailler sur une version parallèle qui pourra plus tard être réincorporée dans la version principale.</p>
 </div>
 <div class="imageblock text-center">
 <div class="content">
@@ -863,7 +863,7 @@ Tous ces outils fonctionnent par différentiel (patch) pour permettre de restaur
 <p><code>git clone &lt;url&gt;</code> : copie un dépôt distant existant en local</p>
 </li>
 <li>
-<p>ou <code>git init</code> : transforme le dossier courant en dépôt local. Un dépôt distant pourra être indiqué par la suite avec <code>git remote add origin &lt;url&gt;</code></p>
+<p>Ou <code>git init</code> : transforme le dossier courant en dépôt local. Un dépôt distant pourra être indiqué par la suite avec <code>git remote add origin &lt;url&gt;</code></p>
 </li>
 </ul>
 </div>
@@ -974,7 +974,7 @@ Ce sera lors d’un push (envoi de l’historique local vers un remote) que ces 
 <div class="paragraph">
 <p>La copie de travail (<strong>working copy</strong>) sont les fichiers contenus dans un dépôt local.<br>
 Il est possible de les modifier, d’en ajouter ou d’en supprimer, sans modifier les versions connues par Git.<br>
-Il sera dans tous les cas possible de revenir à une version connue par Git, grâce à la base de données.</p>
+Il sera, dans tous les cas, possible de revenir à une version connue par Git, grâce à la base de données.</p>
 </div>
 <div class="paragraph">
 <p>Afin de considérer les modifications opérées sur la copie de travail pour être historisées (embarquées dans un <em>commit</em>), il est nécessaire de les indexer.<br>
@@ -1060,6 +1060,28 @@ Ne pas utiliser le rebase sur une branche partagée par plusieurs développeurs,
 <p>Maven est un outil de construction de projet (Build Automation tool) autour de la JVM.</p>
 </div>
 <div class="paragraph">
+<p>Il permet entre autre d’orchestrer :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Gestion des dépendances</p>
+</li>
+<li>
+<p>Compilation des sources</p>
+</li>
+<li>
+<p>Lancement des tests</p>
+</li>
+<li>
+<p>Génération de la documentation</p>
+</li>
+<li>
+<p>Assemblage des binaires</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
 <p>Sa grande extensibilité lui permet de s’adapter à différents languages (Java, Scala, Kotlin, etc.) et à différents scénarios (intégration continue, génération de code, déploiement, etc.).</p>
 </div>
 <div class="sect3">
@@ -1106,14 +1128,17 @@ Ne pas utiliser le rebase sur une branche partagée par plusieurs développeurs,
 </li>
 <li>
 <p>Section optionnelle, permettant de fixer l’encodage et la version de Java utilisée pour éviter des conflits par la suite</p>
+</li>
+</ol>
+</div>
 <div class="ulist">
 <ul>
 <li>
-<p>Un répertoire <strong>src</strong> qui contiendra tous les fichiers que l’on souhaite conserver dans un SCM</p>
+<p>Un répertoire <strong>src</strong> qui contiendra tous les fichiers que l’on souhaite conserver dans le SCM</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Dans <strong>src</strong> on retrouve deux répertoires : <strong>main</strong> et <strong>test</strong> qui contiennent respectivement le code de production, et le code de test, qui ne sera pas inclus dans les binaires produits lors de la phase de <strong><em>packaging</em></strong></p>
+<p>Dans <strong>src</strong> on retrouve deux répertoires : <strong>main</strong> et <strong>test</strong> qui contiennent respectivement le code de production, et le code de test (code qui ne sera pas inclus dans les binaires produits lors de la phase de <strong><em>packaging</em></strong>)</p>
 <div class="ulist">
 <ul>
 <li>
@@ -1133,9 +1158,6 @@ Ne pas utiliser le rebase sur une branche partagée par plusieurs développeurs,
 </div>
 </li>
 </ul>
-</div>
-</li>
-</ol>
 </div>
 <div class="imageblock text-center">
 <div class="content">
@@ -1203,7 +1225,7 @@ Ne pas utiliser le rebase sur une branche partagée par plusieurs développeurs,
 <p><strong>cukedoctor-maven-plugin</strong> : produit une version HTML du résultat des tests Cucumber</p>
 </li>
 <li>
-<p><strong>sonar-maven-plugin</strong> : analyse le code avec différents outils (PMD, Checkstyle, JaCoCo, etc.) et punlie les résultats vers un serveur Sonar</p>
+<p><strong>sonar-maven-plugin</strong> : analyse le code avec différents outils (PMD, Checkstyle, JaCoCo, etc.) et publie les résultats vers un serveur Sonar</p>
 </li>
 </ul>
 </div>
@@ -1267,15 +1289,15 @@ Ne pas utiliser le rebase sur une branche partagée par plusieurs développeurs,
 </li>
 <li>
 <p>Ce second bloc est indiqué avec le <strong><em>scope</em></strong> <code>test</code>, cette dépendance ne sera donc disponible que pour le code de test</p>
+</li>
+</ol>
+</div>
 <div class="ulist">
 <ul>
 <li>
 <p><code>build/plugins</code> : cette balise contient tous les plugins utilisés par le projet ainsi que leurs configurations</p>
 </li>
 </ul>
-</div>
-</li>
-</ol>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1303,15 +1325,15 @@ Ne pas utiliser le rebase sur une branche partagée par plusieurs développeurs,
 </li>
 <li>
 <p>La balise configuration permet de modifier le comportement du plugin, ici le plugin va faire échouer le build si aucun test n’est trouvé</p>
+</li>
+</ol>
+</div>
 <div class="ulist">
 <ul>
 <li>
 <p><code>profiles</code> : cette balise permet d’ajouter des pans de configuration qui sont désactivables. Un profil peut ajouter des <code>properties</code>, des <code>dependencies</code>, des <code>plugins</code> et même des <code>modules</code> (utilisés pour les projets multi-modules)</p>
 </li>
 </ul>
-</div>
-</li>
-</ol>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1341,11 +1363,11 @@ Ne pas utiliser le rebase sur une branche partagée par plusieurs développeurs,
 </div>
 <div class="paragraph">
 <p>Maven propose un répertoire de source, des phases (compilation &amp; exécution) et un scope pour gérer ce code qui n’est pas destiné à la production.<br>
-Cependant, Maven ne fourni pas d’outil pour déclarer ou exécuter ces tests.</p>
+Cependant, Maven ne fourni pas directement d’outil pour déclarer ou exécuter ces tests.</p>
 </div>
 <div class="paragraph">
 <p>C’est là qu’entrent en jeu les frameworks de tests.<br>
-Il en existe plusieurs, et JUnit est le plus répandu aujourd’hui.</p>
+Il en existe plusieurs, et JUnit est aujourd’hui le plus répandu.</p>
 </div>
 <div class="sect3">
 <h4 id="_utilisation_de_lapi_de_junit_jupiter">1.4.1. Utilisation de l’API de JUnit-Jupiter</h4>
@@ -1389,7 +1411,7 @@ Il en existe plusieurs, et JUnit est le plus répandu aujourd’hui.</p>
 <div class="colist arabic">
 <ol>
 <li>
-<p>Méthode identifiée comme un test car marqué avec l’annotation <code>org.junit.jupiter.api.Test</code></p>
+<p>Méthode identifiée comme un test car marquée avec l’annotation <code>org.junit.jupiter.api.Test</code></p>
 </li>
 <li>
 <p>Élément déclencheur, du code de production est exécuté</p>
@@ -1398,10 +1420,10 @@ Il en existe plusieurs, et JUnit est le plus répandu aujourd’hui.</p>
 <p>On vérifie le résultat du code de production (ici avec la bibliothèque <strong>AssertJ</strong>)</p>
 </li>
 <li>
-<p>Ces trois lignes forme une seule expression, le compilateur ne tenant pas compte des sauts de ligne. Ce genre d’écriture est appelé <strong>fluent interface</strong> et repose sur l’appel consécutif de méthode de sorte à former des phrases. Ici littéralement : vérifie que la variable <code>result</code> en tant que "division of 8 by 2" est égal à 4</p>
+<p>Ces trois lignes forme une seule expression, le compilateur ne tenant pas compte des sauts de ligne. Ce genre d’écriture est appelé <strong>fluent interface</strong> et repose sur des appels consécutifs de méthodes de sorte à former des phrases. Ici littéralement : vérifie que la variable <code>result</code> en tant que "division of 8 by 2" est égal à 4</p>
 </li>
 <li>
-<p>Type de vérification différent, ici on vérifie qu’une erreur est produite, le test sera non passant si aucune erreur n’est produite ou si le type de l’erreur est différent de celui indiqué</p>
+<p>Type différent de vérification, ici on vérifie qu’une erreur est produite, le test sera non passant si aucune erreur n’est produite ou si le type de l’erreur est différent de celui indiqué</p>
 </li>
 <li>
 <p>Une fonction est passée à l’API de vérification, elle sera exécutée par la bibliothèque, dans un bloc <code>try / catch</code></p>
@@ -1416,7 +1438,7 @@ Il en existe plusieurs, et JUnit est le plus répandu aujourd’hui.</p>
 <p>Le jeu de donnée, ici passé comme un CSV (Comma Separated Values), d’autres sources de données sont possibles.</p>
 </li>
 <li>
-<p>La méthode prend donc des paramètres dont le nombre correspond aux données dans les jeux de données. L’ordre des paramètres doit correspondre ) l’ordre des données utilisé.</p>
+<p>La méthode prend donc des paramètres dont le nombre correspond aux données dans les jeux de données. L’ordre des paramètres doit correspondre à l’ordre des données.</p>
 </li>
 </ol>
 </div>
@@ -1440,7 +1462,7 @@ Il en existe plusieurs, et JUnit est le plus répandu aujourd’hui.</p>
 <p>JUnit fourni également un lanceur de moteur(s) d’exécution : <strong>junit-platform-launcher</strong></p>
 </div>
 <div class="paragraph">
-<p>Enfin, le plugin <strong>maven-surefire-plugin</strong> sait se connecter (entre autres) à ce <em>launcher</em> (depuis la version 2.22.0).</p>
+<p>Enfin, le plugin <strong>maven-surefire-plugin</strong> "sait" se connecter (entre autres) à ce <em>launcher</em> (depuis la version 2.22.0).</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -1520,7 +1542,7 @@ Cela demande aux équipes fournissant des plugins de fournir des outils qui fonc
 <div class="sectionbody">
 <div class="quoteblock">
 <blockquote>
-J’ai répondu à leur problème en leur proposant d’ajouter un niveau d’indirection.
+J’ai répondu à leur problème en leur proposant d’ajouter un nouveau niveau d’indirection.
 </blockquote>
 <div class="attribution">
 &#8212; un architecte qui passait par là
@@ -1532,8 +1554,11 @@ En cas de problème, lié à la performance, à la sécurité ou au fonctionneme
 Plus le changement de code est important, et plus le risque augmente, et plus le temps nécessaire à la mise en production se rallonge.<br>
 Une correction (mais cela vaut pour une évolution également) doit comporter le moins de risque possible.</p>
 </div>
+<div class="paragraph">
+<p>Réduire l’inertie entre la conception et la mise en production, c’est augmenter la maitrise et la confiance de l’équipe dans le code produit.</p>
+</div>
 <div class="sect2">
-<h3 id="_a_léchelle_dune_classe_java">2.1. A l’échelle d’une classe Java</h3>
+<h3 id="_à_léchelle_dune_classe_java">2.1. À l’échelle d’une classe Java</h3>
 <div class="sect3">
 <h4 id="_exemple_1_état_interne_différent_du_contrat_public">2.1.1. Exemple 1 : État interne différent du contrat public</h4>
 <div class="paragraph">
@@ -1564,7 +1589,7 @@ Une correction (mais cela vaut pour une évolution également) doit comporter le
 </ol>
 </div>
 <div class="paragraph">
-<p>La classe pourrait être ré-écrite de façon à <span class="underline">découpler</span> :</p>
+<p>La classe pourrait être réécrite de façon à <span class="underline">découpler</span> :</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1612,7 +1637,7 @@ Une correction (mais cela vaut pour une évolution également) doit comporter le
 </div>
 </div>
 <div class="paragraph">
-<p>A l’usage, il est simple d’inverser un paramètre avec un autre car leurs types sont identiques.<br>
+<p>À l’usage, il est simple d’inverser un paramètre avec un autre car leurs types sont identiques.<br>
 Ainsi la compilation ne va pas aider à détecter un bug, où le mois et l’année sont inversées par exemple.<br>
 Il s’agit d’un <em>couplage de position</em>.<br>
 Un meilleur design pourrait être :</p>
@@ -1644,7 +1669,7 @@ Un meilleur design pourrait être :</p>
 <pre class="rouge highlight"><code data-lang="java"><span class="nc">Person</span> <span class="n">person</span> <span class="o">=</span> <span class="nc">PersonBuilder</span><span class="o">.</span><span class="na">builder</span><span class="o">()</span>
     <span class="o">.</span><span class="na">firstname</span><span class="o">(</span><span class="s">"Bobby"</span><span class="o">)</span>
     <span class="o">.</span><span class="na">lastname</span><span class="o">(</span><span class="s">"Singer"</span><span class="o">)</span>
-    <span class="o">.</span><span class="na">birthMonth</span><span class="o">(</span><span class="nc">YearMonth</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="mi">1950</span><span class="o">,</span> <span class="nc">Month</span><span class="o">.</span><span class="na">MARCH</span><span class="o">))</span>
+    <span class="o">.</span><span class="na">birthMonth</span><span class="o">(</span><span class="nc">YearMonth</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="mi">1962</span><span class="o">,</span> <span class="nc">Month</span><span class="o">.</span><span class="na">DECEMBER</span><span class="o">))</span>
     <span class="o">.</span><span class="na">build</span><span class="o">();</span>
 
 <span class="n">repository</span><span class="o">.</span><span class="na">savePerson</span><span class="o">(</span><span class="n">person</span><span class="o">);</span></code></pre>
@@ -1662,14 +1687,16 @@ Un meilleur design pourrait être :</p>
 <p>Substituer un objet par un autre (implémentant la même interface) sans modifier le code appelant</p>
 </li>
 <li>
-<p>Cacher l’implémentation (méthodes de l’objet non présentes dans l’interface) dans le code appelant</p>
+<p>Cacher l’implémentation (méthodes et champs de l’objet non présents dans l’interface) dans le code appelant</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
 <p>Le concept de <code>Logger</code>, largement utilisé dans l’informatique de gestion est une abstraction pour envoyer un message <em>quelque part</em>.<br>
-Du point de vue du code métier, peu importe ce ’<em>quelque part</em>’.<br>
-Ainsi cette abstraction est une interface, par exemple :</p>
+Du point de vue du code métier, peu importe ce "<em>quelque part</em>".</p>
+</div>
+<div class="paragraph">
+<p>Cette abstraction est une interface, par exemple :</p>
 </div>
 <div class="listingblock">
 <div class="title">Listing 6. Fichier Logger.java</div>
@@ -1708,7 +1735,7 @@ Ainsi cette abstraction est une interface, par exemple :</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Ainsi passer une implémentation de <code>Logger</code> qui écrit dans</p>
+<p>Passer une implémentation de <code>Logger</code> qui écrit dans</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1777,12 +1804,12 @@ Le code produit, répondant strictement aux cas de tests réalisés, est par con
 <p>Une application touche la plupart du temps à plusieurs concepts métiers distincts.</p>
 </div>
 <div class="paragraph">
-<p>Ainsi dans une application de e-commerce on peut retrouver, la gestion du catalogue, le descriptif d’un produit, le détail du panier, le paiement, la facturation, etc.</p>
+<p>Dans une application de commerce électronique on peut retrouver, la gestion du catalogue, le descriptif d’un produit, le détail du panier, le paiement, la facturation, etc.</p>
 </div>
 <div class="paragraph">
 <p>Ces domaines ont des liens entre eux, mais peuvent évoluer indépendamment les uns des autres.<br>
 Le code doit retranscrire ces liaisons, mais aussi cette indépendance.<br>
-Ainsi le fait de modifier la gestion du panier n’aura (ou ne devrait) pas avoir d’impact sur le paiement.</p>
+Le fait de modifier la gestion du panier n’aura (ou ne devrait) pas avoir d’impact sur le paiement.</p>
 </div>
 <div class="paragraph">
 <p>Mettre en place le découplage entre les composants d’une application permet de diminuer le risque en cas de changement, et d’évaluer plus finement les impacts afin de savoir où mettre l’accent sur les tests par exemple.</p>
@@ -1814,13 +1841,13 @@ On parle de code technique quand celui-ci ne porte pas directement de règle mé
 </ul>
 </div>
 <div class="paragraph">
-<p>Ainsi il est possible de construire le <em>coeur</em> applicatif sans l’aide de framework ou autre bibliothèque afin de simplifier l’écriture des tests et de réduire à sa plus simple forme le code <em>métier</em>.</p>
+<p>Il est possible de construire le <em>coeur</em> applicatif sans l’aide de framework ou autre bibliothèque afin de simplifier l’écriture des tests et de réduire à sa plus simple forme le code <em>métier</em>.</p>
 </div>
 <div class="paragraph">
-<p>On pourra venir par la suite y brancher des <em>connecteurs</em> qui feront le pont entre ce code et les reste du système ou les utilisateurs.</p>
+<p>On pourra venir par la suite y brancher des <em>connecteurs</em> qui feront le pont entre ce code et le reste du système ou les utilisateurs.</p>
 </div>
 <div class="paragraph">
-<p>C’est l’<span class="underline">architecture hexagonale</span> que nous verrons en détail un peu plus loin.</p>
+<p>Une de ces approche est l’<span class="underline">architecture hexagonale</span> que nous verrons en détail un peu plus loin.</p>
 </div>
 </div>
 </div>
@@ -1833,7 +1860,7 @@ On parle de code technique quand celui-ci ne porte pas directement de règle mé
 <p>Dans un système d’information, il est courant que plusieurs applications, opérées par des équipes distinctes doivent échanger des données.</p>
 </div>
 <div class="paragraph">
-<p>Les choix d’architectures réalisés dans ce cadre doivent aussi bien prendre en compte les objectifs énumérés en introduction (Maintenabilité, Testabilité, Sécurité, etc.) que les frictions humaines entre les équipes.</p>
+<p>Les choix d’architectures réalisés dans ce cadre doivent aussi bien prendre en compte les objectifs énumérés en introduction (Maintenabilité, Testabilité, Sécurité, etc.) que les frictions entre les équipes.</p>
 </div>
 <div class="paragraph">
 <p>Les équipes qui travaillent sur des applications différentes sont constituées d’hommes et de femmes qui ont des façons de travailler différentes (agile, cycle en V, etc.), des rythmes différents (décalage horaire, temps partiel, etc.), des façons d’opérer la production différentes (avec ou sans coupure de service, livraison continue, ou par lot, etc.).</p>
@@ -1847,7 +1874,7 @@ On parle de code technique quand celui-ci ne porte pas directement de règle mé
 <div class="sect3">
 <h4 id="_exemple_1_communication_asynchrone">2.3.1. Exemple 1 : communication asynchrone</h4>
 <div class="paragraph">
-<p>Considérant une application soumise à de forts traffics de manière irrégulière, comme un site de simulation de crédit immobilier qui sera consulté massivement entre 12h et 14h à la pause déjeuner.</p>
+<p>Considérant une application soumise à de forts traffics de manière irrégulière, comme un site de simulation de crédit immobilier qui sera consulté massivement entre 12 h et 14 h à la pause déjeuner.</p>
 </div>
 <div class="imageblock text-center">
 <div class="content">
@@ -1855,7 +1882,7 @@ On parle de code technique quand celui-ci ne porte pas directement de règle mé
 </div>
 </div>
 <div class="paragraph">
-<p>Le site public recueille les demandes de simulation et les envoient à un service interne qui doit :</p>
+<p>Le site public recueille les demandes de simulation et les envoie à un service interne qui doit :</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1912,7 +1939,7 @@ Il existe plusieurs manières de construire un tel système, par exemple avec</p
 <p>Un batch qui va lire à interval régulier les X plus vieux messages dans une base de donnée (attention cependant, un système de batch <em>scale</em> difficilement)</p>
 </li>
 <li>
-<p>Une petite application dont l&#8217;état n&#8217;est pas géré dans sa mémoire (mais plutôt dans une base de donnée, de façon à pouvoir scaler si nécessaire)</p>
+<p>Une petite application dont l’état n’est pas géré dans sa mémoire (mais plutôt dans une base de donnée, de façon à pouvoir scaler si nécessaire)</p>
 </li>
 <li>
 <p>Les fonctionnalités de certains brokers</p>
@@ -1948,7 +1975,7 @@ Il existe plusieurs manières de construire un tel système, par exemple avec</p
 <p>Au-delà de l’aspect mercantile de la chose, il est également plus <em>agréable</em> d’ajouter de nouvelles fonctionnalités, que de gérer une friction entre équipe ou de multiples bugs.</p>
 </div>
 <div class="paragraph">
-<p>L’architecture applicative doit donc avoir pour objectif de fluidifier les cycles de développement pour concentrer l’énergie sur la valeur ajoutée.</p>
+<p>L’architecture applicative doit donc tenir compte des cycles de développement pour concentrer l’énergie sur la valeur ajoutée.</p>
 </div>
 <div class="sect2">
 <h3 id="_n_tiers">3.1. N-tiers</h3>
@@ -1987,7 +2014,7 @@ Il existe plusieurs manières de construire un tel système, par exemple avec</p
 <p>Fournir aux contrôleurs des traitements métiers de haut niveau afin qu’aucune logique métier ne soit nécessaire en amont</p>
 </li>
 <li>
-<p>Valider la cohérence des données</p>
+<p>Valider la cohérence des données et le respect des règles <em>métiers</em></p>
 </li>
 <li>
 <p>(Gérer les transactions, si la base de donnée est transactionnelle)</p>
@@ -2047,7 +2074,7 @@ Il existe plusieurs manières de construire un tel système, par exemple avec</p
 <p>L’<strong>architecture hexagonale</strong> vise à séparer le code <em>métier</em> du code <em>technique</em>.</p>
 </div>
 <div class="paragraph">
-<p>Pour celà on distingue le coeur (<em>core</em>) de l’application, des <em>adaptateurs</em> (<em>adapters</em>) qui font le lien entre le code <em>métier</em> et le reste du monde ; que ce soit via des communications <em>machine-to-machine</em> (HTTPS, MQTT, etc.) ou <em>human-to-machine</em> (interface graphique, email, SMS, etc.).</p>
+<p>Pour cela on distingue le coeur (<em>core</em>) de l’application, des <em>adaptateurs</em> (<em>adapters</em>) qui font le lien entre le code <em>métier</em> et le reste du monde ; que ce soit via des communications <em>machine-to-machine</em> (HTTPS, MQTT, etc.) ou <em>human-to-machine</em> (interface graphique, email, SMS, etc.).</p>
 </div>
 <div class="paragraph">
 <p>Les objectifs sont les suivants :</p>
@@ -2090,7 +2117,7 @@ Il existe plusieurs manières de construire un tel système, par exemple avec</p
 <p>Ce code ne doit contenir aucune dépendance vers un framework ou une bibliothèque.</p>
 </div>
 <div class="paragraph">
-<p>À cette fin, il est plus simple de l’isoler dans un module dédié de sorte que ce code n’ait effectivement aucune dépendance.</p>
+<p>À cette fin, il est plus simple de l’isoler dans un module dédié de sorte que ce code n’ait en pratique aucune dépendance (<em>classpath</em> vide).</p>
 </div>
 <div class="paragraph">
 <p>Par la suite d’autres modules peuvent être ajoutés contenant le code des adaptateurs, ces modules auront une dépendance sur le module coeur.</p>
@@ -2113,15 +2140,15 @@ Il existe plusieurs manières de construire un tel système, par exemple avec</p
 <p>L’approche monolithique consiste à former une seule application avec la totalité des fonctionnalités.</p>
 </div>
 <div class="paragraph">
-<p>Ce qui peut impliquer de <em>mélanger</em> plusieurs domaines métiers, en reprenant l’exemple d’un site de e-commerce : gestion du catalogue, détail du panier, paiement, facturation, etc.</p>
+<p>Ce qui peut impliquer de <em>mélanger</em> plusieurs domaines métiers, en reprenant l’exemple d’un site de commerce électronique : gestion du catalogue, détail du panier, paiement, facturation, etc.</p>
 </div>
 <div class="paragraph">
-<p>Il est donc nécessaire de structurer le code d’une application monolithique en <em>modules</em>  pour isoler les parties du code qui n’ont pas à interagir entre elles.</p>
+<p>Il est nécessaire de structurer le code d’une application monolithique en <em>modules</em> pour isoler les parties du code qui n’ont pas à interagir entre elles.</p>
 </div>
 <div class="paragraph">
-<p>Le risque dans le cas où une telle structure n’est pas mis en place est de voir la complexité de l’application augmenter de manière exponentielle à chaque ajout de fonctionnalité.<br>
+<p>Le risque dans le cas où une telle structure n’est pas mise en place est de voir la complexité de l’application augmenter de manière exponentielle à chaque ajout de fonctionnalité.<br>
 On parle dans ce cas de code <em>spaghetti</em>.<br>
-La métaphore des <em>spaghettis</em> vient des morceaux de code entrelacés, mélangés, ce qui les rend difficile à tester en isolation du fait des nombreuses interactions entre les domaines voir les couches (au sens N-tiers).</p>
+La métaphore des <em>spaghettis</em> vient des morceaux de code entrelacés, mélangés, ce qui les rend difficiles à tester en isolation du fait des nombreuses interactions entre les domaines voir les couches (au sens N-tiers).</p>
 </div>
 <div class="paragraph">
 <p>L’approche micro-service a ceci de différent que les différents domaines sont gérés par des applications différentes.</p>
@@ -2132,7 +2159,7 @@ Une des règles qui transcrit le mieux ce principe est le fait que les bases de 
 Cette règle permet également d’éviter un couplage au niveau du modèle de donnée.</p>
 </div>
 <div class="paragraph">
-<p>De même, si des micro-services doivent communiquer entre eux, il est préférable que ce soit de manière asynchrone (à travers un broker de message par ex.).</p>
+<p>De même, si des micro-services doivent communiquer entre eux, il est préférable que ce soit de manière asynchrone (à travers un broker de message par exemple).</p>
 </div>
 <div class="paragraph">
 <p>Ainsi la coupure d’un service n’affecte pas les autres.</p>
@@ -2191,7 +2218,7 @@ Cette règle permet également d’éviter un couplage au niveau du modèle de d
 <div class="ulist unstyled">
 <ul class="unstyled">
 <li>
-<p>&#8594; Le domaine <em>produit</em> de notre site e-commerce sera plus sollicité que le domaine <em>paiement</em>, il sera possible d’affecter plus ressources à celui-ci sans en dépenser inutilement pour les services faiblement sollicités</p>
+<p>&#8594; Si le domaine <em>produit</em> de notre site de commerce électronique est plus sollicité que le domaine <em>paiement</em>, il sera possible d’affecter plus ressources à celui-ci sans en dépenser inutilement pour les services faiblement sollicités</p>
 </li>
 </ul>
 </div>
@@ -2253,18 +2280,18 @@ Ce type de dimensionnement (ou <em>scaling</em>) arrive donc rapidement à une l
 <p>Dans le cas où il y a plusieurs instances d’une même application, que ce soit derrière un <strong>répartiteur de charge</strong> (<em>load-balancer</em>) ou qu’elles consomment les messages d’un broker, en éteindre une ne coupe pas le service.</p>
 </div>
 <div class="paragraph">
-<p>Il est tout à fait possible de configurer le <strong>répartiteur de charge</strong> afin de ne plus distribuer de connexion vers une instance et de laisser les connexions existantes se terminer afin de pour voir éteindre l’instance sans impact pour les utilisateurs.</p>
+<p>Il est tout à fait possible de configurer le <strong>répartiteur de charge</strong> afin de ne plus distribuer de connexion vers une instance, de laisser les connexions existantes se terminer et enfin de pouvoir éteindre l’instance sans impact pour les utilisateurs.</p>
 </div>
 <div class="paragraph">
 <p>Traiter toutes les instances d’une même application comme celà pour réaliser une mise à jour est appelé <strong>rolling update</strong>.</p>
 </div>
 <div class="paragraph">
-<p>Attention toutefois à ce que les systèmes connectés à l’application (clients d’une API, base de données, etc.) puissent fonctionner avec les deux versions qui vont cohabiter durant la mise la mise à jour.</p>
+<p>Attention toutefois à ce que les systèmes connectés à l’application (clients d’une API, base de données, etc.) puissent fonctionner avec les deux versions qui vont cohabiter durant la mise à jour.</p>
 </div>
 <div class="sect2">
 <h3 id="_identifier_les_spofs">4.1. Identifier les SPOFs</h3>
 <div class="paragraph">
-<p>Les SPOFs (<strong>S</strong>ingle <strong>P</strong>oint <strong>O</strong>f <strong>F</strong>ailure) sont les parties d’un système qui ne peuvent pas avoir plus d’une instance et qui par conséquent entraine une coupure de service en cas d’arrêt (crash, mise à jour, etc.).</p>
+<p>Les SPOFs (<strong>S</strong>ingle <strong>P</strong>oint <strong>O</strong>f <strong>F</strong>ailure) sont les parties d’un système qui ne peuvent pas avoir plus d’une instance et qui par conséquent entrainent une coupure de service en cas d’arrêt (crash, mise à jour, etc.).</p>
 </div>
 <div class="paragraph">
 <p>Il est important de les identifier et de monitorer leur état pour pouvoir réagir en cas de problème.</p>
@@ -2273,10 +2300,10 @@ Ce type de dimensionnement (ou <em>scaling</em>) arrive donc rapidement à une l
 <p>Cette réaction peut être automatique (bascule sur un réplica jusque-là passif) ou manuelle (démarrage de services alternatifs).</p>
 </div>
 <div class="paragraph">
-<p>Tenir compte des SPOFs peut également influer sur l’architecture du système pour limiter au strict minimum la charge qui y est envoyée, ou metre en place des mécanismes pour alléger cette charge (un cache de données par exemple).</p>
+<p>Tenir compte des SPOFs peut également influer sur l’architecture du système pour limiter au strict minimum la charge qui y est envoyée, ou mettre en place des mécanismes pour alléger cette charge (un cache de données par exemple).</p>
 </div>
 <div class="paragraph">
-<p>Ces considérations sont applicables à tout système dont on voudrait diminuer l’usage (une API extérieure payante par exemple) et rejoigne le méta-objectif du découplage (diminuer les dépendances entres composants).</p>
+<p>Ces considérations sont applicables à tout système dont on voudrait diminuer l’usage (une API extérieure payante par exemple) et rejoigne de même concept de découplage (diminuer les dépendances entres composants).</p>
 </div>
 <div class="paragraph">
 <p>Les bases de données (SQL) sont également souvent des SPOFs ; il est cependant possible dans la plupart des cas de mettre en place des réplicas pouvant remplacer la base principale en cas d’indisponibilité.</p>
@@ -2309,7 +2336,7 @@ Ce type de dimensionnement (ou <em>scaling</em>) arrive donc rapidement à une l
 </table>
 </div>
 <div class="paragraph">
-<p>Ces points de contention peuvent provoquer ds réactions en chaîne ou en cacher d’autres.</p>
+<p>Ces points de contention peuvent provoquer des réactions en chaîne ou en cacher d’autres.</p>
 </div>
 <div class="paragraph">
 <p>Pour les identifier et si nécessaire les améliorer, il est nécessaire d’avoir une supervision précise des différents composants du système.<br>
@@ -2328,8 +2355,8 @@ Ces courbes témoignent de l’évolution du système dans le temps et permetten
 <p>Il existe différentes configurations possibles, notamment pour affecter des poids aux nœuds cibles ou établir une affinité de session (<em>sticky session</em>).</p>
 </div>
 <div class="paragraph">
-<p>Les répartiteurs de charge logiciel sont plus simples à configurer et peuvent même être pilotés par une API.<br>
-Cela permet notamment d’automatiser des opérations telles que le <strong>rolling update</strong> précédemment vu.</p>
+<p>Les répartiteurs de charge logiciels sont plus simples à configurer et peuvent même être pilotés par une API.<br>
+Cela permet notamment d’automatiser des opérations telles que le <strong>rolling update</strong> précédemment mentionné.</p>
 </div>
 </div>
 <div class="sect3">
@@ -2347,7 +2374,7 @@ Cela permet notamment d’automatiser des opérations telles que le <strong>roll
 <p>En effet, quand deux systèmes communiquent, il est préférable de fonctionner en <em>flux tiré</em> de sorte que l’application cliente consomme quand elle le veut et au rythme ou elle le peut les messages qui lui sont destinés.</p>
 </div>
 <div class="paragraph">
-<p>La répartition de charge se fait naturellement avec l’augmentation du nombre d’instances de l’application cliente (pour Kafka, au sein d’un même <strong>client-group</strong>).</p>
+<p>La répartition de charge se fait naturellement avec l’augmentation du nombre d’instances de l’application cliente (pour Kafka, au sein d’un même <strong>client-group</strong>, le nombre de partitions doit être supérieure à celui des applications clientes).</p>
 </div>
 <div class="paragraph">
 <p>Il faut cependant être vigilant à la stratégie de livraison de message :</p>
@@ -2848,7 +2875,7 @@ Il peut s’agir de langage naturel (Français, Anglais, etc.) ou de graphes d�
 <p>Ce vocabulaire dont les mots et phrases vont être utilisés dans différents tests et scénarios est ensuite associé à du code.</p>
 </div>
 <div class="paragraph">
-<p>Ainsi ces tests et scénarios <em>compris par tous</em> deviennent <span class="underline"><strong><em>executables</em></strong></span>.</p>
+<p>Ces tests et scénarios <em>compris par tous</em> deviennent alors <span class="underline"><strong><em>executables</em></strong></span>.</p>
 </div>
 <div class="paragraph">
 <p>À l’instar du TDD, il s’agit moins d’écrire des tests que d’une méthodologie de travail.</p>
@@ -2930,15 +2957,15 @@ Everybody wants to know when it's Friday
 <div class="ulist">
 <ul>
 <li>
-<p><strong>K</strong>eep <strong>I</strong>t <strong>S</strong>tupid <strong>S</strong>imple Le plus simple, le mieux.<br>
+<p><strong>K</strong>eep <strong>I</strong>t <strong>S</strong>tupid <strong>S</strong>imple : Le plus simple, le mieux.<br>
 Faire simple n’est cependant pas toujours facile.</p>
 </li>
 <li>
-<p><strong>Y</strong>ou <strong>A</strong>in’t <strong>G</strong>onna <strong>N</strong>eed <strong>I</strong>t N’ajouter que du code utile dans le présent.<br>
+<p><strong>Y</strong>ou <strong>A</strong>in’t <strong>G</strong>onna <strong>N</strong>eed <strong>I</strong>t : N’ajouter que du code utile dans le présent.<br>
 Les prédictions sur le futur peuvent se révéler fausses et la conception qui a été faites "en prévision de" peut faire obstacle une fois le futur devenu présent.</p>
 </li>
 <li>
-<p><strong>D</strong>on’t <strong>R</strong>epeat <strong>Y</strong>ourself La duplication est mal vue parmi les développeurs, et amène plusieurs problèmes :</p>
+<p><strong>D</strong>on’t <strong>R</strong>epeat <strong>Y</strong>ourself : La duplication est mal vue parmi les développeurs, et amène plusieurs problèmes :</p>
 <div class="ulist">
 <ul>
 <li>
@@ -3161,7 +3188,7 @@ Par exemple : un utilisateur qui entre un mauvais mot de passe est un cas métie
 <p>D’<strong><em>adaptateurs</em></strong> entre cette API et les bibliothèques de logs existantes qui ne l’implémentent pas</p>
 </li>
 <li>
-<p>De <strong><em>bridges</em></strong>, bibliothèques ayant la même compatibilité binaire (même noms qualifiés des classes, même signatures des méthodes) que les bibliothèques de logs existantes, mais redirigeant l’information vers l’<strong><em>API abstraite</em></strong></p>
+<p>De <strong><em>bridges</em></strong>, bibliothèques ayant la même compatibilité binaire (même noms qualifiés des classes, même signatures des méthodes) que les bibliothèques de logs existantes, mais redirigeant les messages vers l’<strong><em>API abstraite</em></strong></p>
 </li>
 </ul>
 </div>
@@ -3180,7 +3207,7 @@ Par exemple : un utilisateur qui entre un mauvais mot de passe est un cas métie
 <div class="sect4">
 <h5 id="_mdc_mapped_diagnostic_context">MDC (Mapped Diagnostic Context)</h5>
 <div class="paragraph">
-<p>Le <strong>MDC</strong> est un outil fourni par la plupart des bibliothèques de log qui permet de transporter de l’information dans un thread.</p>
+<p>Le <strong>MDC</strong> est un outil fourni par la plupart des bibliothèques de log qui permet de transporter de l’information dans un même thread.</p>
 </div>
 <div class="paragraph">
 <p>L’idée est d’enrichir les informations transverses utiles pour une ligne de log au fur et à mesure de leur disponibilité, sans avoir à les passer en paramètres de toutes les méthodes précédant l’écriture du message.</p>
@@ -3333,7 +3360,7 @@ Cela se fait avec un flag sur la ligne de commande du démarrage de la JVM :</p>
 <div class="sect3">
 <h4 id="_heap_dump">6.2.4. Heap Dump</h4>
 <div class="paragraph">
-<p>Quand la JVM s’arrête de manière non prévue, cela peut être à cause d’un problème de mémoire (<strong>O</strong>ut <strong>O</strong>f <strong>M</strong>emory error) et dans ce cas l’investigation va se faire sur la base d’un <strong>Heap Dump</strong>.</p>
+<p>Quand la JVM s’arrête de manière non prévue, cela peut être à cause d’un problème de mémoire (<strong>O</strong>ut <strong>O</strong>f <strong>M</strong>emory error) et dans ce cas l’investigation peut se faire sur la base d’un <strong>Heap Dump</strong>.</p>
 </div>
 <div class="paragraph">
 <p>Un <strong>Heap Dump</strong> est une projection sur fichier de l’état de la mémoire de la JVM.</p>
@@ -3428,7 +3455,7 @@ Cela se fait avec un flag sur la ligne de commande du démarrage de la JVM :</p>
 <p>Ce sont bien des <span class="underline">développeurs</span> qui doivent réfléchir aux conséquences de leurs réalisations et qui de toute façon les assumerons une fois le produit en production.</p>
 </div>
 <div class="paragraph">
-<p>L’architecture logicielle, tout comme la veille technologique fait partie intégrante du portefeuille d’outil d’un développeur.</p>
+<p>L’architecture logicielle, tout comme la veille technologique, fait partie intégrante du portefeuille d’outils d’un développeur.</p>
 </div>
 <div style="page-break-after: always;"></div>
 </div>
