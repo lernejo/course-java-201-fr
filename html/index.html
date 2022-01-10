@@ -490,10 +490,17 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_techniques_bonnes_pratiques">6. Techniques &amp; bonnes pratiques</a>
 <ul class="sectlevel2">
 <li><a href="#_kiss_yagni_dry">6.1. KISS, YAGNI &amp; DRY</a></li>
-<li><a href="#_logs">6.2. Logs</a></li>
-<li><a href="#_supervision">6.3. Supervision</a></li>
 </ul>
 </li>
+<li><a href="#_gestion_des_logs">7. Gestion des logs</a>
+<ul class="sectlevel2">
+<li><a href="#_la_stack_elastic">7.1. La stack Elastic</a></li>
+<li><a href="#_bibliothèques_de_log">7.2. Bibliothèques de log</a></li>
+<li><a href="#_logs_gc">7.3. Logs GC</a></li>
+<li><a href="#_heap_dump">7.4. Heap Dump</a></li>
+</ul>
+</li>
+<li><a href="#_supervision">8. Supervision</a></li>
 <li><a href="#_conclusion">Conclusion</a></li>
 <li><a href="#_pour_aller_plus_loin">Pour aller plus loin</a></li>
 </ul>
@@ -2776,9 +2783,13 @@ Les prédictions sur le futur peuvent se révéler fausses et la conception qui 
 </li>
 </ul>
 </div>
+<div style="page-break-after: always;"></div>
 </div>
-<div class="sect2">
-<h3 id="_logs">6.2. Logs</h3>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_gestion_des_logs">7. Gestion des logs</h2>
+<div class="sectionbody">
 <div class="listingblock">
 <div class="title">Listing 9. Exemple de log peu utile</div>
 <div class="content">
@@ -2830,8 +2841,8 @@ C’est-à-dire les envoyer dans un même endroit, que ce soit dans un :</p>
 <p>Les logs doivent être claires et apporter le maximum d’information possible.<br>
 Pour cela on évite les logs visuelles ou de <em>debug</em>.</p>
 </div>
-<div class="sect3">
-<h4 id="_la_stack_elastic">6.2.1. La stack Elastic</h4>
+<div class="sect2">
+<h3 id="_la_stack_elastic">7.1. La stack Elastic</h3>
 <div class="paragraph">
 <p>Il existe plusieurs solutions de centralisation <em>on premise</em>, la plus connue étant la suite proposée par <em>Elastic</em> : <strong>ELK</strong> (<strong>E</strong>lasticSearch, <strong>L</strong>ogstash, <strong>K</strong>ibana).<br>
 Aujourd’hui un peu datée, des composants peuvent être remplacés, la chaîne peut être plus complexe pour mieux gérer le dimensionnement, mais la structure reste néanmoins identique.</p>
@@ -2847,8 +2858,8 @@ Aujourd’hui un peu datée, des composants peuvent être remplacés, la chaîne
 <strong>Kibana</strong> fourni une interface Web qui satisfait aussi bien à la recherche exploratoire qu’à la création de tableaux de bord pour suivre l’état du système.</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_bibliothèques_de_log">6.2.2. Bibliothèques de log</h4>
+<div class="sect2">
+<h3 id="_bibliothèques_de_log">7.2. Bibliothèques de log</h3>
 <div class="paragraph">
 <p>Côté applicatif, il existe de nombreuses bibliothèques pour écrire dans des fichiers de logs.</p>
 </div>
@@ -2930,8 +2941,8 @@ Par exemple : un utilisateur qui entre un mauvais mot de passe est un cas métie
 </tr>
 </table>
 </div>
-<div class="sect4">
-<h5 id="_architecture_de_slf4j">Architecture de SLF4J</h5>
+<div class="sect3">
+<h4 id="_architecture_de_slf4j">7.2.1. Architecture de SLF4J</h4>
 <div class="paragraph">
 <p>Le problème avec cette multiplicité de choix d’outil est que l’écosystème s’est construit de manière hétérogène.</p>
 </div>
@@ -2988,8 +2999,8 @@ Par exemple : un utilisateur qui entre un mauvais mot de passe est un cas métie
 <p>La configuration est alors faite une fois, et il n’y a plus de risque de concurrence d’accès.</p>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_mdc_mapped_diagnostic_context">MDC (Mapped Diagnostic Context)</h5>
+<div class="sect3">
+<h4 id="_mdc_mapped_diagnostic_context">7.2.2. MDC (Mapped Diagnostic Context)</h4>
 <div class="paragraph">
 <p>Le <strong>MDC</strong> est un outil fourni par la plupart des bibliothèques de log qui permet de transporter de l’information dans un même thread.</p>
 </div>
@@ -3119,8 +3130,8 @@ Par exemple : un utilisateur qui entre un mauvais mot de passe est un cas métie
 </div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_logs_gc">6.2.3. Logs GC</h4>
+<div class="sect2">
+<h3 id="_logs_gc">7.3. Logs GC</h3>
 <div class="paragraph">
 <p>Les logs applicatives sont une chose, mais quand un problème arrive en production, son origine ou ses symptômes peuvent être techniques.</p>
 </div>
@@ -3141,8 +3152,8 @@ Cela se fait avec un flag sur la ligne de commande du démarrage de la JVM :</p>
 <p><span class="underline">Alternativement</span> des outils de collecte de métriques tels que <strong>Micrometer</strong> peuvent exporter ces informations vers des systèmes ingérant des <em>séries temporelles</em> (Time Series) tels que <strong>Graphite</strong>, <strong>Warp10</strong> ou <strong>Prometheus</strong> (pour du on-premise).</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_heap_dump">6.2.4. Heap Dump</h4>
+<div class="sect2">
+<h3 id="_heap_dump">7.4. Heap Dump</h3>
 <div class="paragraph">
 <p>Quand la JVM s’arrête de manière non prévue, cela peut être à cause d’un problème de mémoire (<strong>O</strong>ut <strong>O</strong>f <strong>M</strong>emory error) et dans ce cas l’investigation peut se faire sur la base d’un <strong>Heap Dump</strong>.</p>
 </div>
@@ -3158,10 +3169,13 @@ Cela se fait avec un flag sur la ligne de commande du démarrage de la JVM :</p>
 <div class="paragraph">
 <p>Par la suite un tel fichier peut être analysé avec des outils comme <strong>Eclipse MAT</strong> (gratuit) ou <strong>JProfiler</strong> (payant).</p>
 </div>
+<div style="page-break-after: always;"></div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_supervision">6.3. Supervision</h3>
+</div>
+<div class="sect1">
+<h2 id="_supervision">8. Supervision</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>La collecte de logs et de métriques forme la base de la <em>supervision</em> d’un système.</p>
 </div>
@@ -3223,7 +3237,6 @@ Cela se fait avec un flag sur la ligne de commande du démarrage de la JVM :</p>
 </div>
 </div>
 <div style="page-break-after: always;"></div>
-</div>
 </div>
 </div>
 <div class="sect1">
