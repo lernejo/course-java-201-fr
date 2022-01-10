@@ -1,0 +1,23 @@
+=== Centralisation des logs
+:hardbreaks-option:
+
+Afin de pouvoir exploiter au mieux les logs, il est important de les centraliser.
+C’est-à-dire les envoyer dans un même endroit, que ce soit dans un :
+
+* Système de fichier, sur lequel on pourra utiliser la commande `grep` par exemple
+* _ElasticSearch_, _Loki_ ou équivalent, sur lequel on pourra faire des requêtes
+* SAAS dont c’est le coeur de métier (_Datadog_, _Logz.io_, etc.)
+
+Les logs doivent être claires et apporter le maximum d’information possible.
+Pour cela on évite les logs visuelles ou de _debug_.
+
+==== La stack Elastic
+
+Il existe plusieurs solutions de centralisation _on premise_, la plus connue étant la suite proposée par _Elastic_ : *ELK* (**E**lasticSearch, **L**ogstash, **K**ibana).
+Aujourd’hui un peu datée, des composants peuvent être remplacés, la chaîne peut être plus complexe pour mieux gérer le dimensionnement, mais la structure reste néanmoins identique.
+
+image::elk_stack.png[align=center]
+
+La brique *Logstash* permet de découper les lignes de logs en documents structurés (JSON) pour ensuite les envoyer à *ElasticSearch*.
+*ElasticSearch* indexe les documents reçus et propose une API de recherche utilisée par *Kibana*.
+*Kibana* fourni une interface Web qui satisfait aussi bien à la recherche exploratoire qu’à la création de tableaux de bord pour suivre l’état du système.

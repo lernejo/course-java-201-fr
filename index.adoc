@@ -55,6 +55,17 @@ include::chapters/chapter-6.adoc[]
 
 <<<
 
+// Gestion des logs
+include::chapters/chapter-7.adoc[]
+// Centralisation des logs
+include::chapters/chapter-8.adoc[]
+
+<<<
+
+include::chapters/chapter-9.adoc[]
+
+<<<
+
 :sectnums!:
 
 include::chapters/conclusion.adoc[]
