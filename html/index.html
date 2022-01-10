@@ -436,221 +436,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 #footer-text{color:rgba(0,0,0,.6);font-size:.9em}}
 @media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
 </style>
-<style>
-pre.rouge table td { padding: 5px; }
-pre.rouge table pre { margin: 0; }
-pre.rouge .cm {
-  color: #999988;
-  font-style: italic;
-}
-pre.rouge .cp {
-  color: #999999;
-  font-weight: bold;
-}
-pre.rouge .c1 {
-  color: #999988;
-  font-style: italic;
-}
-pre.rouge .cs {
-  color: #999999;
-  font-weight: bold;
-  font-style: italic;
-}
-pre.rouge .c, pre.rouge .ch, pre.rouge .cd, pre.rouge .cpf {
-  color: #999988;
-  font-style: italic;
-}
-pre.rouge .err {
-  color: #a61717;
-  background-color: #e3d2d2;
-}
-pre.rouge .gd {
-  color: #000000;
-  background-color: #ffdddd;
-}
-pre.rouge .ge {
-  color: #000000;
-  font-style: italic;
-}
-pre.rouge .gr {
-  color: #aa0000;
-}
-pre.rouge .gh {
-  color: #999999;
-}
-pre.rouge .gi {
-  color: #000000;
-  background-color: #ddffdd;
-}
-pre.rouge .go {
-  color: #888888;
-}
-pre.rouge .gp {
-  color: #555555;
-}
-pre.rouge .gs {
-  font-weight: bold;
-}
-pre.rouge .gu {
-  color: #aaaaaa;
-}
-pre.rouge .gt {
-  color: #aa0000;
-}
-pre.rouge .kc {
-  color: #000000;
-  font-weight: bold;
-}
-pre.rouge .kd {
-  color: #000000;
-  font-weight: bold;
-}
-pre.rouge .kn {
-  color: #000000;
-  font-weight: bold;
-}
-pre.rouge .kp {
-  color: #000000;
-  font-weight: bold;
-}
-pre.rouge .kr {
-  color: #000000;
-  font-weight: bold;
-}
-pre.rouge .kt {
-  color: #445588;
-  font-weight: bold;
-}
-pre.rouge .k, pre.rouge .kv {
-  color: #000000;
-  font-weight: bold;
-}
-pre.rouge .mf {
-  color: #009999;
-}
-pre.rouge .mh {
-  color: #009999;
-}
-pre.rouge .il {
-  color: #009999;
-}
-pre.rouge .mi {
-  color: #009999;
-}
-pre.rouge .mo {
-  color: #009999;
-}
-pre.rouge .m, pre.rouge .mb, pre.rouge .mx {
-  color: #009999;
-}
-pre.rouge .sa {
-  color: #000000;
-  font-weight: bold;
-}
-pre.rouge .sb {
-  color: #d14;
-}
-pre.rouge .sc {
-  color: #d14;
-}
-pre.rouge .sd {
-  color: #d14;
-}
-pre.rouge .s2 {
-  color: #d14;
-}
-pre.rouge .se {
-  color: #d14;
-}
-pre.rouge .sh {
-  color: #d14;
-}
-pre.rouge .si {
-  color: #d14;
-}
-pre.rouge .sx {
-  color: #d14;
-}
-pre.rouge .sr {
-  color: #009926;
-}
-pre.rouge .s1 {
-  color: #d14;
-}
-pre.rouge .ss {
-  color: #990073;
-}
-pre.rouge .s, pre.rouge .dl {
-  color: #d14;
-}
-pre.rouge .na {
-  color: #008080;
-}
-pre.rouge .bp {
-  color: #999999;
-}
-pre.rouge .nb {
-  color: #0086B3;
-}
-pre.rouge .nc {
-  color: #445588;
-  font-weight: bold;
-}
-pre.rouge .no {
-  color: #008080;
-}
-pre.rouge .nd {
-  color: #3c5d5d;
-  font-weight: bold;
-}
-pre.rouge .ni {
-  color: #800080;
-}
-pre.rouge .ne {
-  color: #990000;
-  font-weight: bold;
-}
-pre.rouge .nf, pre.rouge .fm {
-  color: #990000;
-  font-weight: bold;
-}
-pre.rouge .nl {
-  color: #990000;
-  font-weight: bold;
-}
-pre.rouge .nn {
-  color: #555555;
-}
-pre.rouge .nt {
-  color: #000080;
-}
-pre.rouge .vc {
-  color: #008080;
-}
-pre.rouge .vg {
-  color: #008080;
-}
-pre.rouge .vi {
-  color: #008080;
-}
-pre.rouge .nv, pre.rouge .vm {
-  color: #008080;
-}
-pre.rouge .ow {
-  color: #000000;
-  font-weight: bold;
-}
-pre.rouge .o {
-  color: #000000;
-  font-weight: bold;
-}
-pre.rouge .w {
-  color: #bbbbbb;
-}
-pre.rouge {
-  background-color: #f8f8f8;
-}
-</style>
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
@@ -994,8 +779,8 @@ Réaliser un <em>commit</em> (commande <code>commit</code>), embarquera toutes l
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="bash">git fetch <span class="nt">--all</span> <span class="nt">--prune</span> # <b class="conum">(1)</b>
-git log <span class="nt">--one-line</span> <span class="nt">-n</span> 10 # <b class="conum">(2)</b>
+<pre class="highlight"><code class="language-bash" data-lang="bash">git fetch --all --prune # <b class="conum">(1)</b>
+git log --one-line -n 10 # <b class="conum">(2)</b>
 git rebase origin/main # <b class="conum">(3)</b></code></pre>
 </div>
 </div>
@@ -1101,23 +886,23 @@ Ne pas utiliser le rebase sur une branche partagée par plusieurs développeurs,
 <div class="listingblock">
 <div class="title">Listing 1. Fichier pom.xml</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="cp">&lt;?xml version="1.0"?&gt;</span>
-<span class="nt">&lt;project</span> <span class="na">xsi:schemaLocation=</span><span class="s">"http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd"</span>
-         <span class="na">xmlns=</span><span class="s">"http://maven.apache.org/POM/4.0.0"</span>
-         <span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;modelVersion&gt;</span>4.0.0<span class="nt">&lt;/modelVersion&gt;</span>
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;?xml version="1.0"?&gt;
+&lt;project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
 
-    <span class="nt">&lt;groupId&gt;</span>com.mycompany<span class="nt">&lt;/groupId&gt;</span> &lt;!--<b class="conum">(1)</b>--&gt;
-    <span class="nt">&lt;artifactId&gt;</span>my-app<span class="nt">&lt;/artifactId&gt;</span>
-    <span class="nt">&lt;version&gt;</span>1.0.0-SNAPSHOT<span class="nt">&lt;/version&gt;</span>
+    &lt;groupId&gt;com.mycompany&lt;/groupId&gt; &lt;!--<b class="conum">(1)</b>--&gt;
+    &lt;artifactId&gt;my-app&lt;/artifactId&gt;
+    &lt;version&gt;1.0.0-SNAPSHOT&lt;/version&gt;
 
-    <span class="nt">&lt;properties&gt;</span> &lt;!--<b class="conum">(2)</b>--&gt;
-        <span class="nt">&lt;project.build.sourceEncoding&gt;</span>UTF-8<span class="nt">&lt;/project.build.sourceEncoding&gt;</span>
-        <span class="nt">&lt;project.reporting.outputEncoding&gt;</span>UTF-8<span class="nt">&lt;/project.reporting.outputEncoding&gt;</span>
-        <span class="nt">&lt;maven.compiler.source&gt;</span>17<span class="nt">&lt;/maven.compiler.source&gt;</span>
-        <span class="nt">&lt;maven.compiler.target&gt;</span>17<span class="nt">&lt;/maven.compiler.target&gt;</span>
-    <span class="nt">&lt;/properties&gt;</span>
-<span class="nt">&lt;/project&gt;</span></code></pre>
+    &lt;properties&gt; &lt;!--<b class="conum">(2)</b>--&gt;
+        &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;
+        &lt;project.reporting.outputEncoding&gt;UTF-8&lt;/project.reporting.outputEncoding&gt;
+        &lt;maven.compiler.source&gt;17&lt;/maven.compiler.source&gt;
+        &lt;maven.compiler.target&gt;17&lt;/maven.compiler.target&gt;
+    &lt;/properties&gt;
+&lt;/project&gt;</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -1249,9 +1034,9 @@ Ne pas utiliser le rebase sur une branche partagée par plusieurs développeurs,
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;properties&gt;</span>
-    <span class="nt">&lt;my-test-lib.version&gt;</span>1.2<span class="nt">&lt;/my-test-lib.version&gt;</span>
-<span class="nt">&lt;/properties&gt;</span></code></pre>
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;properties&gt;
+    &lt;my-test-lib.version&gt;1.2&lt;/my-test-lib.version&gt;
+&lt;/properties&gt;</code></pre>
 </div>
 </div>
 <div class="ulist">
@@ -1263,19 +1048,19 @@ Ne pas utiliser le rebase sur une branche partagée par plusieurs développeurs,
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;dependencies&gt;</span>
-    <span class="nt">&lt;dependency&gt;</span> &lt;!--<b class="conum">(1)</b>--&gt;
-        <span class="nt">&lt;groupId&gt;</span>com.mycompany<span class="nt">&lt;/groupId&gt;</span>
-        <span class="nt">&lt;artifactId&gt;</span>my-lib<span class="nt">&lt;/artifactId&gt;</span>
-        <span class="nt">&lt;version&gt;</span>1.45.3<span class="nt">&lt;/version&gt;</span>
-    <span class="nt">&lt;/dependency&gt;</span>
-    <span class="nt">&lt;dependency&gt;</span>
-        <span class="nt">&lt;groupId&gt;</span>com.mycompany<span class="nt">&lt;/groupId&gt;</span>
-        <span class="nt">&lt;artifactId&gt;</span>my-test-lib<span class="nt">&lt;/artifactId&gt;</span>
-        <span class="nt">&lt;version&gt;</span>${my-test-lib.version}<span class="nt">&lt;/version&gt;</span> &lt;!--<b class="conum">(2)</b>--&gt;
-        <span class="nt">&lt;scope&gt;</span>test<span class="nt">&lt;/scope&gt;</span> &lt;!--<b class="conum">(3)</b>--&gt;
-    <span class="nt">&lt;/dependency&gt;</span>
-<span class="nt">&lt;/dependencies&gt;</span></code></pre>
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;dependencies&gt;
+    &lt;dependency&gt; &lt;!--<b class="conum">(1)</b>--&gt;
+        &lt;groupId&gt;com.mycompany&lt;/groupId&gt;
+        &lt;artifactId&gt;my-lib&lt;/artifactId&gt;
+        &lt;version&gt;1.45.3&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;com.mycompany&lt;/groupId&gt;
+        &lt;artifactId&gt;my-test-lib&lt;/artifactId&gt;
+        &lt;version&gt;${my-test-lib.version}&lt;/version&gt; &lt;!--<b class="conum">(2)</b>--&gt;
+        &lt;scope&gt;test&lt;/scope&gt; &lt;!--<b class="conum">(3)</b>--&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -1300,18 +1085,18 @@ Ne pas utiliser le rebase sur une branche partagée par plusieurs développeurs,
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;build&gt;</span>
-    <span class="nt">&lt;plugins&gt;</span>
-        <span class="nt">&lt;plugin&gt;</span> &lt;!--<b class="conum">(1)</b>--&gt;
-            <span class="nt">&lt;groupId&gt;</span>org.apache.maven.plugins<span class="nt">&lt;/groupId&gt;</span> &lt;!--<b class="conum">(2)</b>--&gt;
-            <span class="nt">&lt;artifactId&gt;</span>maven-surefire-plugin<span class="nt">&lt;/artifactId&gt;</span>
-            <span class="nt">&lt;version&gt;</span>2.22.2<span class="nt">&lt;/version&gt;</span>
-            <span class="nt">&lt;configuration&gt;</span> &lt;!--<b class="conum">(3)</b>--&gt;
-                <span class="nt">&lt;failIfNoTests&gt;</span>true<span class="nt">&lt;/failIfNoTests&gt;</span>
-            <span class="nt">&lt;/configuration&gt;</span>
-        <span class="nt">&lt;/plugin&gt;</span>
-    <span class="nt">&lt;/plugins&gt;</span>
-<span class="nt">&lt;/build&gt;</span></code></pre>
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;build&gt;
+    &lt;plugins&gt;
+        &lt;plugin&gt; &lt;!--<b class="conum">(1)</b>--&gt;
+            &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt; &lt;!--<b class="conum">(2)</b>--&gt;
+            &lt;artifactId&gt;maven-surefire-plugin&lt;/artifactId&gt;
+            &lt;version&gt;2.22.2&lt;/version&gt;
+            &lt;configuration&gt; &lt;!--<b class="conum">(3)</b>--&gt;
+                &lt;failIfNoTests&gt;true&lt;/failIfNoTests&gt;
+            &lt;/configuration&gt;
+        &lt;/plugin&gt;
+    &lt;/plugins&gt;
+&lt;/build&gt;</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -1336,14 +1121,14 @@ Ne pas utiliser le rebase sur une branche partagée par plusieurs développeurs,
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;profiles&gt;</span>
-    <span class="nt">&lt;profile&gt;</span>
-        <span class="nt">&lt;id&gt;</span>disable-tests<span class="nt">&lt;/id&gt;</span> &lt;!--<b class="conum">(1)</b>--&gt;
-        <span class="nt">&lt;properties&gt;</span>
-            <span class="nt">&lt;maven.test.skip&gt;</span>true<span class="nt">&lt;/maven.test.skip&gt;</span>
-        <span class="nt">&lt;/properties&gt;</span>
-    <span class="nt">&lt;/profile&gt;</span>
-<span class="nt">&lt;/profiles&gt;</span></code></pre>
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;profiles&gt;
+    &lt;profile&gt;
+        &lt;id&gt;disable-tests&lt;/id&gt; &lt;!--<b class="conum">(1)</b>--&gt;
+        &lt;properties&gt;
+            &lt;maven.test.skip&gt;true&lt;/maven.test.skip&gt;
+        &lt;/properties&gt;
+    &lt;/profile&gt;
+&lt;/profiles&gt;</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -1372,39 +1157,39 @@ Il en existe plusieurs, et JUnit est aujourd’hui le plus répandu.</p>
 <h4 id="_utilisation_de_lapi_de_junit_jupiter">1.4.1. Utilisation de l’API de JUnit-Jupiter</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java"><span class="kd">class</span> <span class="nc">CalculatorTest</span> <span class="o">{</span>
+<pre class="highlight"><code class="language-java" data-lang="java">class CalculatorTest {
 
-    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">Calculator</span> <span class="n">calculator</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Calculator</span><span class="o">();</span>
+    private final Calculator calculator = new Calculator();
 
-    <span class="nd">@Test</span> // <b class="conum">(1)</b>
-    <span class="kt">void</span> <span class="nf">simple_division</span><span class="o">()</span> <span class="o">{</span>
-        <span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="n">calculator</span><span class="o">.</span><span class="na">divide</span><span class="o">(</span><span class="mi">8</span><span class="o">).</span><span class="na">by</span><span class="o">(</span><span class="mi">2</span><span class="o">);</span> // <b class="conum">(2)</b>
+    @Test // <b class="conum">(1)</b>
+    void simple_division() {
+        int result = calculator.divide(8).by(2); // <b class="conum">(2)</b>
 
-        <span class="nc">Assertions</span><span class="o">.</span><span class="na">assertThat</span><span class="o">(</span><span class="n">result</span><span class="o">)</span> // <b class="conum">(3)</b>
-            <span class="o">.</span><span class="na">as</span><span class="o">(</span><span class="s">"division of 8 by 2"</span><span class="o">)</span>
-            <span class="o">.</span><span class="na">isEqualTo</span><span class="o">(</span><span class="mi">4</span><span class="o">);</span> // <b class="conum">(4)</b>
-    <span class="o">}</span>
+        Assertions.assertThat(result) // <b class="conum">(3)</b>
+            .as("division of 8 by 2")
+            .isEqualTo(4); // <b class="conum">(4)</b>
+    }
 
-    <span class="nd">@Test</span>
-    <span class="kt">void</span> <span class="nf">division_by_zero_should_throw</span><span class="o">()</span> <span class="o">{</span>
-        <span class="nc">Assertions</span><span class="o">.</span><span class="na">assertThatExceptionOfType</span><span class="o">(</span><span class="nc">IllegalArgumentException</span><span class="o">.</span><span class="na">class</span><span class="o">)</span> // <b class="conum">(5)</b>
-            <span class="o">.</span><span class="na">isThrownBy</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="n">calculator</span><span class="o">.</span><span class="na">divide</span><span class="o">(</span><span class="mi">3</span><span class="o">).</span><span class="na">by</span><span class="o">(</span><span class="mi">0</span><span class="o">))</span> // <b class="conum">(6)</b>
-            <span class="o">.</span><span class="na">withMessage</span><span class="o">(</span><span class="s">"Cannot divide by zero"</span><span class="o">);</span> // <b class="conum">(7)</b>
-    <span class="o">}</span>
+    @Test
+    void division_by_zero_should_throw() {
+        Assertions.assertThatExceptionOfType(IllegalArgumentException.class) // <b class="conum">(5)</b>
+            .isThrownBy(() -&gt; calculator.divide(3).by(0)) // <b class="conum">(6)</b>
+            .withMessage("Cannot divide by zero"); // <b class="conum">(7)</b>
+    }
 
-    <span class="nd">@ParameterizedTest</span> // <b class="conum">(8)</b>
-    <span class="nd">@CsvSource</span><span class="o">({</span>
-        <span class="s">"0, 3, 3"</span><span class="o">,</span>
-        <span class="s">"3, 4, 7"</span>
-    <span class="o">})</span> // <b class="conum">(9)</b>
-    <span class="kt">void</span> <span class="nf">addition_cases</span><span class="o">(</span><span class="kt">int</span> <span class="n">a</span><span class="o">,</span> <span class="kt">int</span> <span class="n">b</span><span class="o">,</span> <span class="kt">int</span> <span class="n">expectedResult</span><span class="o">)</span> <span class="o">{</span> // <b class="conum">(10)</b>
-        <span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="n">calculator</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">a</span><span class="o">).</span><span class="na">and</span><span class="o">(</span><span class="n">b</span><span class="o">);</span>
+    @ParameterizedTest // <b class="conum">(8)</b>
+    @CsvSource({
+        "0, 3, 3",
+        "3, 4, 7"
+    }) // <b class="conum">(9)</b>
+    void addition_cases(int a, int b, int expectedResult) { // <b class="conum">(10)</b>
+        int result = calculator.add(a).and(b);
 
-        <span class="nc">Assertions</span><span class="o">.</span><span class="na">assertThat</span><span class="o">(</span><span class="n">result</span><span class="o">)</span> // <b class="conum">(3)</b>
-            <span class="o">.</span><span class="na">as</span><span class="o">(</span><span class="s">"addition of "</span> <span class="o">+</span> <span class="n">a</span> <span class="o">+</span> <span class="s">" and "</span> <span class="o">+</span> <span class="n">b</span><span class="o">)</span>
-            <span class="o">.</span><span class="na">isEqualTo</span><span class="o">(</span><span class="n">expectedResult</span><span class="o">);</span>
-    <span class="o">}</span>
-<span class="o">}</span></code></pre>
+        Assertions.assertThat(result) // <b class="conum">(3)</b>
+            .as("addition of " + a + " and " + b)
+            .isEqualTo(expectedResult);
+    }
+}</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -1566,18 +1351,18 @@ Une correction (mais cela vaut pour une évolution également) doit comporter le
 <div class="listingblock">
 <div class="title">Listing 2. Fichier TrafficLight.java</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java"><span class="kd">class</span> <span class="nc">TrafficLight</span> <span class="o">{</span>
+<pre class="highlight"><code class="language-java" data-lang="java">class TrafficLight {
 
-    <span class="kd">private</span> <span class="kt">int</span> <span class="n">color</span><span class="o">;</span>
+    private int color;
 
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setColor</span><span class="o">(</span><span class="kt">int</span> <span class="n">newColor</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">this</span><span class="o">.</span><span class="na">color</span> <span class="o">=</span> <span class="n">newColor</span><span class="o">;</span>
-    <span class="o">}</span>
+    public void setColor(int newColor) {
+        this.color = newColor;
+    }
 
-    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getColor</span><span class="o">()</span> <span class="o">{</span> // <b class="conum">(1)</b>
-        <span class="k">return</span> <span class="n">color</span><span class="o">;</span>
-    <span class="o">}</span>
-<span class="o">}</span></code></pre>
+    public int getColor() { // <b class="conum">(1)</b>
+        return color;
+    }
+}</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -1603,21 +1388,21 @@ Une correction (mais cela vaut pour une évolution également) doit comporter le
 <div class="listingblock">
 <div class="title">Listing 3. Fichier TrafficLight.java</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java"><span class="kd">class</span> <span class="nc">TrafficLight</span> <span class="o">{</span>
+<pre class="highlight"><code class="language-java" data-lang="java">class TrafficLight {
 
-    <span class="kd">private</span> <span class="kt">int</span> <span class="n">color</span><span class="o">;</span>
+    private int color;
 
-    <span class="kd">public</span> <span class="nc">Color</span> <span class="nf">nextState</span><span class="o">()</span> <span class="o">{</span>
-        <span class="n">color</span> <span class="o">=</span> <span class="o">(</span><span class="n">color</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="o">%</span> <span class="mi">3</span><span class="o">;</span>
-        <span class="k">return</span> <span class="nc">Color</span><span class="o">.</span><span class="na">values</span><span class="o">()[</span><span class="n">color</span><span class="o">];</span>
-    <span class="o">}</span>
+    public Color nextState() {
+        color = (color + 1) % 3;
+        return Color.values()[color];
+    }
 
-    <span class="kd">public</span> <span class="kd">enum</span> <span class="nc">Color</span> <span class="o">{</span>
-        <span class="no">GREEN</span><span class="o">,</span>
-        <span class="no">ORANGE</span><span class="o">,</span>
-        <span class="no">RED</span><span class="o">,</span>
-    <span class="o">}</span>
-<span class="o">}</span></code></pre>
+    public enum Color {
+        GREEN,
+        ORANGE,
+        RED,
+    }
+}</code></pre>
 </div>
 </div>
 </div>
@@ -1629,10 +1414,10 @@ Une correction (mais cela vaut pour une évolution également) doit comporter le
 <div class="listingblock">
 <div class="title">Listing 4. Fichier PersonRepository.java</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java"><span class="kd">interface</span> <span class="nc">PersonRepository</span> <span class="o">{</span>
+<pre class="highlight"><code class="language-java" data-lang="java">interface PersonRepository {
 
-    <span class="kt">void</span> <span class="nf">savePerson</span><span class="o">(</span><span class="nc">String</span> <span class="n">firstname</span><span class="o">,</span> <span class="nc">String</span> <span class="n">lastname</span><span class="o">,</span> <span class="kt">int</span> <span class="n">birthYear</span><span class="o">,</span> <span class="kt">int</span> <span class="n">birthMonth</span><span class="o">);</span>
-<span class="o">}</span></code></pre>
+    void savePerson(String firstname, String lastname, int birthYear, int birthMonth);
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1644,13 +1429,13 @@ Un meilleur design pourrait être :</p>
 <div class="listingblock">
 <div class="title">Listing 5. Fichier PersonRepository.java</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java"><span class="kd">interface</span> <span class="nc">PersonRepository</span> <span class="o">{</span>
+<pre class="highlight"><code class="language-java" data-lang="java">interface PersonRepository {
 
-    <span class="nc">Person</span> <span class="nf">savePerson</span><span class="o">(</span><span class="nc">Person</span> <span class="n">person</span><span class="o">);</span>
+    Person savePerson(Person person);
 
-    <span class="nd">@RecordBuilder</span> // <b class="conum">(1)</b>
-    <span class="n">record</span> <span class="nf">Person</span><span class="o">(</span><span class="nc">String</span> <span class="n">firstname</span><span class="o">,</span> <span class="nc">String</span> <span class="n">lastname</span><span class="o">,</span> <span class="nc">YearMonth</span> <span class="n">birthMonth</span><span class="o">)</span> <span class="o">{}</span>
-<span class="o">}</span></code></pre>
+    @RecordBuilder // <b class="conum">(1)</b>
+    record Person(String firstname, String lastname, YearMonth birthMonth) {}
+}</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -1665,13 +1450,13 @@ Un meilleur design pourrait être :</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java"><span class="nc">Person</span> <span class="n">person</span> <span class="o">=</span> <span class="nc">PersonBuilder</span><span class="o">.</span><span class="na">builder</span><span class="o">()</span>
-    <span class="o">.</span><span class="na">firstname</span><span class="o">(</span><span class="s">"Bobby"</span><span class="o">)</span>
-    <span class="o">.</span><span class="na">lastname</span><span class="o">(</span><span class="s">"Singer"</span><span class="o">)</span>
-    <span class="o">.</span><span class="na">birthMonth</span><span class="o">(</span><span class="nc">YearMonth</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="mi">1962</span><span class="o">,</span> <span class="nc">Month</span><span class="o">.</span><span class="na">DECEMBER</span><span class="o">))</span>
-    <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+<pre class="highlight"><code class="language-java" data-lang="java">Person person = PersonBuilder.builder()
+    .firstname("Bobby")
+    .lastname("Singer")
+    .birthMonth(YearMonth.of(1962, Month.DECEMBER))
+    .build();
 
-<span class="n">repository</span><span class="o">.</span><span class="na">savePerson</span><span class="o">(</span><span class="n">person</span><span class="o">);</span></code></pre>
+repository.savePerson(person);</code></pre>
 </div>
 </div>
 </div>
@@ -1700,17 +1485,17 @@ Du point de vue du code métier, peu importe ce "<em>quelque part</em>".</p>
 <div class="listingblock">
 <div class="title">Listing 6. Fichier Logger.java</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java"><span class="kd">interface</span> <span class="nc">Logger</span> <span class="o">{</span>
+<pre class="highlight"><code class="language-java" data-lang="java">interface Logger {
 
-    <span class="kt">void</span> <span class="nf">log</span><span class="o">(</span><span class="nc">Level</span> <span class="n">level</span><span class="o">,</span> <span class="nc">String</span> <span class="n">message</span><span class="o">);</span>
+    void log(Level level, String message);
 
-    <span class="kd">enum</span> <span class="nc">Level</span> <span class="o">{</span>
-        <span class="no">INFO</span><span class="o">,</span>
-        <span class="no">WARNING</span><span class="o">,</span>
-        <span class="no">ERROR</span><span class="o">,</span>
-        <span class="o">;</span>
-    <span class="o">}</span>
-<span class="o">}</span></code></pre>
+    enum Level {
+        INFO,
+        WARNING,
+        ERROR,
+        ;
+    }
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1718,19 +1503,19 @@ Du point de vue du code métier, peu importe ce "<em>quelque part</em>".</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java"><span class="n">record</span> <span class="nf">CoffeeShop</span><span class="o">(</span><span class="nc">CoffeeMaker</span> <span class="n">coffeeMaker</span><span class="o">,</span> <span class="nc">Logger</span> <span class="n">logger</span><span class="o">)</span> <span class="o">{</span>
+<pre class="highlight"><code class="language-java" data-lang="java">record CoffeeShop(CoffeeMaker coffeeMaker, Logger logger) {
 
-    <span class="kd">public</span> <span class="nc">Cup</span> <span class="nf">makeCoffee</span><span class="o">(</span><span class="nc">String</span> <span class="n">firstname</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">if</span><span class="o">(!</span><span class="n">coffeeMaker</span><span class="o">.</span><span class="na">isReady</span><span class="o">())</span> <span class="o">{</span>
-            <span class="n">logger</span><span class="o">.</span><span class="na">log</span><span class="o">(</span><span class="nc">Level</span><span class="o">.</span><span class="na">WARN</span><span class="o">,</span> <span class="s">"Tried to make some coffee, but the coffee maker is not ready yet"</span><span class="o">);</span>
-            <span class="k">return</span> <span class="nc">Cup</span><span class="o">.</span><span class="na">EMPTY</span><span class="o">;</span>
-        <span class="o">}</span>
-        <span class="nc">Cup</span> <span class="n">cup</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Cup</span><span class="o">(</span><span class="n">firstname</span><span class="o">);</span>
-        <span class="n">coffeeMaker</span><span class="o">.</span><span class="na">pourIn</span><span class="o">(</span><span class="n">cup</span><span class="o">);</span>
-        <span class="n">logger</span><span class="o">.</span><span class="na">log</span><span class="o">(</span><span class="nc">Level</span><span class="o">.</span><span class="na">INFO</span><span class="o">,</span> <span class="s">"Made coffee for "</span> <span class="o">+</span> <span class="n">firstname</span> <span class="o">+</span> <span class="s">", careful it’s hot !"</span><span class="o">);</span>
-        <span class="k">return</span> <span class="n">cup</span><span class="o">;</span>
-    <span class="o">}</span>
-<span class="o">}</span></code></pre>
+    public Cup makeCoffee(String firstname) {
+        if(!coffeeMaker.isReady()) {
+            logger.log(Level.WARN, "Tried to make some coffee, but the coffee maker is not ready yet");
+            return Cup.EMPTY;
+        }
+        Cup cup = new Cup(firstname);
+        coffeeMaker.pourIn(cup);
+        logger.log(Level.INFO, "Made coffee for " + firstname + ", careful it’s hot !");
+        return cup;
+    }
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2901,37 +2686,37 @@ Il peut s’agir de langage naturel (Français, Anglais, etc.) ou de graphes d�
 <div class="listingblock">
 <div class="title">Listing 7. Description d&#8217;une fonctionnalité au format <strong>Gherkin</strong></div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="gherkin"><span class="kd">Feature</span><span class="p">:</span> Is it Friday yet?
+<pre class="highlight"><code class="language-gherkin" data-lang="gherkin">Feature: Is it Friday yet?
 Everybody wants to know when it's Friday
 
-  <span class="kn">Scenario</span><span class="p">:</span> Sunday isn't Friday
-    <span class="nf">Given </span>today is Sunday
-    <span class="nf">When </span>I ask whether it's Friday yet
-    <span class="nf">Then </span>I should be told <span class="s">"Nope"</span></code></pre>
+  Scenario: Sunday isn't Friday
+    Given today is Sunday
+    When I ask whether it's Friday yet
+    Then I should be told "Nope"</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">Listing 8. Association des phrases à du code</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Stepdefs</span> <span class="o">{</span>
-    <span class="kd">private</span> <span class="nc">String</span> <span class="n">today</span><span class="o">;</span>
-    <span class="kd">private</span> <span class="nc">String</span> <span class="n">actualAnswer</span><span class="o">;</span>
+<pre class="highlight"><code class="language-java" data-lang="java">public class Stepdefs {
+    private String today;
+    private String actualAnswer;
 
-    <span class="nd">@Given</span><span class="o">(</span><span class="s">"today is Sunday"</span><span class="o">)</span> // <b class="conum">(1)</b>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">today_is_Sunday</span><span class="o">()</span> <span class="o">{</span>
-        <span class="n">today</span> <span class="o">=</span> <span class="s">"Sunday"</span><span class="o">;</span>
-    <span class="o">}</span>
+    @Given("today is Sunday") // <b class="conum">(1)</b>
+    public void today_is_Sunday() {
+        today = "Sunday";
+    }
 
-    <span class="nd">@When</span><span class="o">(</span><span class="s">"I ask whether it's Friday yet"</span><span class="o">)</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">i_ask_whether_it_s_Friday_yet</span><span class="o">()</span> <span class="o">{</span>
-        <span class="n">actualAnswer</span> <span class="o">=</span> <span class="nc">IsItFriday</span><span class="o">.</span><span class="na">isItFriday</span><span class="o">(</span><span class="n">today</span><span class="o">);</span>
-    <span class="o">}</span>
+    @When("I ask whether it's Friday yet")
+    public void i_ask_whether_it_s_Friday_yet() {
+        actualAnswer = IsItFriday.isItFriday(today);
+    }
 
-    <span class="nd">@Then</span><span class="o">(</span><span class="s">"I should be told {string}"</span><span class="o">)</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">i_should_be_told</span><span class="o">(</span><span class="nc">String</span> <span class="n">expectedAnswer</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">assertEquals</span><span class="o">(</span><span class="n">expectedAnswer</span><span class="o">,</span> <span class="n">actualAnswer</span><span class="o">);</span>
-    <span class="o">}</span>
-<span class="o">}</span></code></pre>
+    @Then("I should be told {string}")
+    public void i_should_be_told(String expectedAnswer) {
+        assertEquals(expectedAnswer, actualAnswer);
+    }
+}</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -2997,7 +2782,7 @@ Les prédictions sur le futur peuvent se révéler fausses et la conception qui 
 <div class="listingblock">
 <div class="title">Listing 9. Exemple de log peu utile</div>
 <div class="content">
-<pre class="rouge highlight"><code>2017-02-04 22:33:12 [thread-1] com.github.some.project.DatabaseService l.74 #################
+<pre class="highlight"><code>2017-02-04 22:33:12 [thread-1] com.github.some.project.DatabaseService l.74 #################
 2017-02-04 22:33:12 [thread-2] com.github.some.project.DatabaseService l.75 START
 2017-02-04 22:33:12 [thread-1] com.github.some.project.DatabaseService l.93 STOP in 17ms
 2017-02-04 22:33:12 [thread-2] com.github.some.project.DatabaseService l.94 #################
@@ -3014,7 +2799,7 @@ at org.h2.jdbc.JdbcPreparedStatement.execute(JdbcPreparedStatement.java:201)
 <div class="listingblock">
 <div class="title">Listing 10. C’est déjà mieux</div>
 <div class="content">
-<pre class="rouge highlight"><code>2017-02-04 22:33:12.332 INFO  5jhgd45ui74h c.g.s.p.UserService.create [Joshua] [Bloch] Save successful
+<pre class="highlight"><code>2017-02-04 22:33:12.332 INFO  5jhgd45ui74h c.g.s.p.UserService.create [Joshua] [Bloch] Save successful
 2017-02-04 22:33:12.758 INFO  6jyg45hgduyg c.g.s.p.UserService.create [Doug] [Lea] Save successful
 2017-02-04 22:33:12.964 ERROR hg457gehe4rt c.g.s.p.UserService.create [James] [Gosling] Save KO: already exists</code></pre>
 </div>
@@ -3217,43 +3002,43 @@ Par exemple : un utilisateur qui entre un mauvais mot de passe est un cas métie
 <div class="listingblock">
 <div class="title">Listing 11. Fichier MyController.java</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java"><span class="kd">class</span> <span class="nc">MyController</span> <span class="o">{</span>
+<pre class="highlight"><code class="language-java" data-lang="java">class MyController {
 
-    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">MyService</span> <span class="n">service</span><span class="o">;</span>
+    private final MyService service;
 
-    <span class="kd">public</span> <span class="nc">User</span> <span class="nf">newUser</span><span class="o">(</span><span class="nc">User</span> <span class="n">user</span><span class="o">,</span> <span class="nd">@Header</span><span class="o">(</span><span class="s">"correlationId"</span><span class="o">)</span> <span class="nc">String</span> <span class="n">correlationId</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="n">service</span><span class="o">.</span><span class="na">newUser</span><span class="o">(</span><span class="n">user</span><span class="o">,</span> <span class="n">correlationId</span><span class="o">);</span>
-    <span class="o">}</span>
-<span class="o">}</span></code></pre>
+    public User newUser(User user, @Header("correlationId") String correlationId) {
+        return service.newUser(user, correlationId);
+    }
+}</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">Listing 12. Fichier MyService.java</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java"><span class="kd">class</span> <span class="nc">MyService</span> <span class="o">{</span>
+<pre class="highlight"><code class="language-java" data-lang="java">class MyService {
 
-    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">Logger</span> <span class="n">logger</span> <span class="o">=</span> <span class="nc">LoggerFactory</span><span class="o">.</span><span class="na">getLogger</span><span class="o">(</span><span class="nc">MyService</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
-    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">MyRepository</span> <span class="n">repository</span><span class="o">;</span>
+    private final Logger logger = LoggerFactory.getLogger(MyService.class);
+    private final MyRepository repository;
 
-    <span class="kd">public</span> <span class="nc">User</span> <span class="nf">newUser</span><span class="o">(</span><span class="nc">User</span> <span class="n">user</span><span class="o">,</span> <span class="nc">String</span> <span class="n">correlationId</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">if</span><span class="o">(</span><span class="n">isValid</span><span class="o">(</span><span class="n">user</span><span class="o">,</span> <span class="n">correlationId</span><span class="o">))</span> <span class="o">{</span>
-            <span class="k">return</span> <span class="n">repository</span><span class="o">.</span><span class="na">save</span><span class="o">(</span><span class="n">user</span><span class="o">,</span> <span class="n">correlationId</span><span class="o">);</span>
-        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-            <span class="k">throw</span> <span class="k">new</span> <span class="nf">InvalidUserException</span><span class="o">();</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
+    public User newUser(User user, String correlationId) {
+        if(isValid(user, correlationId)) {
+            return repository.save(user, correlationId);
+        } else {
+            throw new InvalidUserException();
+        }
+    }
 
-    <span class="kd">private</span> <span class="kt">boolean</span> <span class="nf">isValid</span><span class="o">(</span><span class="nc">User</span> <span class="n">user</span><span class="o">,</span> <span class="nc">String</span> <span class="n">correlationId</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">if</span><span class="o">(</span><span class="n">user</span><span class="o">.</span><span class="na">age</span> <span class="o">&gt;</span> <span class="mi">110</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">logger</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"["</span> <span class="o">+</span> <span class="n">correlationId</span> <span class="o">+</span> <span class="s">"] Invalid User: too old"</span><span class="o">);</span>
-            <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
-        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span><span class="o">(</span><span class="n">user</span><span class="o">.</span><span class="na">age</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">logger</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"["</span> <span class="o">+</span> <span class="n">correlationId</span> <span class="o">+</span> <span class="s">"] Invalid User: too young"</span><span class="o">);</span>
-            <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
-        <span class="o">}</span>
-        <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
-    <span class="o">}</span>
-<span class="o">}</span></code></pre>
+    private boolean isValid(User user, String correlationId) {
+        if(user.age &gt; 110) {
+            logger.info("[" + correlationId + "] Invalid User: too old");
+            return false;
+        } else if(user.age &lt; 1) {
+            logger.info("[" + correlationId + "] Invalid User: too young");
+            return false;
+        }
+        return true;
+    }
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3265,44 +3050,44 @@ Par exemple : un utilisateur qui entre un mauvais mot de passe est un cas métie
 <div class="listingblock">
 <div class="title">Listing 13. Fichier MyController.java</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java"><span class="kd">class</span> <span class="nc">MyController</span> <span class="o">{</span>
+<pre class="highlight"><code class="language-java" data-lang="java">class MyController {
 
-    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">MyService</span> <span class="n">service</span><span class="o">;</span>
+    private final MyService service;
 
-    <span class="kd">public</span> <span class="nc">User</span> <span class="nf">newUser</span><span class="o">(</span><span class="nc">User</span> <span class="n">user</span><span class="o">,</span> <span class="nd">@Header</span><span class="o">(</span><span class="s">"correlationId"</span><span class="o">)</span> <span class="nc">String</span> <span class="n">correlationId</span><span class="o">)</span> <span class="o">{</span>
-        <span class="no">MDC</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"correlationId"</span><span class="o">,</span> <span class="n">correlationId</span><span class="o">);</span>
-        <span class="k">return</span> <span class="n">service</span><span class="o">.</span><span class="na">newUser</span><span class="o">(</span><span class="n">user</span><span class="o">);</span>
-    <span class="o">}</span>
-<span class="o">}</span></code></pre>
+    public User newUser(User user, @Header("correlationId") String correlationId) {
+        MDC.put("correlationId", correlationId);
+        return service.newUser(user);
+    }
+}</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">Listing 14. Fichier MyService.java</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java"><span class="kd">class</span> <span class="nc">MyService</span> <span class="o">{</span>
+<pre class="highlight"><code class="language-java" data-lang="java">class MyService {
 
-    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">Logger</span> <span class="n">logger</span> <span class="o">=</span> <span class="nc">LoggerFactory</span><span class="o">.</span><span class="na">getLogger</span><span class="o">(</span><span class="nc">MyService</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
-    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">MyRepository</span> <span class="n">repository</span><span class="o">;</span>
+    private final Logger logger = LoggerFactory.getLogger(MyService.class);
+    private final MyRepository repository;
 
-    <span class="kd">public</span> <span class="nc">User</span> <span class="nf">newUser</span><span class="o">(</span><span class="nc">User</span> <span class="n">user</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">if</span><span class="o">(</span><span class="n">isValid</span><span class="o">(</span><span class="n">user</span><span class="o">))</span> <span class="o">{</span>
-            <span class="k">return</span> <span class="n">repository</span><span class="o">.</span><span class="na">save</span><span class="o">(</span><span class="n">user</span><span class="o">);</span>
-        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-            <span class="k">throw</span> <span class="k">new</span> <span class="nf">InvalidUserException</span><span class="o">();</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
+    public User newUser(User user) {
+        if(isValid(user)) {
+            return repository.save(user);
+        } else {
+            throw new InvalidUserException();
+        }
+    }
 
-    <span class="kd">private</span> <span class="kt">boolean</span> <span class="nf">isValid</span><span class="o">(</span><span class="nc">User</span> <span class="n">user</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">if</span><span class="o">(</span><span class="n">user</span><span class="o">.</span><span class="na">age</span> <span class="o">&gt;</span> <span class="mi">110</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">logger</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"Invalid User: too old"</span><span class="o">);</span>
-            <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
-        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span><span class="o">(</span><span class="n">user</span><span class="o">.</span><span class="na">age</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">logger</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"Invalid User: too young"</span><span class="o">);</span>
-            <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
-        <span class="o">}</span>
-        <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
-    <span class="o">}</span>
-<span class="o">}</span></code></pre>
+    private boolean isValid(User user) {
+        if(user.age &gt; 110) {
+            logger.info("Invalid User: too old");
+            return false;
+        } else if(user.age &lt; 1) {
+            logger.info("Invalid User: too young");
+            return false;
+        }
+        return true;
+    }
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3311,18 +3096,18 @@ Par exemple : un utilisateur qui entre un mauvais mot de passe est un cas métie
 <div class="listingblock">
 <div class="title">Listing 15. Fichier logback.xml</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;configuration&gt;</span>
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;configuration&gt;
 
-  <span class="nt">&lt;appender</span> <span class="na">name=</span><span class="s">"STDOUT"</span> <span class="na">class=</span><span class="s">"ch.qos.logback.core.ConsoleAppender"</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;encoder&gt;</span>
-      <span class="nt">&lt;pattern&gt;</span>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - [%X{correlationId}] %msg%n<span class="nt">&lt;/pattern&gt;</span> &lt;!--<b class="conum">(1)</b>--&gt;
-    <span class="nt">&lt;/encoder&gt;</span>
-  <span class="nt">&lt;/appender&gt;</span>
+  &lt;appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender"&gt;
+    &lt;encoder&gt;
+      &lt;pattern&gt;%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - [%X{correlationId}] %msg%n&lt;/pattern&gt; &lt;!--<b class="conum">(1)</b>--&gt;
+    &lt;/encoder&gt;
+  &lt;/appender&gt;
 
-  <span class="nt">&lt;root</span> <span class="na">level=</span><span class="s">"DEBUG"</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;appender-ref</span> <span class="na">ref=</span><span class="s">"STDOUT"</span> <span class="nt">/&gt;</span>
-  <span class="nt">&lt;/root&gt;</span>
-<span class="nt">&lt;/configuration&gt;</span></code></pre>
+  &lt;root level="DEBUG"&gt;
+    &lt;appender-ref ref="STDOUT" /&gt;
+  &lt;/root&gt;
+&lt;/configuration&gt;</code></pre>
 </div>
 </div>
 <div class="colist arabic">
