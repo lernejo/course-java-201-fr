@@ -1,5 +1,5 @@
+include::chapter-base.adoc[]
 == Rappels sur les outils
-:hardbreaks-option:
 
 === Git
 

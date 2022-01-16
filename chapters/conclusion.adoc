@@ -1,5 +1,5 @@
+include::chapter-base.adoc[]
 == Conclusion
-:hardbreaks-option:
 
 Contrairement à ce que l’industrie en France tente de nous faire croire, être Architecte Logiciel n’est pas un métier à part.
 

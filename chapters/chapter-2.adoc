@@ -1,5 +1,5 @@
+include::chapter-base.adoc[]
 == Le Découplage, un concept valide a toutes les échelles
-:hardbreaks-option:
 
 [quote,un architecte qui passait par là]
 J’ai répondu à leur problème en leur proposant d’ajouter un nouveau niveau d’indirection.

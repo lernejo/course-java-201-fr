@@ -1,5 +1,5 @@
+include::chapter-base.adoc[]
 == Techniques & bonnes pratiques
-:hardbreaks-option:
 
 === KISS, YAGNI & DRY
 

@@ -1,5 +1,5 @@
+include::chapter-base.adoc[]
 == Gestion des logs
-:hardbreaks-option:
 
 .Exemple de log peu utile
 [source]

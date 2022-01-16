@@ -1,5 +1,5 @@
+include::chapter-base.adoc[]
 == Dimensionnement & considérations relatives
-:hardbreaks-option:
 
 Historiquement, la construction d’application monolithique et dont l’état est géré en mémoire (_stateful_) nécessitait avec l’augmentation de la charge des serveurs plus puissants.
 

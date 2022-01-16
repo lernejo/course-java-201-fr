@@ -1,5 +1,5 @@
+include::chapter-base.adoc[]
 == Introduction
-:hardbreaks-option:
 
 [quote, Ralph Johnson]
 Architecture is about the important stuff.

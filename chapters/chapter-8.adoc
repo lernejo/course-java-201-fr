@@ -1,5 +1,5 @@
+include::chapter-base.adoc[]
 === Centralisation des logs
-:hardbreaks-option:
 
 Afin de pouvoir exploiter au mieux les logs, il est important de les centraliser.
 C’est-à-dire les envoyer dans un même endroit, que ce soit dans un :

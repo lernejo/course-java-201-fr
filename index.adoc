@@ -8,6 +8,8 @@ Loïc Ledoyen <loic.ledoyen@gmail.com>
 :toc: left
 :title-page:
 
+:course-root:
+
 ifndef::ci[]
 :imagesdir: ./images
 endif::[]
