@@ -1,28 +1,4 @@
 include::chapter-base.adoc[]
 == Supervision
 
-La collecte de logs et de métriques forme la base de la _supervision_ d’un système.
-
-Sur cette base, il est nécessaire d’ajouter des composants pour transformer ces données brutes en :
-
-* Alertes, dans le cas où un comportement anormal est détecté
-* Tableaux de bord, pour investiguer un comportement anormal, trouver des correlations et converger vers l’origine du problème.
-
-La supervision, c’est l’outillage qui permet de suivre l’état d’un système, de comprendre son fonctionnement, et même de prévoir son utilisation.
-
-[TIP]
-====
-Il faut néanmoins faire preuve de retenue et ne garder que les informations qui ont de la valeur, au risque de se perdre dans trop d’information et de devoir stocker d’énormes quantités d’informations inutiles.
-
-Le résultat doit être construit à l’aide de ces trois questions :
-
-* Quels sont les comportements du système que l’on souhaite identifier comme problématiques (service indisponible, utilisation anormale, etc.) ?
-* Quels comportements du système souhaite-t-on comprendre (coup de bélier, interruption de services externes, etc.) ?
-* Où placer les sondes qui remonterons les informations nécessaires ?
-====
-
-Que ce soit des outils d’indexation de document, de stockage de séries temporelles ou des bases de données, tous sont des sources d’information pour la constitution de tableaux de bord et d’alerte.
-
-L’outil open-source le plus complet aujourd’hui pour aggréger ces sources est Grafana
-
-image::grafana.png[align=center]
+include::fragments/supervision.adoc[]

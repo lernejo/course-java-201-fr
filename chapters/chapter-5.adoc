@@ -113,7 +113,7 @@ En effet dans une entrée du journal, on va retrouver
 
 === Documentation des APIs
 
-include::chapter-5/api.adoc[]
+include::fragments/api.adoc[]
 
 === BDD et ATDD
 
