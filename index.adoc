@@ -1,5 +1,5 @@
 = Java 201 - Architecture logicielle
-Loïc Ledoyen <loic.ledoyen@gmail.com>
+Loïc Ledoyen <ledoyen.loic@gmail.com>
 :reproducible:
 :toc-title: Java 201
 :listing-caption: Listing
